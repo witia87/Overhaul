@@ -27,7 +27,7 @@ namespace Assets.Modules.Turrets
 
         public VisionSensor VisionSensor;
 
-        public Vector3 SightDirection
+        public Vector3 TurretDirection
         {
             get { return gameObject.transform.forward; }
         }
@@ -77,7 +77,7 @@ namespace Assets.Modules.Turrets
         {
             if (_isTargetDirectionSet)
             {
-                var angle = Vector3.Angle(TargetGlobalDirection, SightDirection);
+                var angle = Vector3.Angle(TargetGlobalDirection, TurretDirection);
                 if (Vector3.Dot(gameObject.transform.right, TargetGlobalDirection) < 0)
                 {
                     angle *= -1;

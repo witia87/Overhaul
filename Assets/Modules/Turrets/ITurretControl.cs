@@ -3,11 +3,8 @@ using UnityEngine;
 
 namespace Assets.Modules.Turrets
 {
-    public interface ITurretControl : IVisionSensor
+    public interface ITurretControl : IVisionSensor, ITurretParameters
     {
-        Vector3 SightDirection { get; }
-        Vector3 SightPosition { get; }
-
         float CooldownTime { get; }
         float CooldownTimeLeft { get; }
         void TurnTowards(Vector3 direction);

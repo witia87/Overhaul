@@ -16,6 +16,11 @@ namespace Assets.Modules.Vision
 
         [Range(0.1f, 100)] public float VisionLenght = 10;
 
+        public Vector3 SightPosition
+        {
+            get { return gameObject.transform.position; }
+        }
+
         public List<GameObject> VisibleGameObjects { get; private set; }
         public List<Core> VisibleCores { get; private set; }
 

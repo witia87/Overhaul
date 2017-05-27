@@ -88,7 +88,7 @@ namespace Assets.Cognitions.VehicleCognitions.States
                 var distance = direction.magnitude;
                 if (distance > 1)
                 {
-                    var angle = Vector3.Angle(direction, turretControl.SightDirection);
+                    var angle = Vector3.Angle(direction, turretControl.TurretDirection);
                     if (angle < 0)
                     {
                         throw new ApplicationException("Angle is less than 0.");

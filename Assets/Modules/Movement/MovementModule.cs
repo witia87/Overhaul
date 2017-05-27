@@ -23,7 +23,7 @@ namespace Assets.Modules.Movement
         protected float JumpCooldownLeft;
         public float JumpVelocity = 100;
 
-        protected bool IsGrounded
+        public bool IsGrounded
         {
             get { return gameObject.transform.position.y <= 0.001; }
         }

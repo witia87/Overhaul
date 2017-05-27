@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Modules.Movement
 {
-    public class HumanoidMovementModule : MovementModule, IHumanoidMovementControl
+    public class HumanoidMovementModule : MovementModule, IHumanoidMovementControl, IMovementModuleParameters
     {
         public TurretModule TurretModule;
         bool IsTurretModulePresent { get { return TurretModule != null; } }
@@ -19,10 +19,17 @@ namespace Assets.Modules.Movement
             globalDirection.y = 0;
             GlobalDirectionInWhichToMove = globalDirection;
 
-            GlobalDirectionToTurnTowards = Vector3.Dot(GlobalDirectionInWhichToMove,
-                TurretModule.gameObject.transform.forward) >= 0
-                ? globalDirection
-                : -globalDirection;
+            if (Vector3.Dot(GlobalDirectionInWhichToMove, TurretModule.gameObject.transform.forward) >= 0)
+            {
+                GlobalDirectionToTurnTowards = globalDirection;
+                MovementType = MovementType.Forward;
+            }
+            else
+            {
+                GlobalDirectionToTurnTowards = -globalDirection;
+                MovementType = MovementType.Backward;
+            }
+
             GlobalDirectionToTurnTowards.Normalize();
 
             IsSetToMove = true;
@@ -50,7 +57,7 @@ namespace Assets.Modules.Movement
             {
                 // Find a best way to reach the deasired direction
                 Vector3 torque;
-                if (Vector3.Angle(GlobalDirectionToTurnTowards, TurretModule.SightDirection) < 90)
+                if (Vector3.Angle(GlobalDirectionToTurnTowards, TurretModule.TurretDirection) < 90)
                 {
                     // If desired direction is in front of the Torso, 
                     // then simply try to reach it the closest way.
@@ -59,7 +66,7 @@ namespace Assets.Modules.Movement
                 else
                 {
                     //torque = Vector3.Dot(gameObject.transform.right, TurretModule.gameObject.transform.forward);
-                    torque = GetTorqueTowards(TurretModule.SightDirection);
+                    torque = GetTorqueTowards(TurretModule.TurretDirection);
 
                 }
 
@@ -88,6 +95,12 @@ namespace Assets.Modules.Movement
             }
             return torque;
         }
-        
+
+        public MovementType MovementType { get; private set; }
+
+        public float MovementSpeed
+        {
+            get { return Rigidbody.velocity.magnitude; }
+        }
     }
 }

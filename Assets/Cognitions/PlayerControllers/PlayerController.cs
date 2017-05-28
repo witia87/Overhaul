@@ -2,14 +2,15 @@
 using Assets.Cognitions.PlayerControllers.Controllers;
 using Assets.Cognitions.PlayerControllers.States;
 using Assets.Cores;
+using UnityEngine;
 
 namespace Assets.Cognitions.PlayerControllers
 {
     public class PlayerController : Cognition<PlayerControllerStateIds>
     {
-        private MouseMovementController _movementController;
+        private PadMovementController _movementController;
 
-        private MouseTargetingController _targetingController;
+        private PadTargetingController _targetingController;
         /* private const float ConnectionCooldown = 1;
         private float _connectionCooldownLeft;
         
@@ -34,8 +35,8 @@ namespace Assets.Cognitions.PlayerControllers
 
         protected override void Start()
         {
-            _targetingController = new MouseTargetingController(Camera);
-            _movementController = new MouseMovementController();
+            _targetingController = new PadTargetingController(Camera);
+            _movementController = new PadMovementController();
             _targetingController.Start();
             _movementController.Start();
 

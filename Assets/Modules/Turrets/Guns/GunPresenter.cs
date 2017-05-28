@@ -21,14 +21,11 @@ namespace Assets.Modules.Turrets.Guns
         
         private void Update()
         {
-            if (Input.GetMouseButton(0))
-                Animator.SetBool("IsFiring", true);
-            if (!Input.GetMouseButton(0))
-                Animator.SetBool("IsFiring", false);
+            Animator.SetBool("IsFiring", Input.GetAxis("Fire1") > 0.1f);
 
             gameObject.transform.eulerAngles = _baseCameraEulerAngles;
             var direction = Gun.gameObject.transform.forward;
-            direction = Quaternion.AngleAxis(-GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up) * direction; ;
+            direction = Quaternion.AngleAxis(-GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up) * direction; 
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);
         }        

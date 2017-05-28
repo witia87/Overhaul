@@ -12,6 +12,8 @@ namespace Assets.Modules.Turrets
     {
         public float SmoothTime = 0.2f;
 
+        public GameObject Crosshair;
+
         private bool _isSetToFire;
         private bool _isTargetDirectionSet;
 
@@ -99,6 +101,11 @@ namespace Assets.Modules.Turrets
 
         private void Update()
         {
+            if (Crosshair)
+            {
+                Crosshair.transform.SetPositionAndRotation(this.transform.position + 2 * gameObject.transform.forward, Quaternion.AngleAxis(0, Vector3.up));
+            }
+
             if (_isSetToFire && CooldownTimeLeft <= 0)
             {
                 CooldownTimeLeft = CooldownTime;

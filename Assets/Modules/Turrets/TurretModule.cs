@@ -4,6 +4,7 @@ using Assets.Modules.Vision;
 using Assets.Pojectiles.Bullets;
 using Assets.Utilities;
 using UnityEngine;
+using Assets.Modules.Turrets.Guns;
 
 namespace Assets.Modules.Turrets
 {
@@ -26,6 +27,8 @@ namespace Assets.Modules.Turrets
         public Vector3 SightLocalOffset = new Vector3(0, 0.5f, 1);
 
         public VisionSensor VisionSensor;
+
+        public Gun Gun;
 
         public Vector3 TurretDirection
         {

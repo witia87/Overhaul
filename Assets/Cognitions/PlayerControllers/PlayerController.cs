@@ -7,9 +7,9 @@ namespace Assets.Cognitions.PlayerControllers
 {
     public class PlayerController : Cognition<PlayerControllerStateIds>
     {
-        private MovementController _movementController;
+        private MouseMovementController _movementController;
 
-        private TargetingController _targetingController;
+        private MouseTargetingController _targetingController;
         /* private const float ConnectionCooldown = 1;
         private float _connectionCooldownLeft;
         
@@ -34,8 +34,8 @@ namespace Assets.Cognitions.PlayerControllers
 
         protected override void Start()
         {
-            _targetingController = new TargetingController(Camera);
-            _movementController = new MovementController();
+            _targetingController = new MouseTargetingController(Camera);
+            _movementController = new MouseMovementController();
             _targetingController.Start();
             _movementController.Start();
 

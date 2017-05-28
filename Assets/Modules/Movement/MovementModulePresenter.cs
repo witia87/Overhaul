@@ -16,7 +16,7 @@ namespace Assets.Modules.Movement
             _movementModuleParameters = Module as IMovementModuleParameters;
         }
 
-        private void Update()
+        protected override void Update()
         {
             base.Update();
             var direction = _movementModuleParameters.UnitDirection;

@@ -22,8 +22,7 @@ namespace Assets.Modules
 
             _offset = Quaternion.Euler(BaseCameraEulerAngles)*Vector3.back;
             _offset *= Module.Size.y/2*(Mathf.Sqrt(3)/4);
-
-            var pixelsPerUnit = SpriteRenderer.sprite.pixelsPerUnit;
+            
             var baseSize = (SpriteSize.y/2)/SpriteRenderer.sprite.pixelsPerUnit;
             gameObject.transform.localScale = new Vector3(
                 Module.Size.y * Mathf.Sqrt(3) / 2 / baseSize,

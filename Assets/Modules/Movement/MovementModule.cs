@@ -83,9 +83,6 @@ namespace Assets.Modules.Movement
         {
             DrawArrow.ForDebug(gameObject.transform.position + UnitDirection*Size.z/2, UnitDirection,
                 Color.magenta, 0.1f, 20);
-
-            //DrawArrow.ForDebug(gameObject.transform.position + GlobalDirectionToTurnTowards * Size.z / 2, GlobalDirectionToTurnTowards,
-            //    Color.blue, 0.1f, 20);
         }
     }
 }

@@ -79,7 +79,6 @@ namespace Assets.Modules.Movement
             else
             {
                 var direction = ((gameObject.transform.forward + TurretModule.TargetGlobalDirection) / 2).normalized;
-                //direction = gameObject.transform.InverseTransformDirection(direction);
                 var torque = GetTorqueTowards(direction);
                 var torqueToApply = torque * AngularAcceleration;
                 Rigidbody.AddTorque(torqueToApply);

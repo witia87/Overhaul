@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Cognitions.PlayerControllers.Controllers
 {
-    public class MovementController : IMovementController
+    public class MouseMovementController : IMovementController
     {
         public bool IsMovementPresent { get; private set; }
         public Vector3 MovementVector { get; private set; }

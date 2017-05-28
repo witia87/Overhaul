@@ -1,6 +1,6 @@
-﻿namespace Assets.Modules.Guns
+﻿namespace Assets.Modules.Turrets.Guns
 {
-    public interface IGunModule
+    public interface IGun
     {
         int TotalAmmoLeft { get; }
         int ClipSize { get; }

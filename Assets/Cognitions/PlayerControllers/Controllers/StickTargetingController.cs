@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Cognitions.PlayerControllers.Controllers
 {
-    public class TargetingController : ITargetingController
+    public class StickTargetingController : ITargetingController
     {
         private readonly int _floorLayerMask = Layers.Floor;
 
@@ -16,7 +16,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
 
         private readonly UnityEngine.Camera _camera;
 
-        public TargetingController(UnityEngine.Camera camera)
+        public StickTargetingController(UnityEngine.Camera camera)
         {
             _camera = camera;
         }

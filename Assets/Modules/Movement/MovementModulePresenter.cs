@@ -6,27 +6,25 @@ using UnityEngine;
 
 namespace Assets.Modules.Movement
 {
-    class MovementModulePresenter: MonoBehaviour
+    class MovementModulePresenter: ModuleSpritePresenter
 
     {
-        public HumanoidMovementModule MovementModule;
-        public Animator Animator;
-
-        Vector3 _baseCameraEulerAngles;
-        private void Start() {
-            Animator = GetComponent<Animator>();
-            _baseCameraEulerAngles = GameMechanics.Stores.CameraStore.CameraEulerAngles;
+        private IMovementModuleParameters _movementModuleParameters;
+        
+        protected override void Start() {
+            base.Start();
+            _movementModuleParameters = Module as IMovementModuleParameters;
         }
 
         private void Update()
         {
-            gameObject.transform.eulerAngles = _baseCameraEulerAngles;
-            var direction = MovementModule.UnitDirection;
-            direction = Quaternion.AngleAxis(-GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up) * direction; ;
+            base.Update();
+            var direction = _movementModuleParameters.UnitDirection;
+            direction = Quaternion.AngleAxis(-GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up) * direction;
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);
-            Animator.SetFloat("Speed", MovementModule.MovementSpeed);
-            Animator.SetBool("IsMovingForward", MovementModule.MovementType == MovementType.Forward);
+            Animator.SetFloat("Speed", _movementModuleParameters.MovementSpeed);
+            Animator.SetBool("IsMovingForward", _movementModuleParameters.MovementType == MovementType.Forward);
         }
     }
 }

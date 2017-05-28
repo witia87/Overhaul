@@ -1,31 +1,26 @@
-﻿using Assets.Modules.Turrets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Modules.Movement
+namespace Assets.Modules.Turrets
 {
-    class TurretModulePresenter : MonoBehaviour
-
+    internal class TurretModulePresenter : ModuleSpritePresenter
     {
-        public TurretModule TurretModule;
-        public Animator Animator;
+        private ITurretParameters _turretParameters;
 
-        Vector3 _baseCameraEulerAngles;
-        private void Start() {
-            Animator = GetComponent<Animator>();
-            _baseCameraEulerAngles = GameMechanics.Stores.CameraStore.CameraEulerAngles;
+        protected override void Start()
+        {
+            base.Start();
+            _turretParameters = Module as ITurretParameters;
         }
 
-        private void Update()
+        protected override void Update()
         {
-            gameObject.transform.eulerAngles = _baseCameraEulerAngles;
-            var direction = TurretModule.TurretDirection;
-            direction = Quaternion.AngleAxis(-GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up) * direction; ;
+            base.Update();
+            var direction = _turretParameters.TurretDirection;
+            direction = Quaternion.AngleAxis(-GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up)*
+                        direction;
+            ;
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);
-        }        
+        }
     }
 }

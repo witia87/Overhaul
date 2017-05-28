@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Cognitions.PlayerControllers.Controllers
 {
-    public class StickTargetingController : ITargetingController
+    public class PadTargetingController : ITargetingController
     {
         private readonly int _floorLayerMask = Layers.Floor;
 
@@ -16,7 +16,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
 
         private readonly UnityEngine.Camera _camera;
 
-        public StickTargetingController(UnityEngine.Camera camera)
+        public PadTargetingController(UnityEngine.Camera camera)
         {
             _camera = camera;
         }
@@ -31,38 +31,27 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
         public Module TargetedModule { get; private set; }
         public bool IsFirePressed { get; private set; }
 
+        private float horizontalAxis = 0.5f;
+        private float verticalAxis = 0.5f;
+
         public void Start()
         {
         }
 
         public void Update()
         {
-            var ray = _camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit mouseHit;
+            var cameraFocusPoint = GameMechanics.Stores.CameraStore.FocusPoint;
 
-            if (Physics.Raycast(ray, out mouseHit, float.PositiveInfinity, _floorLayerMask))
+            if (Mathf.Abs(Input.GetAxis("HorizontalLook")) > 0.25f || Mathf.Abs(Input.GetAxis("VerticalLook")) > 0.25f)
             {
-                TargetedPosition = mouseHit.point;
+                horizontalAxis = Input.GetAxis("HorizontalLook");
+                verticalAxis = Input.GetAxis("VerticalLook");
             }
-            else
-            {
-                var a = 0;
-            }
+            var targetingVector = new Vector3(horizontalAxis, 0, verticalAxis);
+            targetingVector = Quaternion.AngleAxis(45, Vector3.up)* targetingVector;
+            TargetedPosition = cameraFocusPoint + targetingVector;
 
-            if (Physics.Raycast(ray, out mouseHit, _targetLayerMask))
-            {
-                var module = mouseHit.transform.gameObject.GetComponent<Module>();
-                if (mouseHit.transform.gameObject.GetComponent<Module>() != null)
-                {
-                    TargetedModule = module;
-                }
-            }
-            else
-            {
-                TargetedModule = null;
-            }
-
-            IsFirePressed = Input.GetButton("Fire1");
+            IsFirePressed = Input.GetAxis("Fire1") > 0.5f;
         }
 
         public void OnDrawGizmos()

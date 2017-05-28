@@ -3,6 +3,8 @@
     public enum Commands
     {
         InitializeMap,
-        InitializeCamera
+        InitializeCamera,
+
+        SetCameraFocusPoint
     }
 }

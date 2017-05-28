@@ -8,6 +8,9 @@ namespace Assets.Modules.Turrets.Guns
 {
     public class Gun : MonoBehaviour, IGun
     {
+
+        private bool _isFiring;
+
         public int AmmoLeftInTheClip
         {
             get
@@ -24,6 +27,11 @@ namespace Assets.Modules.Turrets.Guns
             }
         }
 
+        public bool IsFiring()
+        {
+           return _isFiring;
+        }
+
         public int TotalAmmoLeft
         {
             get
@@ -34,6 +42,7 @@ namespace Assets.Modules.Turrets.Guns
 
         public void Fire()
         {
+            _isFiring = true;
             throw new NotImplementedException();
         }
 

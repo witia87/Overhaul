@@ -37,11 +37,6 @@ namespace Assets.Modules
         protected virtual void Update()
         {
             gameObject.transform.eulerAngles = BaseCameraEulerAngles;
-            gameObject.transform.position = new Vector3(
-                Module.gameObject.transform.position.x + _offset.x,
-                Module.gameObject.transform.position.y + _offset.y,
-                Module.gameObject.transform.position.z + _offset.z
-                );
 
             if (FixedOffsetGameObject != null)
             {
@@ -49,14 +44,13 @@ namespace Assets.Modules
                                                 CameraComponent.GetPixelatedOffset(
                                                     FixedOffsetGameObject.transform.position,
                                                     Module.transform.position);
-
             }
             else
             {
                 gameObject.transform.position =
                     CameraComponent.GetClosestPixelatedPosition(Module.transform.position);
             }
-
+            gameObject.transform.position = gameObject.transform.position + _offset;
         }
     }
 }

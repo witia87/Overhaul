@@ -7,7 +7,7 @@ namespace Assets.Presentation.Camera
     {
         private static CameraComponent _instance;
 
-        private readonly PrecisionQuad _board = new PrecisionQuad();
+        private GameObject _board;
         private RenderTexture _boardTexture;
 
         private UnityEngine.Camera _camera;
@@ -76,14 +76,19 @@ namespace Assets.Presentation.Camera
             var pixelsInHeight = Screen.height/PixelationSize;
             var boardWidth = pixelsInWidth/PixelsPerUnit;
             var boardHeight = pixelsInHeight/PixelsPerUnit;
-            var ascpect = pixelsInWidth/(float) pixelsInHeight;
+            var aspect = pixelsInWidth/(float) pixelsInHeight;
+
+            var singleFragmentSizeInUnits = 1 / (PixelsPerUnit * PixelationSize);
+            var screenWidth = Screen.width * singleFragmentSizeInUnits;
+            var screenHeight = Screen.height * singleFragmentSizeInUnits;
 
             _boardTexture = new RenderTexture(pixelsInWidth, pixelsInHeight, 256);
             _boardTexture.filterMode = FilterMode.Point;
 
+            var fragmentsLeft = new Vector3(screenWidth - boardWidth, -screenHeight + boardHeight, 0);
             var boardMaterial = Resources.Load("Materials/BoardMaterial", typeof (Material)) as Material;
             boardMaterial.mainTexture = _boardTexture;
-            _board.Initialize("BoardQuad", boardMaterial, gameObject,
+            _board = PrecisionQuadFactory.Create("Board Quad", boardMaterial, gameObject, Vector3.back,
                 new Vector3(-boardWidth/2, -boardHeight/2, 0),
                 new Vector3(+boardWidth/2, -boardHeight/2, 0),
                 new Vector3(-boardWidth/2, +boardHeight/2, 0),
@@ -95,7 +100,15 @@ namespace Assets.Presentation.Camera
             _camera.transform.position = GetCameraPosition(FocusObject.transform.position);
             _camera.orthographicSize = boardHeight/2;
             _camera.targetTexture = _boardTexture;
-            _camera.aspect = ascpect;
+            _camera.aspect = aspect;
+
+            var guiBackgroundMaterial = Resources.Load("Materials/GuiBackgroundMaterial", typeof(Material)) as Material;
+            boardMaterial.mainTexture = _boardTexture;
+            _board = PrecisionQuadFactory.Create("Gui Backround Quad", guiBackgroundMaterial, gameObject, Vector3.back/2,
+                new Vector3(-screenWidth / 2, -screenHeight / 2, 0),
+                new Vector3(+screenWidth / 2, -screenHeight / 2, 0),
+                new Vector3(-screenWidth / 2, +screenHeight / 2, 0),
+                new Vector3(+screenWidth / 2, +screenHeight / 2, 0));
 
             _guiCamera = new GameObject().AddComponent<UnityEngine.Camera>();
             _guiCamera.transform.parent = _camera.transform;
@@ -103,17 +116,28 @@ namespace Assets.Presentation.Camera
             _guiCamera.orthographic = true;
             _guiCamera.transform.localPosition = new Vector3(0, 0, -10);
             _guiCamera.transform.localEulerAngles = new Vector3(0, 0, 0);
-            _guiCamera.orthographicSize = boardHeight/2;
-            _guiCamera.aspect = ascpect;
+            _guiCamera.orthographicSize = screenHeight / 2;
+            _guiCamera.aspect = screenWidth / screenHeight;
         }
 
         private void SwapCameras()
         {
             if (_swapCamerasCooldown <= 0)
             {
-                _swapCamerasCooldown = 0.1f;
-                _guiCamera.enabled = !_guiCamera.enabled;
-                _camera.targetTexture = null;
+                if (_isRenderingToTexture)
+                {
+                    _swapCamerasCooldown = 0.1f;
+                    _guiCamera.enabled = !_guiCamera.enabled;
+                    _camera.targetTexture = null;
+                    _isRenderingToTexture = false;
+                }
+                else
+                {
+                    _swapCamerasCooldown = 0.1f;
+                    _guiCamera.enabled = !_guiCamera.enabled;
+                    _camera.targetTexture = _boardTexture;
+                    _isRenderingToTexture = true;
+                }
             }
         }
 

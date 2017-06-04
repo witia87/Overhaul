@@ -23,6 +23,5 @@ namespace Assets.Modules.Movement
 
         void StopMoving();
         void StopTurning();
-
     }
 }

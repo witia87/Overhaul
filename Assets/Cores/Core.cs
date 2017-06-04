@@ -7,19 +7,20 @@ namespace Assets.Cores
     public class Core : MonoBehaviour
     {
         protected ArtillerySlot[] ArtillerySlots;
-        
+
         protected HumanoidMovementSlot HumanoidMovementSlot;
-        protected VehicleMovementSlot VehicleMovementSlot;
         protected TurretSlot[] TurretSlots;
         public CoreTypeIds Type = CoreTypeIds.Vehicle;
-        
+        protected VehicleMovementSlot VehicleMovementSlot;
+
         public MountedModules MountedModules { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
 
         public void ScanModules()
         {
             MountedModules = new MountedModules();
-            MountedModules.HumanoidMovementControl = HumanoidMovementSlot != null && HumanoidMovementSlot.IsModuleMounted
+            MountedModules.HumanoidMovementControl = HumanoidMovementSlot != null &&
+                                                     HumanoidMovementSlot.IsModuleMounted
                 ? HumanoidMovementSlot.MountedModule
                 : null;
 

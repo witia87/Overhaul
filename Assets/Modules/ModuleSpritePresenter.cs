@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using Assets.Presentation;
+using Assets.Presentation.Camera;
+using UnityEngine;
 
 namespace Assets.Modules
 {
-    public class ModuleSpritePresenter : MonoBehaviour
+    public class ModuleSpritePresenter : Presenter
     {
         private Vector3 _offset;
         protected Animator Animator;
@@ -22,16 +24,16 @@ namespace Assets.Modules
 
             _offset = Quaternion.Euler(BaseCameraEulerAngles)*Vector3.back;
             _offset *= Module.Size.y/2*(Mathf.Sqrt(3)/4);
-            
-            var baseSize = (SpriteSize.y/2)/SpriteRenderer.sprite.pixelsPerUnit;
+
+            var baseSize = SpriteSize.y/2/SpriteRenderer.sprite.pixelsPerUnit;
             gameObject.transform.localScale = new Vector3(
-                Module.Size.y * Mathf.Sqrt(3) / 2 / baseSize,
-                Module.Size.y * Mathf.Sqrt(3) / 2 / baseSize,
-                Module.Size.y * Mathf.Sqrt(3) / 2 / baseSize
+                Module.Size.y*Mathf.Sqrt(3)/2/baseSize,
+                Module.Size.y*Mathf.Sqrt(3)/2/baseSize,
+                Module.Size.y*Mathf.Sqrt(3)/2/baseSize
                 );
         }
 
-
+        public GameObject FixedOffsetGameObject;
         protected virtual void Update()
         {
             gameObject.transform.eulerAngles = BaseCameraEulerAngles;
@@ -40,6 +42,21 @@ namespace Assets.Modules
                 Module.gameObject.transform.position.y + _offset.y,
                 Module.gameObject.transform.position.z + _offset.z
                 );
+
+            if (FixedOffsetGameObject != null)
+            {
+                gameObject.transform.position = CameraComponent.GetClosestPixelatedPosition(FixedOffsetGameObject.transform.position) +
+                                                CameraComponent.GetPixelatedOffset(
+                                                    FixedOffsetGameObject.transform.position,
+                                                    Module.transform.position);
+
+            }
+            else
+            {
+                gameObject.transform.position =
+                    CameraComponent.GetClosestPixelatedPosition(Module.transform.position);
+            }
+
         }
     }
 }

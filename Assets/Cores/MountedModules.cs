@@ -9,8 +9,8 @@ namespace Assets.Cores
     {
         public List<IArtilleryControl> ArtilleryControls = new List<IArtilleryControl>();
         public IHumanoidMovementControl HumanoidMovementControl = null;
-        public IVehicleMovementControl VehicleMovementControl = null;
         public List<ITurretControl> TurretControls = new List<ITurretControl>();
+        public IVehicleMovementControl VehicleMovementControl = null;
 
 
         public bool IsHumanoidMovementControlMounted

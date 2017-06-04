@@ -10,7 +10,7 @@ namespace Assets.Modules.Movement
         void Move(Vector3 localDirection);
         void MoveTowards(Vector3 globalDirection);
         void GoTo(Vector3 position);
-        
+
         void Jump(Vector3 localDirection);
         void JumpTowards(Vector3 direction);
 

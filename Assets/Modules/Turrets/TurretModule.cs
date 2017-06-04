@@ -1,19 +1,15 @@
 ﻿using System.Collections.Generic;
 using Assets.Cores;
+using Assets.Modules.Turrets.Guns;
 using Assets.Modules.Vision;
 using Assets.Pojectiles.Bullets;
 using Assets.Utilities;
 using UnityEngine;
-using Assets.Modules.Turrets.Guns;
 
 namespace Assets.Modules.Turrets
 {
     public class TurretModule : Module, ITurretControl
     {
-        public float SmoothTime = 0.2f;
-
-        public GameObject Crosshair;
-
         private bool _isSetToFire;
         private bool _isTargetDirectionSet;
 
@@ -21,16 +17,19 @@ namespace Assets.Modules.Turrets
         private BulletComponentFactory _rightBulletComponentFactory;
 
         private bool _shouldLeftShoot = true;
-        public Vector3 TargetGlobalDirection;
         private float _velocity;
 
         public float Cooldown = 1;
 
-        public Vector3 SightLocalOffset = new Vector3(0, 0.5f, 1);
-
-        public VisionSensor VisionSensor;
+        public GameObject Crosshair;
 
         public Gun Gun;
+
+        public Vector3 SightLocalOffset = new Vector3(0, 0.5f, 1);
+        public float SmoothTime = 0.2f;
+        public Vector3 TargetGlobalDirection;
+
+        public VisionSensor VisionSensor;
 
         public Vector3 TurretDirection
         {
@@ -135,9 +134,9 @@ namespace Assets.Modules.Turrets
         {
             if (_isTargetDirectionSet)
             {
-               // DrawArrow.ForGizmo(gameObject.transform.position, TargetGlobalDirection * 2, Color.red);
+                // DrawArrow.ForGizmo(gameObject.transform.position, TargetGlobalDirection * 2, Color.red);
             }
-            DrawArrow.ForGizmo(gameObject.transform.position, gameObject.transform.forward * 2, Color.red);
+            DrawArrow.ForGizmo(gameObject.transform.position, gameObject.transform.forward*2, Color.red);
         }
     }
 }

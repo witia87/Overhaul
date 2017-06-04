@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Modules;
+﻿using Assets.Modules;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
 {
     public class MouseTargetingController : ITargetingController
     {
+        private readonly Camera _camera;
         private readonly int _floorLayerMask = Layers.Floor;
 
         private readonly int _targetLayerMask = Layers.Map | Layers.MapTransparent
@@ -14,9 +14,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
                                                 | Layers.Environment | Layers.EnvironmentTransparent
                                                 | Layers.Organism | Layers.OrganismTransparent;
 
-        private readonly UnityEngine.Camera _camera;
-
-        public MouseTargetingController(UnityEngine.Camera camera)
+        public MouseTargetingController(Camera camera)
         {
             _camera = camera;
         }

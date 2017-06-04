@@ -2,7 +2,7 @@
 using Assets.Flux.Stores;
 using UnityEngine;
 
-namespace Assets.Camera
+namespace Assets.Presentation.Camera
 {
     public class CameraStore : Store, ICameraStore
     {

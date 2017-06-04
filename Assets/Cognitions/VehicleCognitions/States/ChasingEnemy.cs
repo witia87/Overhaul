@@ -109,7 +109,7 @@ namespace Assets.Cognitions.VehicleCognitions.States
         {
             INode currentNode;
             GameMechanics.Stores.MapStore.TryGetNode(Core.gameObject.transform.position, Scale, out currentNode);
-            
+
             if (_path != null)
             {
                 var index = _path.LastIndexOf(currentNode);

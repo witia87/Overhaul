@@ -1,5 +1,4 @@
 ﻿using Assets.Modules.Turrets;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Modules.Movement
@@ -7,7 +6,11 @@ namespace Assets.Modules.Movement
     public class HumanoidMovementModule : MovementModule, IHumanoidMovementControl, IMovementModuleParameters
     {
         public TurretModule TurretModule;
-        bool IsTurretModulePresent { get { return TurretModule != null; } }
+
+        private bool IsTurretModulePresent
+        {
+            get { return TurretModule != null; }
+        }
 
         public void Move(Vector3 localDirection)
         {
@@ -39,7 +42,14 @@ namespace Assets.Modules.Movement
         {
             MoveTowards(position - gameObject.transform.position);
         }
-        
+
+        public MovementType MovementType { get; private set; }
+
+        public float MovementSpeed
+        {
+            get { return Rigidbody.velocity.magnitude; }
+        }
+
         protected void FixedUpdate()
         {
             var acceleration = Acceleration;
@@ -52,7 +62,7 @@ namespace Assets.Modules.Movement
             {
                 Rigidbody.drag = GroundedDrag;
             }
-            
+
             if (IsSetToMove)
             {
                 // Find a best way to reach the deasired direction
@@ -67,20 +77,19 @@ namespace Assets.Modules.Movement
                 {
                     //torque = Vector3.Dot(gameObject.transform.right, TurretModule.gameObject.transform.forward);
                     torque = GetTorqueTowards(TurretModule.TurretDirection);
-
                 }
 
-                var speedModifier = 0.75f + 0.25f * Vector3.Dot(gameObject.transform.forward, MovementDirection);
-                Rigidbody.AddForce(GlobalDirectionInWhichToMove * acceleration * speedModifier, ForceMode.Acceleration);
+                var speedModifier = 0.75f + 0.25f*Vector3.Dot(gameObject.transform.forward, MovementDirection);
+                Rigidbody.AddForce(GlobalDirectionInWhichToMove*acceleration*speedModifier, ForceMode.Acceleration);
 
-                var torqueToApply = torque * AngularAcceleration;
+                var torqueToApply = torque*AngularAcceleration;
                 Rigidbody.AddTorque(torqueToApply);
             }
             else
             {
-                var direction = ((gameObject.transform.forward + TurretModule.TargetGlobalDirection) / 2).normalized;
+                var direction = ((gameObject.transform.forward + TurretModule.TargetGlobalDirection)/2).normalized;
                 var torque = GetTorqueTowards(direction);
-                var torqueToApply = torque * AngularAcceleration;
+                var torqueToApply = torque*AngularAcceleration;
                 Rigidbody.AddTorque(torqueToApply);
             }
         }
@@ -93,13 +102,6 @@ namespace Assets.Modules.Movement
                 torque.y = Mathf.Sign(torque.y);
             }
             return torque;
-        }
-
-        public MovementType MovementType { get; private set; }
-
-        public float MovementSpeed
-        {
-            get { return Rigidbody.velocity.magnitude; }
         }
     }
 }

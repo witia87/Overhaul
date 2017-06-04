@@ -1,6 +1,6 @@
-﻿using Assets.Camera;
-using Assets.Flux;
+﻿using Assets.Flux;
 using Assets.Map;
+using Assets.Presentation.Camera;
 
 namespace Assets
 {

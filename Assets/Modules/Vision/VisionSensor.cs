@@ -7,10 +7,13 @@ namespace Assets.Modules.Vision
 {
     public class VisionSensor : DiamondDetector, IVisionSensor
     {
-        private readonly int _layerMask = Layers.Map | Layers.Environment | Layers.Organism | Layers.Structure | Layers.Floor;
+        private readonly int _layerMask = Layers.Map | Layers.Environment | Layers.Organism | Layers.Structure |
+                                          Layers.Floor;
 
         [Range(0.1f, Mathf.PI/2)] public float HorizontalAngleTolerance = Mathf.PI/3;
         public string TagToDetect = "Player";
+
+        public GameObject TargetedObject;
 
         [Range(0.1f, Mathf.PI/2)] public float VerticalAngleTolerance = Mathf.PI/4;
 
@@ -42,7 +45,6 @@ namespace Assets.Modules.Vision
             }
         }
 
-        public GameObject TargetedObject;
         public void Update()
         {
             VisibleGameObjects = new List<GameObject>();
@@ -54,7 +56,7 @@ namespace Assets.Modules.Vision
                     var a = 0;
                 }
                 TargetedObject = collidingObject;
-                var ray = (collidingObject.transform.position + Vector3.up/2) - gameObject.transform.position;
+                var ray = collidingObject.transform.position + Vector3.up/2 - gameObject.transform.position;
                 RaycastHit hit;
                 if (Physics.Raycast(gameObject.transform.position, ray, out hit, _layerMask)
                     && hit.transform.gameObject == collidingObject)

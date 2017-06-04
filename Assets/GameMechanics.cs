@@ -55,7 +55,7 @@ namespace Assets
             _instance._dispatcher = new Dispatcher();
             _instance._stores = new Stores(_instance._dispatcher);
             _instance._random = new Random();
-        
+
             _isInitialized = true;
         }
     }

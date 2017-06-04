@@ -8,8 +8,8 @@ namespace Assets.Modules.Movement
         MovementType MovementType { get; }
 
         /// <summary>
-        /// A value from [0..1] range, 
-        /// where 0 means no movement, and 1 means maximal speed for this unit.
+        ///     A value from [0..1] range,
+        ///     where 0 means no movement, and 1 means maximal speed for this unit.
         /// </summary>
         float MovementSpeed { get; }
 

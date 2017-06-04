@@ -1,15 +1,13 @@
-﻿using Assets.Map;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Cognitions.PlayerControllers.Controllers
 {
     public class MouseMovementController : IMovementController
     {
+        private Quaternion _rotationQuaternion;
         public bool IsMovementPresent { get; private set; }
         public Vector3 MovementVector { get; private set; }
         public bool IsJumpPressed { get; private set; }
-
-        Quaternion _rotationQuaternion;
 
         public void Start()
         {

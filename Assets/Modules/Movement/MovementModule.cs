@@ -46,7 +46,7 @@ namespace Assets.Modules.Movement
 
         public void JumpTowards(Vector3 globalDirection)
         {
-            Jump(gameObject.transform.worldToLocalMatrix * globalDirection);
+            Jump(gameObject.transform.worldToLocalMatrix*globalDirection);
         }
 
         public void StopMoving()

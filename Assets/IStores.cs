@@ -1,5 +1,5 @@
-﻿using Assets.Camera;
-using Assets.Map;
+﻿using Assets.Map;
+using Assets.Presentation.Camera;
 
 namespace Assets
 {

@@ -1,7 +1,7 @@
 ﻿using Assets.Flux;
 using UnityEngine;
 
-namespace Assets.Camera
+namespace Assets.Presentation.Camera
 {
     public class SetCameraFocusPointPayload : IPayload
     {

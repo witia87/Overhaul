@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Modules;
+﻿using Assets.Modules;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
 {
     public class PadTargetingController : ITargetingController
     {
+        private readonly Camera _camera;
         private readonly int _floorLayerMask = Layers.Floor;
 
         private readonly int _targetLayerMask = Layers.Map | Layers.MapTransparent
@@ -14,9 +14,10 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
                                                 | Layers.Environment | Layers.EnvironmentTransparent
                                                 | Layers.Organism | Layers.OrganismTransparent;
 
-        private readonly UnityEngine.Camera _camera;
+        private float horizontalAxis = 0.5f;
+        private float verticalAxis = 0.5f;
 
-        public PadTargetingController(UnityEngine.Camera camera)
+        public PadTargetingController(Camera camera)
         {
             _camera = camera;
         }
@@ -30,9 +31,6 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
 
         public Module TargetedModule { get; private set; }
         public bool IsFirePressed { get; private set; }
-
-        private float horizontalAxis = 0.5f;
-        private float verticalAxis = 0.5f;
 
         public void Start()
         {
@@ -48,7 +46,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
                 verticalAxis = Input.GetAxis("VerticalLook");
             }
             var targetingVector = new Vector3(horizontalAxis, 0, verticalAxis);
-            targetingVector = Quaternion.AngleAxis(45, Vector3.up)* targetingVector;
+            targetingVector = Quaternion.AngleAxis(45, Vector3.up)*targetingVector;
             TargetedPosition = cameraFocusPoint + targetingVector;
 
             IsFirePressed = Input.GetAxis("Fire1") > 0.5f;

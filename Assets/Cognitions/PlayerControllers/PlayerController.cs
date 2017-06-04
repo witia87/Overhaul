@@ -2,7 +2,7 @@
 using Assets.Cognitions.PlayerControllers.Controllers;
 using Assets.Cognitions.PlayerControllers.States;
 using Assets.Cores;
-using UnityEngine;
+using Assets.Presentation.Camera;
 
 namespace Assets.Cognitions.PlayerControllers
 {
@@ -31,11 +31,10 @@ namespace Assets.Cognitions.PlayerControllers
             }
             _connectionCooldownLeft = Mathf.Max(0, _connectionCooldownLeft - Time.deltaTime);
         }*/
-        public UnityEngine.Camera Camera;
 
         protected override void Start()
         {
-            _targetingController = new MouseTargetingController(Camera);
+            _targetingController = new MouseTargetingController(CameraComponent.GuiCamera);
             _movementController = new MouseMovementController();
             _targetingController.Start();
             _movementController.Start();

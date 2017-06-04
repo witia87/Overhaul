@@ -139,10 +139,6 @@ namespace Assets.Cognitions.Brain.States
                 {
                     //MountedModules.HumanoidMovementControl.TurnLeft();
                 }
-                else
-                {
-                    //MountedModules.HumanoidMovementControl.TurnRight();
-                }
 
                 var angle = Vector3.Angle(Vector3.forward, localPathDirection);
                 if (angle < 45)

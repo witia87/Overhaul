@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Flux;
-using Assets.Flux.Stores;
 using Assets.Map.Nodes;
 using UnityEngine;
 
 namespace Assets.Map
 {
-    public class MapStore : Store, IMapStore
+    public class MapStore : MonoBehaviour, IMapStore
     {
-        public MapStore(Dispatcher dispatcher) : base(dispatcher)
-        {
-            dispatcher.Register(Commands.InitializeMap,
-                payload => OnInitializeMapCommand(payload as InitializeMapPayload));
-        }
-
         public float MapWidth
         {
             get { return Grid[0].GetLength(1)*GridUnitSize; }
@@ -79,17 +71,17 @@ namespace Assets.Map
             return true;
         }
 
-        private void OnInitializeMapCommand(InitializeMapPayload payload)
+        public void InitializeMap(Vector3[,] grid, float unitSize)
         {
             Grid = new List<INode[,]>();
-            Grid.Add(new INode[payload.Grid.GetLength(0), payload.Grid.GetLength(1)]);
+            Grid.Add(new INode[grid.GetLength(0), grid.GetLength(1)]);
             for (var z = 0; z < Grid[0].GetLength(0); z++)
             {
                 for (var x = 0; x < Grid[0].GetLength(1); x++)
                 {
-                    if (payload.Grid[z, x] != Vector3.zero)
+                    if (grid[z, x] != Vector3.zero)
                     {
-                        Grid[0][z, x] = new Node(Grid[0], x, z, 0, payload.Grid[z, x]);
+                        Grid[0][z, x] = new Node(Grid[0], x, z, 0, grid[z, x]);
                     }
                     else
                     {
@@ -135,7 +127,7 @@ namespace Assets.Map
                 }
             }
 
-            GridUnitSize = payload.UnitSize;
+            GridUnitSize = unitSize;
         }
     }
 }

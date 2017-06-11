@@ -1,5 +1,6 @@
 ﻿using Assets.Cognitions.PathFinders;
 using Assets.Cores;
+using Assets.Map;
 using UnityEngine;
 
 namespace Assets.Cognitions
@@ -7,11 +8,13 @@ namespace Assets.Cognitions
     public abstract class CognitionState<TStateIds> : ICognitionState<TStateIds>
     {
         protected readonly Cognition<TStateIds> ParrentCognition;
+        protected readonly IMapStore MapStore;
 
         protected CognitionState(Cognition<TStateIds> parrentCognition, TStateIds id)
         {
             Id = id;
             ParrentCognition = parrentCognition;
+            MapStore = parrentCognition.MapStore;
         }
 
         protected bool IsConnected
@@ -72,9 +75,9 @@ namespace Assets.Cognitions
         protected Vector3 ClampVector(Vector3 v)
         {
             return new Vector3(
-                Mathf.Min(GameMechanics.Stores.MapStore.MapWidth, Mathf.Max(0, v.x)),
+                Mathf.Min(MapStore.MapWidth, Mathf.Max(0, v.x)),
                 0,
-                Mathf.Min(GameMechanics.Stores.MapStore.MapLength, Mathf.Max(0, v.z)));
+                Mathf.Min(MapStore.MapLength, Mathf.Max(0, v.z)));
         }
     }
 }

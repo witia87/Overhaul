@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Cognitions.PathFinders;
+using Assets.Map;
 using Assets.Map.Nodes;
 using Assets.Modules.Movement;
 using Assets.Modules.Vision;
@@ -13,6 +14,7 @@ namespace Assets.Cognitions.Brain
     {
         protected MovementModule _movementModule;
         private List<INode> _path;
+        private IMapStore MapStore;
 
         protected IPathFinder _pathFinder;
         private GameObject _target;
@@ -98,7 +100,7 @@ namespace Assets.Cognitions.Brain
         private void FixedUpdate()
         {
             INode currentNode;
-            GameMechanics.Stores.MapStore.TryGetNode(connectedGameObject.transform.position, 1, out currentNode);
+            MapStore.TryGetNode(connectedGameObject.transform.position, 1, out currentNode);
             if (_path != null)
             {
                 var index = _path.LastIndexOf(currentNode);
@@ -116,7 +118,7 @@ namespace Assets.Cognitions.Brain
             {
                 var shortcutLength = 0;
                 while (shortcutLength < _path.Count - 1 &&
-                       GameMechanics.Stores.MapStore.IsRectangleClear(
+                       MapStore.IsRectangleClear(
                            currentNode, _path[shortcutLength]))
                 {
                     shortcutLength++;

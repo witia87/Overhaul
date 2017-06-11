@@ -8,5 +8,6 @@ namespace Assets.MainCamera
         Vector3 CameraEulerAngles { get; }
         RaycastsHelper Raycasts { get; }
         PixelatedPositionsCalculator Pixelation { get; }
+        Camera MainCamera { get; }
     }
 }

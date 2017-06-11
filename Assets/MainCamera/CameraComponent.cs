@@ -5,15 +5,13 @@ namespace Assets.MainCamera
 {
     public class CameraComponent : MonoBehaviour, ICameraStore
     {
-        private RenderTexture _boardTexture;
-
         public PixelatedPositionsCalculator Pixelation { get; private set; }
 
         [SerializeField] private float _pixelsPerUnit;
 
         private GameObject _cameraHook;
         public GameObject FocusObject;
-        private Camera _mainCamera;
+        public Camera MainCamera { get; private set; }
 
         private IGuiStore _guiStore;
 
@@ -58,11 +56,11 @@ namespace Assets.MainCamera
         {
             _guiStore = FindObjectOfType<GuiComponent>() as IGuiStore;
 
-            _mainCamera = GetComponent<Camera>();
-            _mainCamera.cameraType = CameraType.Game;
-            _mainCamera.orthographic = true;
+            MainCamera = GetComponent<Camera>();
+            MainCamera.cameraType = CameraType.Game;
+            MainCamera.orthographic = true;
 
-            Raycasts = new RaycastsHelper(_mainCamera);
+            Raycasts = new RaycastsHelper(MainCamera);
 
             _cameraHook = new GameObject("Camera Hook");
             _cameraHook.transform.eulerAngles = gameObject.transform.localEulerAngles;
@@ -73,17 +71,17 @@ namespace Assets.MainCamera
 
         private void Start()
         {
-            _mainCamera.orthographicSize = FieldOfViewHeight/2;
-            _mainCamera.targetTexture = _boardTexture;
-            _mainCamera.aspect = FieldOfViewWidth/FieldOfViewHeight;
-            _mainCamera.targetTexture = _guiStore.RegisterBoardTexture;
+            MainCamera.orthographicSize = FieldOfViewHeight/2;
+            MainCamera.targetTexture = _guiStore.BoardTexture;
+            MainCamera.aspect = FieldOfViewWidth/FieldOfViewHeight;
+            MainCamera.targetTexture = _guiStore.BoardTexture;
             Update();
         }
 
         private void Update()
         {
             var position = FocusObject.transform.position - gameObject.transform.TransformDirection(Vector3.forward*30);
-            _mainCamera.transform.position = Pixelation.GetClosestPixelatedPosition(position);
+            MainCamera.transform.position = Pixelation.GetClosestPixelatedPosition(position);
         }
     }
 }

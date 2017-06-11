@@ -10,6 +10,8 @@ namespace Assets.Gui
 
         int BoardPixelHeight { get; }
 
-        RenderTexture RegisterBoardTexture { get; }
+        Camera GuiCamera { get; }
+
+        RenderTexture BoardTexture { get; }
     }
 }

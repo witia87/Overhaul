@@ -1,16 +1,21 @@
-﻿using UnityEngine;
+﻿using Assets.Gui;
+using Assets.MainCamera;
+using UnityEngine;
 
 namespace Assets.Utilities
 {
-    public class CamerasSwapper: MonoBehaviour
+    public class CamerasSwapper : MonoBehaviour
     {
-        public Camera GuiCamera;
-        public Camera MainCamera;
+        private RenderTexture _boardTexture;
+        private ICameraStore _cameraStore;
+        private Camera _guiCamera;
+
+        private IGuiStore _guiStore;
+        private bool _isRenderingToTexture = true;
+        private Camera _mainCamera;
 
         private float _swapCamerasCooldown;
-        private bool _isRenderingToTexture = true;
 
-        private RenderTexture _boardTexture;
         public void SwapCameras()
         {
             if (_swapCamerasCooldown <= 0)
@@ -18,19 +23,31 @@ namespace Assets.Utilities
                 if (_isRenderingToTexture)
                 {
                     _swapCamerasCooldown = 0.1f;
-                    GuiCamera.enabled = !GuiCamera.enabled;
-                    _boardTexture = MainCamera.targetTexture;
-                    MainCamera.targetTexture = null;
+                    Camera.SetupCurrent(_mainCamera);
+                    _boardTexture = _mainCamera.targetTexture;
+                    _mainCamera.targetTexture = null;
                     _isRenderingToTexture = false;
                 }
                 else
                 {
                     _swapCamerasCooldown = 0.1f;
-                    GuiCamera.enabled = !GuiCamera.enabled;
-                    MainCamera.targetTexture = _boardTexture;
+                    _mainCamera.targetTexture = _boardTexture;
+                    Camera.SetupCurrent(_guiCamera);
                     _isRenderingToTexture = true;
                 }
             }
+        }
+
+        private void Awake()
+        {
+            _guiStore = FindObjectOfType<GuiComponent>();
+            _cameraStore = FindObjectOfType<CameraComponent>();
+        }
+
+        private void Start()
+        {
+            _guiCamera = _guiStore.GuiCamera;
+            _mainCamera = _cameraStore.MainCamera;
         }
 
         private void Update()

@@ -1,5 +1,4 @@
-﻿using Assets.Flux;
-using Assets.Utilities;
+﻿using Assets.Utilities;
 using UnityEngine;
 
 namespace Assets.Map
@@ -10,7 +9,7 @@ namespace Assets.Map
                                           | Layers.Map | Layers.MapTransparent
                                           | Layers.Environment | Layers.EnvironmentTransparent;
 
-        private IMapStore _mapStore;
+        private MapStore _mapStore;
         public int GridLength;
 
         public int GridWidth;
@@ -18,7 +17,7 @@ namespace Assets.Map
 
         private void Awake()
         {
-            _mapStore = GameMechanics.Stores.MapStore;
+            _mapStore = FindObjectOfType<MapStore>();
             var grid = new Vector3[GridLength, GridWidth];
             for (var z = 0; z < GridLength; z++)
             {
@@ -41,12 +40,9 @@ namespace Assets.Map
                 }
             }
 
-            GameMechanics.Dispatcher.Dispatch(Commands.InitializeMap, new InitializeMapPayload
-            {
-                Grid = grid,
-                UnitSize = UnitSize
-            });
+            _mapStore.InitializeMap(grid, UnitSize);
         }
+        
 
         public void ShowGrid(int scale)
         {

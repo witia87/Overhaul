@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Cognitions.PathFinders;
 using Assets.Cores;
+using Assets.Map;
 using UnityEngine;
 
 namespace Assets.Cognitions
@@ -10,6 +11,8 @@ namespace Assets.Cognitions
         public Core Core;
         protected ICognitionState<TStateUids> CurrentState;
         [Range(1, 5)] public int MapSamplingSize = 5;
+
+        public IMapStore MapStore;
 
         public MountedModules MountedModules
         {
@@ -29,9 +32,14 @@ namespace Assets.Cognitions
             get { return MountedModules != null; }
         }
 
+        protected virtual void Awake()
+        {
+            MapStore = FindObjectOfType<MapStore>() as IMapStore;
+        }
+
         protected virtual void Start()
         {
-            PathFinder = new SimplePathFinder(GameMechanics.Stores.MapStore, MapSamplingSize);
+            PathFinder = new SimplePathFinder(MapStore, MapSamplingSize);
         }
 
         protected virtual void Update()

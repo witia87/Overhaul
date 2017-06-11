@@ -9,14 +9,13 @@ namespace Assets.Gui
 
         private GameObject _board;
         
-        private Camera _guiCamera;
+        public Camera GuiCamera { get; private set; }
         
-        public Material BoardMaterial;
-        public RenderTexture BoardTexture;
+        public RenderTexture BoardTexture { get; private set; }
 
         public float GuiFragmentSizeInUnits = 0.1f;
 
-        public int _pixelationSize = 4;
+        [SerializeField] public int _pixelationSize = 4;
         public int PixelationSize
         {
             get { return _pixelationSize;  }
@@ -32,15 +31,7 @@ namespace Assets.Gui
         {
             get { return Screen.height / PixelationSize; }
         }
-
-        public RenderTexture RegisterBoardTexture
-        {
-            get
-            {
-                return BoardTexture;
-            }
-        }
-
+        
         private void Awake()
         {
             var screenWidth = Screen.width*GuiFragmentSizeInUnits;
@@ -88,15 +79,15 @@ namespace Assets.Gui
 
         private void CreateGuiCamera(float screenWidth, float screenHeight)
         {
-            _guiCamera = new GameObject("Gui Camera").AddComponent<Camera>();
-            _guiCamera.transform.parent = gameObject.transform;
-            _guiCamera.cameraType = CameraType.Preview;
-            _guiCamera.orthographic = true;
-            _guiCamera.transform.localPosition = Vector3.back*10;
-            _guiCamera.transform.localEulerAngles = Vector3.zero;
-            _guiCamera.orthographicSize = screenHeight/2;
-            _guiCamera.aspect = screenWidth/screenHeight;
-            Camera.SetupCurrent(_guiCamera);
+            GuiCamera = new GameObject("Gui Camera").AddComponent<Camera>();
+            GuiCamera.transform.parent = gameObject.transform;
+            GuiCamera.cameraType = CameraType.Preview;
+            GuiCamera.orthographic = true;
+            GuiCamera.transform.localPosition = Vector3.back*10;
+            GuiCamera.transform.localEulerAngles = Vector3.zero;
+            GuiCamera.orthographicSize = screenHeight/2;
+            GuiCamera.aspect = screenWidth/screenHeight;
+            Camera.SetupCurrent(GuiCamera);
         }
     }
 }

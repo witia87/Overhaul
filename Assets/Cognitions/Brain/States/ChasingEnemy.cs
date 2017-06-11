@@ -52,7 +52,7 @@ namespace Assets.Cognitions.Brain.States
                                                             .magnitude;
                                 runaroundPosition = ClampVector(runaroundPosition);
                                 INode node;
-                                if (GameMechanics.Stores.MapStore.TryGetNode(runaroundPosition, Scale, out node))
+                                if (MapStore.TryGetNode(runaroundPosition, Scale, out node))
                                 {
                                     return new Investigate(ParrentCognition, node.Position,
                                         -_targetLastSeenDirection);
@@ -102,7 +102,7 @@ namespace Assets.Cognitions.Brain.States
         protected virtual void ManageMovement()
         {
             INode currentNode;
-            GameMechanics.Stores.MapStore.TryGetNode(Core.gameObject.transform.position, Scale, out currentNode);
+            MapStore.TryGetNode(Core.gameObject.transform.position, Scale, out currentNode);
 
             DrawArrow.ForDebug(currentNode.Position,
                 Vector3.up*2, Color.yellow, 0.1f, 0);
@@ -123,7 +123,7 @@ namespace Assets.Cognitions.Brain.States
             {
                 var shortcutLength = 0;
                 while (shortcutLength < _path.Count - 1 &&
-                       GameMechanics.Stores.MapStore.IsRectangleClear(
+                       MapStore.IsRectangleClear(
                            currentNode, _path[shortcutLength]))
                 {
                     shortcutLength++;

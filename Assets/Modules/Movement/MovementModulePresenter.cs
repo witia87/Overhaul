@@ -17,7 +17,7 @@ namespace Assets.Modules.Movement
         {
             base.Update();
             var direction = _movementModuleParameters.UnitDirection;
-            direction = Quaternion.AngleAxis(-GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up)*
+            direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)*
                         direction;
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Assets.Presentation.Camera
+namespace Assets.Gui
 {
-    public class BoardQuad: MonoBehaviour
+    public class BoardQuad : MonoBehaviour
     {
         private MeshRenderer _renderer;
+
         private void Awake()
         {
             _renderer = gameObject.AddComponent<MeshRenderer>();

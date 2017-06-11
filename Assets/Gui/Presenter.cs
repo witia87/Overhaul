@@ -1,14 +1,21 @@
-﻿using Assets.Presentation.Camera;
+﻿using Assets.MainCamera;
 using UnityEngine;
 
-namespace Assets.Presentation
+namespace Assets.Gui
 {
     public class Presenter : MonoBehaviour
     {
+        protected ICameraStore CameraStore;
+
+        protected virtual void Awake()
+        {
+            CameraStore = FindObjectOfType<CameraComponent>() as ICameraStore;
+        }
+
         protected virtual void Update()
         {
             gameObject.transform.position =
-                CameraComponent.GetClosestPixelatedPosition(gameObject.transform.position);
+                CameraStore.Pixelation.GetClosestPixelatedPosition(gameObject.transform.position);
         }
     }
 }

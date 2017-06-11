@@ -2,7 +2,7 @@
 using Assets.Cognitions.PlayerControllers.Controllers;
 using Assets.Cognitions.PlayerControllers.States;
 using Assets.Cores;
-using Assets.Presentation.Camera;
+using Assets.MainCamera;
 
 namespace Assets.Cognitions.PlayerControllers
 {
@@ -11,6 +11,7 @@ namespace Assets.Cognitions.PlayerControllers
         private MouseMovementController _movementController;
 
         private MouseTargetingController _targetingController;
+
         /* private const float ConnectionCooldown = 1;
         private float _connectionCooldownLeft;
         
@@ -34,8 +35,9 @@ namespace Assets.Cognitions.PlayerControllers
 
         protected override void Start()
         {
-            _targetingController = new MouseTargetingController(CameraComponent.GuiCamera);
-            _movementController = new MouseMovementController();
+            var cameraStore = FindObjectOfType<CameraComponent>() as ICameraStore;
+            _targetingController = new MouseTargetingController(cameraStore);
+            _movementController = new MouseMovementController(cameraStore);
             _targetingController.Start();
             _movementController.Start();
 

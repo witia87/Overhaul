@@ -11,7 +11,7 @@ namespace Assets.Presentation.Camera
 
         private static readonly Vector2[] _uvs = new Vector2[4]
         {new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0f, 1f), new Vector2(1f, 1f)};
-        public static GameObject Create(string name, Material material, GameObject parent, Vector3 localPosition,
+        public static GameObject Create(string name, Material material, Vector3 localPosition,
             Vector3 bottomLeft, Vector3 bottomRight, Vector3 topLeft, Vector3 topRight)
         {
             Vector3[] _vertices = new Vector3[4] {bottomLeft, bottomRight, topLeft, topRight};
@@ -29,8 +29,7 @@ namespace Assets.Presentation.Camera
             renderer.material = material;
             renderer.shadowCastingMode = ShadowCastingMode.Off;
             renderer.receiveShadows = false;
-
-            quadGameObject.transform.parent = parent.transform;
+            
             quadGameObject.transform.localPosition = localPosition;
             quadGameObject.transform.localEulerAngles = Vector3.zero;
 

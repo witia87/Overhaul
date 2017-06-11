@@ -1,10 +1,18 @@
-﻿using UnityEngine;
+﻿using Assets.MainCamera;
+using UnityEngine;
 
 namespace Assets.Cognitions.PlayerControllers.Controllers
 {
     public class MouseMovementController : IMovementController
     {
+        private readonly ICameraStore _cameraStore;
         private Quaternion _rotationQuaternion;
+
+        public MouseMovementController(ICameraStore cameraStore)
+        {
+            _cameraStore = cameraStore;
+        }
+
         public bool IsMovementPresent { get; private set; }
         public Vector3 MovementVector { get; private set; }
         public bool IsJumpPressed { get; private set; }
@@ -12,7 +20,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
         public void Start()
         {
             _rotationQuaternion = Quaternion.AngleAxis(
-                GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up);
+                _cameraStore.CameraEulerAngles.y, Vector3.up);
         }
 
         public void Update()

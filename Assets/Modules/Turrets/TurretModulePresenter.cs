@@ -16,7 +16,7 @@ namespace Assets.Modules.Turrets
         {
             base.Update();
             var direction = _turretParameters.TurretDirection;
-            direction = Quaternion.AngleAxis(-GameMechanics.Stores.CameraStore.CameraEulerAngles.y, Vector3.up)*
+            direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)*
                         direction;
             ;
             Animator.SetFloat("H", direction.x);

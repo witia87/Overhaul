@@ -1,4 +1,5 @@
-﻿using Assets.Modules;
+﻿using Assets.MainCamera;
+using Assets.Modules;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
 {
     public class PadTargetingController : ITargetingController
     {
-        private readonly Camera _camera;
+        private readonly ICameraStore _cameraStore;
         private readonly int _floorLayerMask = Layers.Floor;
 
         private readonly int _targetLayerMask = Layers.Map | Layers.MapTransparent
@@ -14,12 +15,12 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
                                                 | Layers.Environment | Layers.EnvironmentTransparent
                                                 | Layers.Organism | Layers.OrganismTransparent;
 
-        private float horizontalAxis = 0.5f;
-        private float verticalAxis = 0.5f;
+        private float _horizontalAxis;
+        private float _verticalAxis;
 
-        public PadTargetingController(Camera camera)
+        public PadTargetingController(ICameraStore cameraStore)
         {
-            _camera = camera;
+            _cameraStore = cameraStore;
         }
 
         public Vector3 TargetedPosition { get; private set; }
@@ -32,20 +33,16 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
         public Module TargetedModule { get; private set; }
         public bool IsFirePressed { get; private set; }
 
-        public void Start()
-        {
-        }
-
         public void Update()
         {
-            var cameraFocusPoint = GameMechanics.Stores.CameraStore.FocusPoint;
+            var cameraFocusPoint = _cameraStore.FocusPoint;
 
             if (Mathf.Abs(Input.GetAxis("HorizontalLook")) > 0.25f || Mathf.Abs(Input.GetAxis("VerticalLook")) > 0.25f)
             {
-                horizontalAxis = Input.GetAxis("HorizontalLook");
-                verticalAxis = Input.GetAxis("VerticalLook");
+                _horizontalAxis = Input.GetAxis("HorizontalLook");
+                _verticalAxis = Input.GetAxis("VerticalLook");
             }
-            var targetingVector = new Vector3(horizontalAxis, 0, verticalAxis);
+            var targetingVector = new Vector3(_horizontalAxis, 0, _verticalAxis);
             targetingVector = Quaternion.AngleAxis(45, Vector3.up)*targetingVector;
             TargetedPosition = cameraFocusPoint + targetingVector;
 

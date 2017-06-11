@@ -1,22 +1,16 @@
-﻿using Assets.Modules;
-using Assets.Utilities;
+﻿using Assets.MainCamera;
+using Assets.Modules;
 using UnityEngine;
 
 namespace Assets.Cognitions.PlayerControllers.Controllers
 {
     public class MouseTargetingController : ITargetingController
     {
-        private readonly Camera _camera;
-        private readonly int _floorLayerMask = Layers.Floor;
+        private readonly ICameraStore _cameraStore;
 
-        private readonly int _targetLayerMask = Layers.Map | Layers.MapTransparent
-                                                | Layers.Structure | Layers.StructureTransparent
-                                                | Layers.Environment | Layers.EnvironmentTransparent
-                                                | Layers.Organism | Layers.OrganismTransparent;
-
-        public MouseTargetingController(Camera camera)
+        public MouseTargetingController(ICameraStore cameraStore)
         {
-            _camera = camera;
+            _cameraStore = cameraStore;
         }
 
         public Vector3 TargetedPosition { get; private set; }
@@ -35,19 +29,13 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
 
         public void Update()
         {
-            var ray = _camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit mouseHit;
-
-            if (Physics.Raycast(ray, out mouseHit, float.PositiveInfinity, _floorLayerMask))
+            if (_cameraStore.Raycasts.ScreenPointToFloorRay(Input.mousePosition, out mouseHit))
             {
                 TargetedPosition = mouseHit.point;
             }
-            else
-            {
-                var a = 0;
-            }
 
-            if (Physics.Raycast(ray, out mouseHit, _targetLayerMask))
+            if (_cameraStore.Raycasts.ScreenPointToRay(Input.mousePosition, out mouseHit))
             {
                 var module = mouseHit.transform.gameObject.GetComponent<Module>();
                 if (mouseHit.transform.gameObject.GetComponent<Module>() != null)

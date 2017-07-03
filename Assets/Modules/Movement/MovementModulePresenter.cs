@@ -10,7 +10,7 @@ namespace Assets.Modules.Movement
         protected override void Start()
         {
             base.Start();
-            _movementModuleParameters = Module as IMovementModuleParameters;
+            _movementModuleParameters = Module as MovementModule;
         }
 
         protected override void Update()

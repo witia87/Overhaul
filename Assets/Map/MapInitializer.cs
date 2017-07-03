@@ -42,7 +42,7 @@ namespace Assets.Map
 
             _mapStore.InitializeMap(grid, UnitSize);
         }
-        
+
 
         public void ShowGrid(int scale)
         {

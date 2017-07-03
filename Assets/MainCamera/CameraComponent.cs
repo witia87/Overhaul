@@ -5,15 +5,12 @@ namespace Assets.MainCamera
 {
     public class CameraComponent : MonoBehaviour, ICameraStore
     {
-        public PixelatedPositionsCalculator Pixelation { get; private set; }
-
-        [SerializeField] private float _pixelsPerUnit;
-
         private GameObject _cameraHook;
-        public GameObject FocusObject;
-        public Camera MainCamera { get; private set; }
 
         private IGuiStore _guiStore;
+
+        [SerializeField] private float _pixelsPerUnit;
+        public GameObject FocusObject;
 
         public float PixelsPerUnit
         {
@@ -30,10 +27,20 @@ namespace Assets.MainCamera
             get { return _guiStore.BoardPixelHeight/PixelsPerUnit; }
         }
 
+        public PixelatedPositionsCalculator Pixelation { get; private set; }
+        public Camera MainCamera { get; private set; }
+
         public Vector3 CameraEulerAngles
         {
             get { return gameObject.transform.localEulerAngles; }
         }
+
+        public Vector3 FocusPoint
+        {
+            get { return FocusObject.transform.position; }
+        }
+
+        public RaycastsHelper Raycasts { get; private set; }
 
         public Vector3 GetClosestPixelatedPosition(Vector3 position)
         {
@@ -45,16 +52,9 @@ namespace Assets.MainCamera
             return Pixelation.GetPixelatedOffset(from, to);
         }
 
-        public Vector3 FocusPoint
-        {
-            get { return FocusObject.transform.position; }
-        }
-
-        public RaycastsHelper Raycasts { get; private set; }
-
         private void Awake()
         {
-            _guiStore = FindObjectOfType<GuiComponent>() as IGuiStore;
+            _guiStore = FindObjectOfType<GuiComponent>();
 
             MainCamera = GetComponent<Camera>();
             MainCamera.cameraType = CameraType.Game;

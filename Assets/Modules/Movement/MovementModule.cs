@@ -1,9 +1,13 @@
-﻿using Assets.Utilities;
+﻿using System;
+using System.Collections.Generic;
+using Assets.Modules.Artilleries;
+using Assets.Modules.Turrets;
+using Assets.Utilities;
 using UnityEngine;
 
 namespace Assets.Modules.Movement
 {
-    public abstract class MovementModule : Module
+    public class MovementModule : Module, IMovementControl
     {
         public float Acceleration = 100;
         public float AirAcceleration = 20;
@@ -23,9 +27,23 @@ namespace Assets.Modules.Movement
         protected float JumpCooldownLeft;
         public float JumpVelocity = 100;
 
+        public TurretModule TurretModule;
+
         public bool IsGrounded
         {
             get { return gameObject.transform.position.y <= 0.001; }
+        }
+
+        public MovementType MovementType { get; private set; }
+
+        public float MovementSpeed
+        {
+            get { return Rigidbody.velocity.magnitude; }
+        }
+
+        private bool IsTurretModulePresent
+        {
+            get { return TurretModule != null; }
         }
 
         public Vector3 UnitDirection
@@ -37,6 +55,20 @@ namespace Assets.Modules.Movement
         public Vector3 MovementDirection
         {
             get { return Rigidbody.velocity.magnitude > 0 ? Rigidbody.velocity.normalized : Vector3.zero; }
+        }
+
+        public List<IArtilleryControl> ArtilleryControls
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        public bool AreArtilleryControlsMounted
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public void StopTurning()
@@ -65,18 +97,95 @@ namespace Assets.Modules.Movement
             JumpCooldownLeft = Mathf.Max(0, JumpCooldownLeft - Time.deltaTime);
         }
 
-        public override void Mount(GameObject parrentGameObject, Vector3 localPosition)
+
+        public void MoveTowards(Vector3 globalDirection)
         {
+            globalDirection.y = 0;
+            GlobalDirectionInWhichToMove = globalDirection;
+
+            if (Vector3.Dot(GlobalDirectionInWhichToMove, TurretModule.gameObject.transform.forward) >= 0)
+            {
+                GlobalDirectionToTurnTowards = globalDirection;
+                MovementType = MovementType.Forward;
+            }
+            else
+            {
+                GlobalDirectionToTurnTowards = -globalDirection;
+                MovementType = MovementType.Backward;
+            }
+
+            GlobalDirectionToTurnTowards.Normalize();
+
+            IsSetToMove = true;
         }
 
-        public override void Unmount()
+        public void GoTo(Vector3 position)
         {
+            MoveTowards(position - gameObject.transform.position);
         }
 
-        protected override void Awake()
+        public void Move(Vector3 localDirection)
         {
-            base.Awake();
+            throw new NotImplementedException();
+        }
+
+        protected void Awake()
+        {
             GroundedDrag = Rigidbody.drag;
+        }
+
+        protected void FixedUpdate()
+        {
+            var acceleration = Acceleration;
+            if (!IsGrounded)
+            {
+                Rigidbody.drag = GroundedDrag*0.01f;
+                acceleration = AirAcceleration;
+            }
+            else
+            {
+                Rigidbody.drag = GroundedDrag;
+            }
+
+            if (IsSetToMove)
+            {
+                // Find a best way to reach the deasired direction
+                Vector3 torque;
+                if (Vector3.Angle(GlobalDirectionToTurnTowards, TurretModule.TurretDirection) < 90)
+                {
+                    // If desired direction is in front of the Torso, 
+                    // then simply try to reach it the closest way.
+                    torque = GetTorqueTowards(GlobalDirectionToTurnTowards);
+                }
+                else
+                {
+                    //torque = Vector3.Dot(gameObject.transform.right, TurretModule.gameObject.transform.forward);
+                    torque = GetTorqueTowards(TurretModule.TurretDirection);
+                }
+
+                var speedModifier = 0.75f + 0.25f*Vector3.Dot(gameObject.transform.forward, MovementDirection);
+                Rigidbody.AddForce(GlobalDirectionInWhichToMove*acceleration*speedModifier, ForceMode.Acceleration);
+
+                var torqueToApply = torque*AngularAcceleration;
+                Rigidbody.AddTorque(torqueToApply);
+            }
+            else
+            {
+                var direction = ((gameObject.transform.forward + TurretModule.TargetGlobalDirection)/2).normalized;
+                var torque = GetTorqueTowards(direction);
+                var torqueToApply = torque*AngularAcceleration;
+                Rigidbody.AddTorque(torqueToApply);
+            }
+        }
+
+        private Vector3 GetTorqueTowards(Vector3 direction)
+        {
+            var torque = Vector3.Cross(gameObject.transform.forward, direction);
+            if (Vector3.Dot(direction, gameObject.transform.forward) < 0)
+            {
+                torque.y = Mathf.Sign(torque.y);
+            }
+            return torque;
         }
 
         protected void OnDrawGizmos()
@@ -84,5 +193,16 @@ namespace Assets.Modules.Movement
             DrawArrow.ForDebug(gameObject.transform.position + UnitDirection*Size.z/2, UnitDirection,
                 Color.magenta, 0.1f, 20);
         }
+
+        public override void Mount(Module parrentGameObject, Vector3 localPosition)
+        {
+            throw new ApplicationException("Movement Module is not suppoused to be mounted.");
+        }
+
+        public override void Unmount()
+        {
+            throw new ApplicationException("Movement Module is not suppoused to be mounted.");
+        }
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using Assets.Utilities;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Gui
 {
@@ -8,30 +7,31 @@ namespace Assets.Gui
         private GameObject _background;
 
         private GameObject _board;
-        
-        public Camera GuiCamera { get; private set; }
-        
-        public RenderTexture BoardTexture { get; private set; }
+
+        [SerializeField] public int _pixelationSize = 4;
 
         public float GuiFragmentSizeInUnits = 0.1f;
 
-        [SerializeField] public int _pixelationSize = 4;
+        public Camera GuiCamera { get; private set; }
+
+        public RenderTexture BoardTexture { get; private set; }
+
         public int PixelationSize
         {
-            get { return _pixelationSize;  }
+            get { return _pixelationSize; }
         }
 
 
         public int BoardPixelWidth
         {
-            get { return Screen.width / PixelationSize; }
+            get { return Screen.width/PixelationSize; }
         }
 
         public int BoardPixelHeight
         {
-            get { return Screen.height / PixelationSize; }
+            get { return Screen.height/PixelationSize; }
         }
-        
+
         private void Awake()
         {
             var screenWidth = Screen.width*GuiFragmentSizeInUnits;

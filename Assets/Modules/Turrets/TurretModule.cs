@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Assets.Cores;
 using Assets.Modules.Turrets.Guns;
-using Assets.Modules.Vision;
-using Assets.Pojectiles.Bullets;
+using Assets.Modules.Turrets.Guns.Bullets;
+using Assets.Modules.Turrets.Vision;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -10,27 +9,15 @@ namespace Assets.Modules.Turrets
 {
     public class TurretModule : Module, ITurretControl
     {
-        private bool _isSetToFire;
-        private bool _isTargetDirectionSet;
-
-        private BulletComponentFactory _leftBulletComponentFactory;
-        private BulletComponentFactory _rightBulletComponentFactory;
-
-        private bool _shouldLeftShoot = true;
-        private float _velocity;
-
-        public float Cooldown = 1;
-
-        public GameObject Crosshair;
-
-        public Gun Gun;
+        public GunModule Gun;
 
         public Vector3 SightLocalOffset = new Vector3(0, 0.5f, 1);
         public float SmoothTime = 0.2f;
         public Vector3 TargetGlobalDirection;
 
-        public VisionSensor VisionSensor;
-
+        [SerializeField] private VisionSensor _visionSensor;
+        public IVisionSensor VisionSensor { get {  return _visionSensor;} }
+        
         public Vector3 TurretDirection
         {
             get { return gameObject.transform.forward; }
@@ -41,13 +28,12 @@ namespace Assets.Modules.Turrets
             get { return gameObject.transform.TransformPoint(SightLocalOffset); }
         }
 
+        public List<IGunControl> GunControls { get; private set; }
 
-        public float CooldownTime
+        public bool AreGunControlsMounted
         {
-            get { return Cooldown; }
+            get { return GunControls.Count > 0; }
         }
-
-        public float CooldownTimeLeft { get; private set; }
 
         public void TurnTowards(Vector3 globalDirection)
         {
@@ -62,21 +48,8 @@ namespace Assets.Modules.Turrets
             TurnTowards(point - gameObject.transform.position);
         }
 
-        public void Fire()
-        {
-            _isSetToFire = true;
-        }
-
-        public List<GameObject> VisibleGameObjects
-        {
-            get { return VisionSensor.VisibleGameObjects; }
-        }
-
-        public List<Core> VisibleCores
-        {
-            get { return VisionSensor.VisibleCores; }
-        }
-
+        bool _isTargetDirectionSet;
+        float _velocity;
         private void FixedUpdate()
         {
             if (_isTargetDirectionSet)
@@ -94,48 +67,10 @@ namespace Assets.Modules.Turrets
                     _velocity = 0;
                 }
             }
-
-            CooldownTimeLeft = Mathf.Max(0, CooldownTimeLeft -= Time.fixedDeltaTime);
-        }
-
-        private void Update()
-        {
-            if (Crosshair)
-            {
-                Crosshair.transform.position = transform.position + 2*gameObject.transform.forward;
-            }
-
-            if (_isSetToFire && CooldownTimeLeft <= 0)
-            {
-                CooldownTimeLeft = CooldownTime;
-                if (_shouldLeftShoot)
-                {
-                    _leftBulletComponentFactory.Create();
-                }
-                else
-                {
-                    _rightBulletComponentFactory.Create();
-                }
-                _shouldLeftShoot = !_shouldLeftShoot;
-                _isSetToFire = false;
-            }
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _leftBulletComponentFactory = new BulletComponentFactory(gameObject, new Vector3(-0.5f, 0.75f, 2),
-                new Vector3(0, 0, 1));
-            _rightBulletComponentFactory = new BulletComponentFactory(gameObject, new Vector3(0.5f, 0.75f, 2),
-                new Vector3(0, 0, 1));
         }
 
         private void OnDrawGizmos()
         {
-            if (_isTargetDirectionSet)
-            {
-                // DrawArrow.ForGizmo(gameObject.transform.position, TargetGlobalDirection * 2, Color.red);
-            }
             DrawArrow.ForGizmo(gameObject.transform.position, gameObject.transform.forward*2, Color.red);
         }
     }

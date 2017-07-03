@@ -5,6 +5,7 @@ namespace Assets.Modules.Movement
     public interface IMovementModuleParameters
     {
         Vector3 UnitDirection { get; }
+        Vector3 MovementDirection { get; }
         MovementType MovementType { get; }
 
         /// <summary>

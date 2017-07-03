@@ -1,8 +1,7 @@
-﻿using Assets.Gui;
-using Assets.MainCamera;
+﻿using Assets.MainCamera;
 using UnityEngine;
 
-namespace Assets.Utilities
+namespace Assets.Gui
 {
     public class CamerasSwapper : MonoBehaviour
     {

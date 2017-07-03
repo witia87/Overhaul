@@ -4,8 +4,8 @@ namespace Assets.MainCamera
 {
     public class PixelatedPositionsCalculator
     {
-        private readonly CameraComponent _parrent;
         private readonly GameObject _cameraHook;
+        private readonly CameraComponent _parrent;
 
         public PixelatedPositionsCalculator(CameraComponent parrent, GameObject cameraHook)
         {

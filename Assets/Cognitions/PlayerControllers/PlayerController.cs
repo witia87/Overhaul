@@ -1,7 +1,6 @@
 ﻿using System;
 using Assets.Cognitions.PlayerControllers.Controllers;
 using Assets.Cognitions.PlayerControllers.States;
-using Assets.Cores;
 using Assets.MainCamera;
 
 namespace Assets.Cognitions.PlayerControllers
@@ -21,12 +20,12 @@ namespace Assets.Cognitions.PlayerControllers
             {
                 if (CoreDetector.TargetCore != null && _connectionCooldownLeft <= 0)
                 {
-                    var localPosition = Core.gameObject.transform.localPosition;
-                    var localRotation = Core.gameObject.transform.localRotation;
-                    Core.gameObject.transform.parent = CoreDetector.TargetCore.gameObject.transform;
-                    Core.gameObject.transform.localPosition = localPosition;
-                    Core.gameObject.transform.localRotation = localRotation;
-                    Core = CoreDetector.TargetCore;
+                    var localPosition = ModulesNetwork.gameObject.transform.localPosition;
+                    var localRotation = ModulesNetwork.gameObject.transform.localRotation;
+                    ModulesNetwork.gameObject.transform.parent = CoreDetector.TargetCore.gameObject.transform;
+                    ModulesNetwork.gameObject.transform.localPosition = localPosition;
+                    ModulesNetwork.gameObject.transform.localRotation = localRotation;
+                    ModulesNetwork = CoreDetector.TargetCore;
                     _connectionCooldownLeft = ConnectionCooldown;
                 }
             }
@@ -41,17 +40,7 @@ namespace Assets.Cognitions.PlayerControllers
             _targetingController.Start();
             _movementController.Start();
 
-            switch (Core.Type)
-            {
-                case CoreTypeIds.Vehicle:
-                    CurrentState = new ControllingVehicle(this, _targetingController, _movementController);
-                    break;
-                case CoreTypeIds.Humanoid:
-                    CurrentState = new ControllingHumanoid(this, _targetingController, _movementController);
-                    break;
-                default:
-                    throw new ApplicationException("Core Type not recognized.");
-            }
+            CurrentState = new ControllingHumanoid(this, _targetingController, _movementController);
         }
 
         protected override void Update()

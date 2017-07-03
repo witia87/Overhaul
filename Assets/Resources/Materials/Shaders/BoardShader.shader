@@ -1,4 +1,6 @@
-﻿Shader "Overhaul/BoardShader"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Overhaul/BoardShader"
 {
 	Properties
 	{
@@ -53,7 +55,7 @@
 			vertexOutput vert(vertexInput input)
 			{
 				vertexOutput output;
-				output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+				output.pos = UnityObjectToClipPos(input.vertex);
 				output.screenPosition = float2((1.0 + output.pos.x) / 2.0, (1.0 + output.pos.y) / 2.0) * _ScreenParams.xy;
 				output.texcoord = TRANSFORM_TEX(input.texcoord, _MainTex);
 				return output;

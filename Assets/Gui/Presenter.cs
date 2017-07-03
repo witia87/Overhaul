@@ -9,7 +9,7 @@ namespace Assets.Gui
 
         protected virtual void Awake()
         {
-            CameraStore = FindObjectOfType<CameraComponent>() as ICameraStore;
+            CameraStore = FindObjectOfType<CameraComponent>();
         }
 
         protected virtual void Update()

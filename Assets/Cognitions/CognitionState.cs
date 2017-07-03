@@ -1,14 +1,16 @@
 ﻿using Assets.Cognitions.PathFinders;
-using Assets.Cores;
 using Assets.Map;
+using Assets.Modules;
+using Assets.Modules.Movement;
+using Assets.Modules.Turrets;
 using UnityEngine;
 
 namespace Assets.Cognitions
 {
     public abstract class CognitionState<TStateIds> : ICognitionState<TStateIds>
     {
-        protected readonly Cognition<TStateIds> ParrentCognition;
         protected readonly IMapStore MapStore;
+        protected readonly Cognition<TStateIds> ParrentCognition;
 
         protected CognitionState(Cognition<TStateIds> parrentCognition, TStateIds id)
         {
@@ -17,25 +19,19 @@ namespace Assets.Cognitions
             MapStore = parrentCognition.MapStore;
         }
 
-        protected bool IsConnected
-        {
-            get { return ParrentCognition.IsConnected; }
-        }
-
-        protected MountedModules MountedModules
-        {
-            get { return ParrentCognition.MountedModules; }
-        }
-
         protected IPathFinder PathFinder
         {
             get { return ParrentCognition.PathFinder; }
         }
 
-        protected Core Core
+        protected IMovementControl MovementControl
         {
-            get { return ParrentCognition.Core; }
-            set { ParrentCognition.Core = value; }
+            get { return ParrentCognition.MovementModule; }
+        }
+
+        protected ITurretControl TurretControl
+        {
+            get { return ParrentCognition.TurretModule; }
         }
 
         protected int Scale
@@ -51,19 +47,20 @@ namespace Assets.Cognitions
         {
         }
 
-        protected virtual Core GetHighestPriorityTarget()
+        protected virtual Module GetHighestPriorityTarget()
         {
-            Core highestPriorityTargetSoFar = null;
+            Module highestPriorityTargetSoFar = null;
             var minDistance = float.MaxValue;
-            foreach (var visionSensor in MountedModules.TurretControls)
+            if (TurretControl != null)
             {
-                foreach (var testedGameObject in visionSensor.VisibleCores)
+                var visionSensor = TurretControl.VisionSensor;
+                foreach (var testedModule in visionSensor.VisibleModules)
                 {
                     var currentDistance =
-                        (testedGameObject.gameObject.transform.position - Core.gameObject.transform.position).magnitude;
+                        (testedModule.transform.position - visionSensor.SightPosition).magnitude;
                     if (currentDistance < minDistance)
                     {
-                        highestPriorityTargetSoFar = testedGameObject;
+                        highestPriorityTargetSoFar = testedModule;
                         minDistance = currentDistance;
                     }
                 }

@@ -14,31 +14,31 @@ namespace Assets.Cognitions.PlayerControllers.States
 
         public override ICognitionState<PlayerControllerStateIds> Update()
         {
-            foreach (var turretControl in Core.MountedModules.TurretControls)
+            if(TurretControl != null)
             {
-                turretControl.LookAt(TargetingController.TargetedPosition);
+                TurretControl.LookAt(TargetingController.TargetedPosition);
             }
 
-            if (MovementController.IsMovementPresent)
+            if (MovementControl != null)
             {
-                Core.MountedModules.HumanoidMovementControl.MoveTowards(MovementController.MovementVector);
-            }
-            else
-            {
-                Core.MountedModules.HumanoidMovementControl.StopMoving();
-            }
-
-            if (TargetingController.IsFirePressed)
-            {
-                Core.MountedModules.HumanoidMovementControl.Jump(Vector3.up);
-            }
-
-            if (TargetingController.IsFirePressed)
-            {
-                foreach (var turretControl in Core.MountedModules.TurretControls)
+                if (MovementController.IsMovementPresent)
                 {
-                    turretControl.Fire();
+                    MovementControl.MoveTowards(MovementController.MovementVector);
                 }
+                else
+                {
+                    MovementControl.StopMoving();
+                }
+
+                if (MovementController.IsJumpPressed)
+                {
+                    MovementControl.Jump(Vector3.up);
+                }
+            }
+
+            if (TargetingController.IsFirePressed)
+            {
+                // TODO
             }
 
             return this;

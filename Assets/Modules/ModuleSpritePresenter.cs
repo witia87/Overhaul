@@ -1,5 +1,4 @@
 ﻿using Assets.Gui;
-using Assets.MainCamera;
 using UnityEngine;
 
 namespace Assets.Modules

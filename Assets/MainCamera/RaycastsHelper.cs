@@ -20,14 +20,14 @@ namespace Assets.MainCamera
 
         public bool ScreenPointToFloorRay(Vector2 screenPosition, out RaycastHit mouseHit)
         {
-            var viewportPosition = new Vector2(screenPosition.x / Screen.width,screenPosition.y / Screen.height);
+            var viewportPosition = new Vector2(screenPosition.x/Screen.width, screenPosition.y/Screen.height);
             var ray = _camera.ViewportPointToRay(viewportPosition);
             return Physics.Raycast(ray, out mouseHit, float.PositiveInfinity, _floorLayerMask);
         }
 
         public bool ScreenPointToRay(Vector2 screenPosition, out RaycastHit mouseHit)
         {
-            var viewportPosition = new Vector2(screenPosition.x / Screen.width, screenPosition.y / Screen.height);
+            var viewportPosition = new Vector2(screenPosition.x/Screen.width, screenPosition.y/Screen.height);
             var ray = _camera.ViewportPointToRay(viewportPosition);
             return Physics.Raycast(ray, out mouseHit, float.PositiveInfinity, _targetLayerMask);
         }

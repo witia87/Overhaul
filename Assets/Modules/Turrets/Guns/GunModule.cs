@@ -53,15 +53,14 @@ namespace Assets.Modules.Turrets.Guns
         {
             base.Mount(parrentGameObject, localPosition);
             ParrentModule.Rigidbody.mass += Rigidbody.mass;
-            //Rigidbody.detectCollisions = false;
+            Rigidbody.detectCollisions = false;
         }
 
         public override void Unmount()
         {
             ParrentModule.Rigidbody.mass -= Rigidbody.mass;
-            //Rigidbody.detectCollisions = true;
+            Rigidbody.detectCollisions = true;
             base.Unmount();
         }
-
     }
 }

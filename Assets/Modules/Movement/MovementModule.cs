@@ -29,6 +29,11 @@ namespace Assets.Modules.Movement
 
         public TurretModule TurretModule;
 
+        private bool IsTurretModulePresent
+        {
+            get { return TurretModule != null; }
+        }
+
         public bool IsGrounded
         {
             get { return gameObject.transform.position.y <= 0.001; }
@@ -39,11 +44,6 @@ namespace Assets.Modules.Movement
         public float MovementSpeed
         {
             get { return Rigidbody.velocity.magnitude; }
-        }
-
-        private bool IsTurretModulePresent
-        {
-            get { return TurretModule != null; }
         }
 
         public Vector3 UnitDirection
@@ -59,10 +59,7 @@ namespace Assets.Modules.Movement
 
         public List<IArtilleryControl> ArtilleryControls
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
 
@@ -203,6 +200,5 @@ namespace Assets.Modules.Movement
         {
             throw new ApplicationException("Movement Module is not suppoused to be mounted.");
         }
-
     }
 }

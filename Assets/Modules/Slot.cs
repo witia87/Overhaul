@@ -6,6 +6,7 @@ namespace Assets.Modules
     public abstract class Slot<TMountableModule> : MonoBehaviour
         where TMountableModule : Module
     {
+        private Module _parrentModule;
         public TMountableModule MountedModule;
         public Vector3 Position;
 
@@ -35,7 +36,6 @@ namespace Assets.Modules
             if (ModuleHasBeenUnmounted != null) ModuleHasBeenUnmounted();
         }
 
-        private Module _parrentModule;
         private void OnValidate()
         {
             _parrentModule = GetComponent<Module>();

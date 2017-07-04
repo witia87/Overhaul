@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Modules.Movement
 {
-    public interface IMovementControl: IMovementModuleParameters
+    public interface IMovementControl : IMovementModuleParameters
     {
         List<IArtilleryControl> ArtilleryControls { get; }
         bool AreArtilleryControlsMounted { get; }

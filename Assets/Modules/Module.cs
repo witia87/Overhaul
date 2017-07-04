@@ -40,7 +40,7 @@ namespace Assets.Modules
             gameObject.transform.parent = null;
             Rigidbody.isKinematic = false;
         }
-        
+
         private List<Module> GetNeighboringModules(Module orderer)
         {
             var neighboringModules = new List<Module>(GetComponentsInChildren<Module>());

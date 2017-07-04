@@ -14,7 +14,7 @@ namespace Assets.Cognitions.PlayerControllers.States
 
         public override ICognitionState<PlayerControllerStateIds> Update()
         {
-            if(TurretControl != null)
+            if (TurretControl != null)
             {
                 TurretControl.LookAt(TargetingController.TargetedPosition);
             }

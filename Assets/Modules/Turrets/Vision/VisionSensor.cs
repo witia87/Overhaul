@@ -50,10 +50,6 @@ namespace Assets.Modules.Turrets.Vision
             VisibleModules = new List<Module>();
             foreach (var collidingObject in CollidingGameObjects)
             {
-                if (collidingObject == null)
-                {
-                    var a = 0;
-                }
                 TargetedObject = collidingObject;
                 var ray = collidingObject.transform.position + Vector3.up/2 - gameObject.transform.position;
                 RaycastHit hit;

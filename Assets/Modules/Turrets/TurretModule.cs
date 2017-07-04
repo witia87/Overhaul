@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Assets.Modules.Turrets.Guns;
-using Assets.Modules.Turrets.Guns.Bullets;
 using Assets.Modules.Turrets.Vision;
 using Assets.Utilities;
 using UnityEngine;
@@ -9,23 +8,29 @@ namespace Assets.Modules.Turrets
 {
     public class TurretModule : Module, ITurretControl
     {
+        private bool _isTargetDirectionSet;
+        private float _velocity;
+
+        [SerializeField] private VisionSensor _visionSensor;
         public GunModule Gun;
 
         public Vector3 SightLocalOffset = new Vector3(0, 0.5f, 1);
         public float SmoothTime = 0.2f;
         public Vector3 TargetGlobalDirection;
 
-        [SerializeField] private VisionSensor _visionSensor;
-        public IVisionSensor VisionSensor { get {  return _visionSensor;} }
-        
-        public Vector3 TurretDirection
-        {
-            get { return gameObject.transform.forward; }
-        }
-
         public Vector3 SightPosition
         {
             get { return gameObject.transform.TransformPoint(SightLocalOffset); }
+        }
+
+        public IVisionSensor VisionSensor
+        {
+            get { return _visionSensor; }
+        }
+
+        public Vector3 TurretDirection
+        {
+            get { return gameObject.transform.forward; }
         }
 
         public List<IGunControl> GunControls { get; private set; }
@@ -48,8 +53,6 @@ namespace Assets.Modules.Turrets
             TurnTowards(point - gameObject.transform.position);
         }
 
-        bool _isTargetDirectionSet;
-        float _velocity;
         private void FixedUpdate()
         {
             if (_isTargetDirectionSet)

@@ -8,8 +8,6 @@ namespace Assets.Utilities
     {
         public static void PerformOnAverageOnceEvery(float howManySeconds, Action actionToPerform)
         {
-            var fixedUpdatesPerDeclaredTime = howManySeconds/Time.fixedDeltaTime;
-            var randomizedValue = Random.value*fixedUpdatesPerDeclaredTime;
             if (TestOnAverageOnceEvery(howManySeconds))
             {
                 actionToPerform();
@@ -28,8 +26,6 @@ namespace Assets.Utilities
     {
         public static void PerformOnAverageOnceEvery(float howManySeconds, Action actionToPerform)
         {
-            var updatesPerDeclaredTime = howManySeconds/Time.deltaTime;
-            var randomizedValue = Random.value*updatesPerDeclaredTime;
             if (TestOnAverageOnceEvery(howManySeconds))
             {
                 actionToPerform();

@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Cognitions.PlayerControllers.Controllers;
+﻿using Assets.Cognitions.PlayerControllers.Controllers;
 using Assets.Cognitions.PlayerControllers.States;
 using Assets.MainCamera;
 

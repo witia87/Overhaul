@@ -29,12 +29,12 @@ namespace Assets.Modules
             var baseSize = SpriteSize.y/2/SpriteRenderer.sprite.pixelsPerUnit;
             gameObject.transform.localScale = new Vector3(
                 /*Module.Size.y**/Mathf.Sqrt(3)/2/baseSize,
-                /*Module.Size.y**/Mathf.Sqrt(3)/2/baseSize,
-                /*Module.Size.y**/Mathf.Sqrt(3)/2/baseSize
+                    /*Module.Size.y**/Mathf.Sqrt(3)/2/baseSize,
+                    /*Module.Size.y**/Mathf.Sqrt(3)/2/baseSize
                 );
         }
 
-        protected virtual void Update()
+        protected override void Update()
         {
             gameObject.transform.eulerAngles = BaseCameraEulerAngles;
 

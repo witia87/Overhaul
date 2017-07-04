@@ -1,10 +1,8 @@
-﻿using System;
-using Assets.Cognitions.PathFinders;
+﻿using Assets.Cognitions.PathFinders;
 using Assets.Map;
-using UnityEngine;
-using Assets.Modules;
 using Assets.Modules.Movement;
 using Assets.Modules.Turrets;
+using UnityEngine;
 
 namespace Assets.Cognitions
 {
@@ -15,16 +13,17 @@ namespace Assets.Cognitions
 
         public IMapStore MapStore;
 
-        public IPathFinder PathFinder { get; private set; }
+        public MovementModule MovementModule;
 
         public TurretModule TurretModule;
 
-        public MovementModule MovementModule;
+        public IPathFinder PathFinder { get; private set; }
 
         public int Scale
         {
             get { return MapSamplingSize; }
         }
+
         protected virtual void Awake()
         {
             MapStore = FindObjectOfType<MapStore>();

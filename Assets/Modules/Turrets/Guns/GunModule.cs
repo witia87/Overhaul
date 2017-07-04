@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Modules.Turrets.Guns
 {
@@ -46,5 +47,21 @@ namespace Assets.Modules.Turrets.Guns
         {
             return _isFiring;
         }
+
+
+        public override void Mount(Module parrentGameObject, Vector3 localPosition)
+        {
+            base.Mount(parrentGameObject, localPosition);
+            ParrentModule.Rigidbody.mass += Rigidbody.mass;
+            //Rigidbody.detectCollisions = false;
+        }
+
+        public override void Unmount()
+        {
+            ParrentModule.Rigidbody.mass -= Rigidbody.mass;
+            //Rigidbody.detectCollisions = true;
+            base.Unmount();
+        }
+
     }
 }

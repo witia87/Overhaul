@@ -16,9 +16,8 @@ namespace Assets.Modules.Movement
         protected override void Update()
         {
             base.Update();
-            var direction = _movementModuleParameters.UnitDirection;
-            direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)*
-                        direction;
+            var direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)*
+                        _movementModuleParameters.UnitDirection;
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);
             Animator.SetFloat("Speed", _movementModuleParameters.MovementSpeed);

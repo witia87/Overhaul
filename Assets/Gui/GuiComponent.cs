@@ -10,7 +10,7 @@ namespace Assets.Gui
 
         [SerializeField] public int _pixelationSize = 4;
 
-        public float GuiFragmentSizeInUnits = 0.1f;
+        [HideInInspector] public float GuiFragmentSizeInUnits = 0.1f;
 
         public Camera GuiCamera { get; private set; }
 

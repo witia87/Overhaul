@@ -14,7 +14,7 @@ namespace Assets.Editor.Modules
             {
                 throw new ApplicationException("Invalid MeshHelperParameters");
             }
-            
+
             size.x /= 2;
             size.z /= 2;
             var flat = flatPartsRatio/2;

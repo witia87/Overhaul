@@ -9,5 +9,6 @@ namespace Assets.MainCamera
         RaycastsHelper Raycasts { get; }
         PixelatedPositionsCalculator Pixelation { get; }
         Camera MainCamera { get; }
+        Vector3 TransformVectorToCameraSpace(Vector3 vector);
     }
 }

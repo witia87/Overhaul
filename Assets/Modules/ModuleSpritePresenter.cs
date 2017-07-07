@@ -6,6 +6,8 @@ namespace Assets.Modules
     public class ModuleSpritePresenter : Presenter
     {
         private Vector3 _offset;
+        private Vector3 _pixelatedOffset;
+        private float _projectionHeight;
         protected Animator Animator;
 
         protected Vector3 BaseCameraEulerAngles;
@@ -23,15 +25,34 @@ namespace Assets.Modules
 
             BaseCameraEulerAngles = CameraStore.CameraEulerAngles;
 
-            _offset = Quaternion.Euler(BaseCameraEulerAngles)*Vector3.back;
-            _offset *= Module.Size.y/2*(Mathf.Sqrt(3)/4);
+            var alpha = Mathf.Deg2Rad*BaseCameraEulerAngles.x;
+
+            var moduleSize = Mathf.Max(Module.Size.x, Module.Size.y, Module.Size.z);
+
+            var spriteHeight = SpriteSize.y/SpriteRenderer.sprite.pixelsPerUnit;
+            _projectionHeight = moduleSize*Mathf.Cos(alpha);
+
+            _offset = CameraStore.TransformVectorToCameraSpace(Vector3.back);
+                //Quaternion.Euler(BaseCameraEulerAngles)*Vector3.back;
+            _offset *= moduleSize*Mathf.Sin(alpha)/2;
+
 
             var baseSize = SpriteSize.y/2/SpriteRenderer.sprite.pixelsPerUnit;
             gameObject.transform.localScale = new Vector3(
-                /*Module.Size.y**/Mathf.Sqrt(3)/2/baseSize,
-                    /*Module.Size.y**/Mathf.Sqrt(3)/2/baseSize,
-                    /*Module.Size.y**/Mathf.Sqrt(3)/2/baseSize
+                _projectionHeight/(spriteHeight/2),
+                _projectionHeight/(spriteHeight/2),
+                _projectionHeight/(spriteHeight/2)
                 );
+
+
+            gameObject.transform.position =
+                CameraStore.Pixelation.GetClosestPixelatedPosition(Module.transform.position);
+            gameObject.transform.position = gameObject.transform.position + _offset;
+
+            if (FixedOffsetGameObject != null)
+            {
+                _pixelatedOffset = gameObject.transform.position - FixedOffsetGameObject.transform.position;
+            }
         }
 
         protected override void Update()
@@ -40,11 +61,11 @@ namespace Assets.Modules
 
             if (FixedOffsetGameObject != null)
             {
-                gameObject.transform.position =
-                    CameraStore.Pixelation.GetClosestPixelatedPosition(FixedOffsetGameObject.transform.position) +
-                    CameraStore.Pixelation.GetPixelatedOffset(
-                        FixedOffsetGameObject.transform.position,
-                        Module.transform.position);
+                _pixelatedOffset = CameraStore.Pixelation.GetPixelatedOffset(FixedOffsetGameObject.transform.position,
+                    Module.transform.position);
+                gameObject.transform.position = CameraStore.Pixelation.GetClosestPixelatedPosition(
+                    FixedOffsetGameObject.transform.position)
+                                                + _pixelatedOffset;
             }
             else
             {

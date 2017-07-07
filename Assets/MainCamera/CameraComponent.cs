@@ -27,6 +27,11 @@ namespace Assets.MainCamera
             get { return _guiStore.BoardPixelHeight/PixelsPerUnit; }
         }
 
+        public Vector3 TransformVectorToCameraSpace(Vector3 vector)
+        {
+            return _cameraHook.transform.TransformVector(vector);
+        }
+
         public PixelatedPositionsCalculator Pixelation { get; private set; }
         public Camera MainCamera { get; private set; }
 
@@ -63,7 +68,7 @@ namespace Assets.MainCamera
             Raycasts = new RaycastsHelper(MainCamera);
 
             _cameraHook = new GameObject("Camera Hook");
-            _cameraHook.transform.eulerAngles = gameObject.transform.localEulerAngles;
+            _cameraHook.transform.localEulerAngles = gameObject.transform.localEulerAngles;
             _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, -10));
 
             Pixelation = new PixelatedPositionsCalculator(this, _cameraHook);

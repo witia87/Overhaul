@@ -7,10 +7,10 @@ namespace Assets.Cognitions.PlayerControllers
         protected IMovementController MovementController;
         protected ITargetingController TargetingController;
 
-        protected PlayerControllerState(Cognition<PlayerControllerStateIds> parrentCognition,
+        protected PlayerControllerState(Cognition<PlayerControllerStateIds> parentCognition,
             ITargetingController targetingController, IMovementController movementController,
             PlayerControllerStateIds id)
-            : base(parrentCognition, id)
+            : base(parentCognition, id)
         {
             TargetingController = targetingController;
             MovementController = movementController;

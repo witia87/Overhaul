@@ -16,10 +16,7 @@ namespace Assets.Modules.Movement
         protected Vector3 GlobalDirectionInWhichToMove;
         protected Vector3 GlobalDirectionToTurnTowards;
 
-        protected float GroundedDrag;
-
         protected bool IsSetToMove;
-
 
         protected bool IsSetToTurn;
         public float JumpCooldown = 1;
@@ -126,22 +123,17 @@ namespace Assets.Modules.Movement
             throw new NotImplementedException();
         }
 
-        protected void Awake()
-        {
-            GroundedDrag = Rigidbody.drag;
-        }
-
         protected void FixedUpdate()
         {
             var acceleration = Acceleration;
             if (!IsGrounded)
             {
-                Rigidbody.drag = GroundedDrag*0.01f;
+                Rigidbody.drag = Drag*0.01f;
                 acceleration = AirAcceleration;
             }
             else
             {
-                Rigidbody.drag = GroundedDrag;
+                Rigidbody.drag = Drag;
             }
 
             if (IsSetToMove)
@@ -185,20 +177,17 @@ namespace Assets.Modules.Movement
             return torque;
         }
 
+        public override void Mount(GameObject parentGameObject, Vector3 localPosition)
+        {
+            base.Mount(parentGameObject, localPosition);
+            Unit.Rigidbody.drag = Drag;
+            Unit.Rigidbody.angularDrag = AngularDrag;
+        }
+        
         protected void OnDrawGizmos()
         {
             DrawArrow.ForDebug(gameObject.transform.position + UnitDirection*Size.z/2, UnitDirection,
                 Color.magenta, 0.1f, 20);
-        }
-
-        public override void Mount(Module parrentGameObject, Vector3 localPosition)
-        {
-            throw new ApplicationException("Movement Module is not suppoused to be mounted.");
-        }
-
-        public override void Unmount()
-        {
-            throw new ApplicationException("Movement Module is not suppoused to be mounted.");
         }
     }
 }

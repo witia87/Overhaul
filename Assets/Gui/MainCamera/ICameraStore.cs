@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.MainCamera
+namespace Assets.Gui.MainCamera
 {
     public interface ICameraStore
     {
@@ -9,6 +9,7 @@ namespace Assets.MainCamera
         RaycastsHelper Raycasts { get; }
         PixelatedPositionsCalculator Pixelation { get; }
         Camera MainCamera { get; }
+        float PixelsPerOneUnitInHeight { get; }
         Vector3 TransformVectorToCameraSpace(Vector3 vector);
     }
 }

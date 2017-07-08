@@ -4,7 +4,10 @@ namespace Assets.Modules.Turrets.Guns
 {
     internal class GunPresenter : ModuleSpritePresenter
     {
-        protected override void Update()
+        public ModuleSpritePresenter LegsPresenter;
+        public ModuleSpritePresenter TorsoPresenter;
+
+        public override void Update()
         {
             base.Update();
             var direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)*

@@ -1,61 +1,56 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Modules
 {
     public abstract class Module : MonoBehaviour
     {
         private Rigidbody _rigidbody;
+        public float AngularDrag;
+        public float Drag;
+        public float Mass;
         public Vector3 Size;
 
-        public Rigidbody Rigidbody
+        public Unit Unit { get; private set; }
+
+        public bool IsConntectedToUnit
         {
-            get
-            {
-                if (_rigidbody == null)
-                {
-                    _rigidbody = GetComponent<Rigidbody>();
-                }
-                return _rigidbody;
-            }
+            get { return Unit != null; }
         }
 
-        public Module ParrentModule { get; private set; }
-
-        public bool HasParrentModule
+        protected Rigidbody Rigidbody
         {
-            get { return ParrentModule != null; }
+            get { return IsConntectedToUnit ? Unit.Rigidbody : _rigidbody; }
         }
 
-        public virtual void Mount(Module parrentGameObject, Vector3 localPosition)
+        public virtual void Awake()
         {
-            ParrentModule = parrentGameObject;
-            gameObject.transform.parent = parrentGameObject.transform;
+            AttachRigidbody();
+        }
+
+        public virtual void Mount(GameObject parentGameObject, Vector3 localPosition)
+        {
+            gameObject.transform.parent = parentGameObject.transform;
             gameObject.transform.localPosition = localPosition;
-            Rigidbody.isKinematic = true;
+            Unit = gameObject.transform.root.gameObject.GetComponent<Unit>();
+            DestroyImmediate(_rigidbody);
+            Unit.Rigidbody.mass += Mass;
         }
 
         public virtual void Unmount()
         {
+            Unit.Rigidbody.mass -= Mass;
             gameObject.transform.parent = null;
-            Rigidbody.isKinematic = false;
+            Unit = null;
+            AttachRigidbody();
         }
 
-        private List<Module> GetNeighboringModules(Module orderer)
+        private void AttachRigidbody()
         {
-            var neighboringModules = new List<Module>(GetComponentsInChildren<Module>());
-            if (HasParrentModule)
-            {
-                neighboringModules.Add(ParrentModule);
-            }
-            neighboringModules.Remove(orderer);
-            var furtherModules = new List<Module>();
-            foreach (var module in neighboringModules)
-            {
-                furtherModules.AddRange(module.GetNeighboringModules(this));
-            }
-            neighboringModules.AddRange(furtherModules);
-            return neighboringModules;
+            _rigidbody = gameObject.AddComponent<Rigidbody>();
+            _rigidbody.mass = Mass;
+            _rigidbody.drag = Drag;
+            _rigidbody.angularDrag = AngularDrag;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Assets.Cognitions.PlayerControllers.Controllers;
 using Assets.Cognitions.PlayerControllers.States;
-using Assets.MainCamera;
+using Assets.Gui.MainCamera;
 
 namespace Assets.Cognitions.PlayerControllers
 {

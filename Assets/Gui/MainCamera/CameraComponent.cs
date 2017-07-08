@@ -1,21 +1,17 @@
-﻿using Assets.Gui;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.MainCamera
+namespace Assets.Gui.MainCamera
 {
     public class CameraComponent : MonoBehaviour, ICameraStore
     {
         private GameObject _cameraHook;
-
         private IGuiStore _guiStore;
 
-        [SerializeField] private float _pixelsPerUnit;
+        [SerializeField] private float _pixelsPerOneUnitInHeight;
+
         public GameObject FocusObject;
 
-        public float PixelsPerUnit
-        {
-            get { return _pixelsPerUnit; }
-        }
+        public float PixelsPerUnit { get; private set; }
 
         public float FieldOfViewWidth
         {
@@ -26,6 +22,12 @@ namespace Assets.MainCamera
         {
             get { return _guiStore.BoardPixelHeight/PixelsPerUnit; }
         }
+
+        /// <summary>
+        ///     This value informs how many pixels will be projected onto the screen in height, when the height of an object is 1
+        ///     unit.
+        /// </summary>
+        public float PixelsPerOneUnitInHeight { get; private set; }
 
         public Vector3 TransformVectorToCameraSpace(Vector3 vector)
         {
@@ -47,16 +49,6 @@ namespace Assets.MainCamera
 
         public RaycastsHelper Raycasts { get; private set; }
 
-        public Vector3 GetClosestPixelatedPosition(Vector3 position)
-        {
-            return Pixelation.GetClosestPixelatedPosition(position);
-        }
-
-        public Vector3 GetPixelatedOffset(Vector3 from, Vector3 to)
-        {
-            return Pixelation.GetPixelatedOffset(from, to);
-        }
-
         private void Awake()
         {
             _guiStore = FindObjectOfType<GuiComponent>();
@@ -70,6 +62,8 @@ namespace Assets.MainCamera
             _cameraHook = new GameObject("Camera Hook");
             _cameraHook.transform.localEulerAngles = gameObject.transform.localEulerAngles;
             _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, -10));
+
+            PixelsPerUnit = _pixelsPerOneUnitInHeight/Mathf.Cos(CameraEulerAngles.x*Mathf.Deg2Rad);
 
             Pixelation = new PixelatedPositionsCalculator(this, _cameraHook);
         }

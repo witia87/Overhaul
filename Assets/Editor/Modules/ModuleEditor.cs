@@ -27,13 +27,13 @@ namespace Assets.Editor.Modules
             var module = (Module) target;
 
             Index = EditorGUILayout.Popup(Index, Options);
-            if (GUILayout.Button("Setup Collider and Rigidbody"))
+            if (GUILayout.Button("Setup Collider"))
             {
-                SetupColliderAndRigidbody(module);
+                SetupCollider(module);
             }
         }
 
-        private void SetupColliderAndRigidbody(Module module)
+        private void SetupCollider(Module module)
         {
             switch (Index)
             {
@@ -44,8 +44,6 @@ namespace Assets.Editor.Modules
                         BottomSpikeRatio);
                     extendedBoxCollider.convex = true;
 
-                    AddRigidbody(module.gameObject);
-
                     GUIUtility.ExitGUI();
                     break;
                 case 1:
@@ -54,8 +52,6 @@ namespace Assets.Editor.Modules
                     meshCollider.sharedMesh = ExtendedOctagonMeshHelper.Create(module.Size, BottomSpikeRatio,
                         TopSpikeRatio);
                     meshCollider.convex = true;
-
-                    AddRigidbody(module.gameObject);
 
                     GUIUtility.ExitGUI();
                     break;
@@ -66,23 +62,12 @@ namespace Assets.Editor.Modules
                         BottomSpikeRatio, TopSpikeRatio);
                     dodecanonCollider.convex = true;
 
-                    AddRigidbody(module.gameObject);
-
                     GUIUtility.ExitGUI();
                     break;
                 default:
                     Debug.LogError("Unrecognized Option");
                     break;
             }
-        }
-
-        private void AddRigidbody(GameObject gameObject)
-        {
-            var rigidbody = gameObject.AddComponent<Rigidbody>();
-            rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            rigidbody.mass = 40;
-            rigidbody.drag = 20;
-            rigidbody.angularDrag = 10;
         }
 
         private void RemoveComponents(GameObject gameObject)

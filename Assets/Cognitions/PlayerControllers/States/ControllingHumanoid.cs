@@ -5,9 +5,9 @@ namespace Assets.Cognitions.PlayerControllers.States
 {
     public class ControllingHumanoid : PlayerControllerState
     {
-        public ControllingHumanoid(Cognition<PlayerControllerStateIds> parrentCognition,
+        public ControllingHumanoid(Cognition<PlayerControllerStateIds> parentCognition,
             ITargetingController targetingController, IMovementController movementController)
-            : base(parrentCognition, targetingController, movementController,
+            : base(parentCognition, targetingController, movementController,
                 PlayerControllerStateIds.ControllingHumanoid)
         {
         }

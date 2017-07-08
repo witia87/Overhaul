@@ -10,33 +10,33 @@ namespace Assets.Cognitions
     public abstract class CognitionState<TStateIds> : ICognitionState<TStateIds>
     {
         protected readonly IMapStore MapStore;
-        protected readonly Cognition<TStateIds> ParrentCognition;
+        protected readonly Cognition<TStateIds> ParentCognition;
 
-        protected CognitionState(Cognition<TStateIds> parrentCognition, TStateIds id)
+        protected CognitionState(Cognition<TStateIds> parentCognition, TStateIds id)
         {
             Id = id;
-            ParrentCognition = parrentCognition;
-            MapStore = parrentCognition.MapStore;
+            ParentCognition = parentCognition;
+            MapStore = parentCognition.MapStore;
         }
 
         protected IPathFinder PathFinder
         {
-            get { return ParrentCognition.PathFinder; }
+            get { return ParentCognition.PathFinder; }
         }
 
         protected IMovementControl MovementControl
         {
-            get { return ParrentCognition.MovementModule; }
+            get { return ParentCognition.MovementModule; }
         }
 
         protected ITurretControl TurretControl
         {
-            get { return ParrentCognition.TurretModule; }
+            get { return ParentCognition.TurretModule; }
         }
 
         protected int Scale
         {
-            get { return ParrentCognition.Scale; }
+            get { return ParentCognition.Scale; }
         }
 
         public TStateIds Id { get; private set; }

@@ -6,7 +6,6 @@ namespace Assets.Modules
     public abstract class Slot<TMountableModule> : MonoBehaviour
         where TMountableModule : Module
     {
-        private Module _parrentModule;
         public TMountableModule MountedModule;
         public Vector3 Position;
 
@@ -23,7 +22,7 @@ namespace Assets.Modules
             if (IsModuleMounted)
                 throw new ApplicationException("Module already mounted onto the MovementModule.");
             MountedModule = module;
-            MountedModule.Mount(_parrentModule, Position);
+            MountedModule.Mount(gameObject, Position);
             if (ModuleHasBeenMounted != null) ModuleHasBeenMounted();
         }
 
@@ -36,19 +35,27 @@ namespace Assets.Modules
             if (ModuleHasBeenUnmounted != null) ModuleHasBeenUnmounted();
         }
 
-        private void OnValidate()
+        private void Start()
         {
-            _parrentModule = GetComponent<Module>();
             if (IsModuleMounted)
             {
-                MountedModule.Mount(_parrentModule, Position);
+                MountedModule.Mount(gameObject, Position);
+            }
+        }
+
+        private void OnValidate()
+        {
+            if (IsModuleMounted)
+            {
+                MountedModule.transform.parent = gameObject.transform;
+                MountedModule.transform.localPosition = Position;
             }
         }
 
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(gameObject.transform.TransformPoint(Position), 0.1f);
+            Gizmos.DrawSphere(gameObject.transform.TransformPoint(Position), 0.02f);
         }
     }
 }

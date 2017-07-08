@@ -1,4 +1,4 @@
-﻿using Assets.MainCamera;
+﻿using Assets.Gui.MainCamera;
 using UnityEngine;
 
 namespace Assets.Gui
@@ -10,12 +10,6 @@ namespace Assets.Gui
         protected virtual void Awake()
         {
             CameraStore = FindObjectOfType<CameraComponent>();
-        }
-
-        protected virtual void Update()
-        {
-            gameObject.transform.position =
-                CameraStore.Pixelation.GetClosestPixelatedPosition(gameObject.transform.position);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Assets.Utilities;
 using UnityEngine;
 
-namespace Assets.MainCamera
+namespace Assets.Gui.MainCamera
 {
     public class RaycastsHelper
     {

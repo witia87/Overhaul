@@ -1,4 +1,4 @@
-﻿using Assets.MainCamera;
+﻿using Assets.Gui.MainCamera;
 using UnityEngine;
 
 namespace Assets.Gui

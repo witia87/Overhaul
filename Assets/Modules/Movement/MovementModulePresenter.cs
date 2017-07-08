@@ -13,7 +13,7 @@ namespace Assets.Modules.Movement
             _movementModuleParameters = Module as MovementModule;
         }
 
-        protected override void Update()
+        public override void Update()
         {
             base.Update();
             var direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)*

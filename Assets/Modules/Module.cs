@@ -17,7 +17,7 @@ namespace Assets.Modules
             get { return Unit != null; }
         }
 
-        protected Rigidbody Rigidbody
+        public Rigidbody Rigidbody
         {
             get { return IsConntectedToUnit ? Unit.Rigidbody : _rigidbody; }
         }

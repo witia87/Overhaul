@@ -12,5 +12,7 @@ namespace Assets.Modules.Turrets
         bool AreGunControlsMounted { get; }
         void TurnTowards(Vector3 direction);
         void LookAt(Vector3 point);
+        void DropGun();
+        void PickGun();
     }
 }

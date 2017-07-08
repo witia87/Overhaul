@@ -6,8 +6,8 @@ namespace Assets.Cognitions.PlayerControllers.States
     public class ControllingHumanoid : PlayerControllerState
     {
         public ControllingHumanoid(Cognition<PlayerControllerStateIds> parentCognition,
-            ITargetingController targetingController, IMovementController movementController)
-            : base(parentCognition, targetingController, movementController,
+            ITargetingController targetingController, IMovementController movementController, IActionsController actionsController)
+            : base(parentCognition, targetingController, movementController, actionsController,
                 PlayerControllerStateIds.ControllingHumanoid)
         {
         }
@@ -17,6 +17,16 @@ namespace Assets.Cognitions.PlayerControllers.States
             if (TurretControl != null)
             {
                 TurretControl.LookAt(TargetingController.TargetedPosition);
+
+                if (ActionsController.IsDropWeaponPressed)
+                {
+                    TurretControl.DropGun();
+                }
+
+                if (ActionsController.IsUsePressed)
+                {
+                    TurretControl.PickGun();
+                }
             }
 
             if (MovementControl != null)
@@ -40,6 +50,7 @@ namespace Assets.Cognitions.PlayerControllers.States
             {
                 // TODO
             }
+
 
             return this;
         }

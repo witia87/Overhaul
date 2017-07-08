@@ -53,6 +53,40 @@ namespace Assets.Modules.Turrets
             TurnTowards(point - gameObject.transform.position);
         }
 
+        public void DropGun()
+        {
+            var gunSlots = gameObject.GetComponents<GunSlot>();
+                foreach (var gunSlot in gunSlots)
+            {
+                if (gunSlot.IsModuleMounted)
+                {
+                    var module = gunSlot.MountedModule;
+                    module.gameObject.transform.position = module.gameObject.transform.position +
+                                                           gameObject.transform.forward;
+                    gunSlot.UnmountModule();
+                    module.Rigidbody.AddForce(gameObject.transform.forward * 50f, ForceMode.Impulse);
+                }
+            }
+        }
+
+        public GunSensor GunSensor;
+        public void PickGun()
+        {
+            if (GunSensor.IsGunVisible())
+            {
+                var gun = GunSensor.GetClosestGun();
+                var gunSlots = gameObject.GetComponents<GunSlot>();
+                foreach (var gunSlot in gunSlots)
+                {
+                    if (!gunSlot.IsModuleMounted)
+                    {
+                        gunSlot.MountModule(gun);
+                        return;
+                    }
+                }
+            }
+        }
+
         private void FixedUpdate()
         {
             if (_isTargetDirectionSet)

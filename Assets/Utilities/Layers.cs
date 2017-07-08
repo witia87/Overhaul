@@ -20,5 +20,6 @@
         public static int Organism = 1 << 14;
         public static int OrganismTransparent = 1 << 15;
         public static int Floor = 1 << 16;
+        public static int Guns = 1 << 17;
     }
 }

@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Assets.Cognitions.PlayerControllers.Controllers
 {
-    public class MouseMovementController : IMovementController
+    public class KeyboardMovementController : IMovementController
     {
         private readonly ICameraStore _cameraStore;
         private Quaternion _rotationQuaternion;
 
-        public MouseMovementController(ICameraStore cameraStore)
+        public KeyboardMovementController(ICameraStore cameraStore)
         {
             _cameraStore = cameraStore;
         }

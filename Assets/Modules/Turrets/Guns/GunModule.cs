@@ -66,7 +66,7 @@ namespace Assets.Modules.Turrets.Guns
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
             AmmoLeftInTheClip = ClipSize;
             _bulletFactories = GetComponentsInChildren<BulletsFactory>();

@@ -4,9 +4,6 @@ namespace Assets.Modules.Turrets.Guns
 {
     internal class GunPresenter : ModuleSpritePresenter
     {
-        public ModuleSpritePresenter LegsPresenter;
-        public ModuleSpritePresenter TorsoPresenter;
-
         public override void Update()
         {
             base.Update();

@@ -8,12 +8,6 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
     public class PadTargetingController : ITargetingController
     {
         private readonly ICameraStore _cameraStore;
-        private readonly int _floorLayerMask = Layers.Floor;
-
-        private readonly int _targetLayerMask = Layers.Map | Layers.MapTransparent
-                                                | Layers.Structure | Layers.StructureTransparent
-                                                | Layers.Environment | Layers.EnvironmentTransparent
-                                                | Layers.Organism | Layers.OrganismTransparent;
 
         private float _horizontalAxis;
         private float _verticalAxis;

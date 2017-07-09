@@ -22,7 +22,7 @@ namespace Assets.Modules
             get { return IsConntectedToUnit ? Unit.Rigidbody : _rigidbody; }
         }
 
-        public virtual void Awake()
+        protected virtual void Awake()
         {
             AttachRigidbody();
         }
@@ -31,6 +31,7 @@ namespace Assets.Modules
         {
             gameObject.transform.parent = parentGameObject.transform;
             gameObject.transform.localPosition = localPosition;
+            gameObject.transform.localEulerAngles = Vector3.zero;
             Unit = gameObject.transform.root.gameObject.GetComponent<Unit>();
             DestroyImmediate(_rigidbody);
             Unit.Rigidbody.mass += Mass;

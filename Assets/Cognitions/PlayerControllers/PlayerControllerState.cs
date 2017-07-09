@@ -4,13 +4,13 @@ namespace Assets.Cognitions.PlayerControllers
 {
     public abstract class PlayerControllerState : CognitionState<PlayerControllerStateIds>
     {
+        protected IActionsController ActionsController;
         protected IMovementController MovementController;
         protected ITargetingController TargetingController;
-        protected IActionsController ActionsController;
 
         protected PlayerControllerState(Cognition<PlayerControllerStateIds> parentCognition,
-            ITargetingController targetingController, 
-            IMovementController movementController, 
+            ITargetingController targetingController,
+            IMovementController movementController,
             IActionsController actionsController,
             PlayerControllerStateIds id)
             : base(parentCognition, id)

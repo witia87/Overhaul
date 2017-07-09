@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Assets.Modules.Turrets.Guns;
+﻿using Assets.Modules.Turrets.Guns;
 using Assets.Modules.Turrets.Vision;
 using Assets.Utilities;
 using UnityEngine;
@@ -13,6 +12,8 @@ namespace Assets.Modules.Turrets
 
         [SerializeField] private VisionSensor _visionSensor;
         public GunModule Gun;
+
+        public GunSensor GunSensor;
 
         public Vector3 SightLocalOffset = new Vector3(0, 0.5f, 1);
         public float SmoothTime = 0.2f;
@@ -33,12 +34,12 @@ namespace Assets.Modules.Turrets
             get { return gameObject.transform.forward; }
         }
 
-        public List<IGunControl> GunControls { get; private set; }
-
         public bool AreGunControlsMounted
         {
-            get { return GunControls.Count > 0; }
+            get { return GunControls.Length > 0; }
         }
+
+        public IGunControl[] GunControls { get; private set; }
 
         public void TurnTowards(Vector3 globalDirection)
         {
@@ -56,7 +57,7 @@ namespace Assets.Modules.Turrets
         public void DropGun()
         {
             var gunSlots = gameObject.GetComponents<GunSlot>();
-                foreach (var gunSlot in gunSlots)
+            foreach (var gunSlot in gunSlots)
             {
                 if (gunSlot.IsModuleMounted)
                 {
@@ -64,12 +65,11 @@ namespace Assets.Modules.Turrets
                     module.gameObject.transform.position = module.gameObject.transform.position +
                                                            gameObject.transform.forward;
                     gunSlot.UnmountModule();
-                    module.Rigidbody.AddForce(gameObject.transform.forward * 50f, ForceMode.Impulse);
+                    module.Rigidbody.AddForce(gameObject.transform.forward*15f, ForceMode.Impulse);
                 }
             }
         }
 
-        public GunSensor GunSensor;
         public void PickGun()
         {
             if (GunSensor.IsGunVisible())
@@ -84,6 +84,23 @@ namespace Assets.Modules.Turrets
                         return;
                     }
                 }
+            }
+            ScanGunControls();
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            ScanGunControls();
+        }
+
+        private void ScanGunControls()
+        {
+            var gunModules = GetComponentsInChildren<GunModule>();
+            GunControls = new IGunControl[gunModules.Length];
+            for (var i = 0; i < gunModules.Length; i++)
+            {
+                GunControls[i] = gunModules[i];
             }
         }
 

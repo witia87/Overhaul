@@ -6,11 +6,10 @@ namespace Assets.Cognitions.PlayerControllers
 {
     public class PlayerController : Cognition<PlayerControllerStateIds>
     {
+        private KeyboardActionsController _actionsController;
         private KeyboardMovementController _movementController;
 
         private MouseTargetingController _targetingController;
-
-        private KeyboardActionsController _actionsController;
 
         protected override void Start()
         {

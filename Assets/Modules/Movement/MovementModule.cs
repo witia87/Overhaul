@@ -183,7 +183,7 @@ namespace Assets.Modules.Movement
             Unit.Rigidbody.drag = Drag;
             Unit.Rigidbody.angularDrag = AngularDrag;
         }
-        
+
         protected void OnDrawGizmos()
         {
             DrawArrow.ForDebug(gameObject.transform.position + UnitDirection*Size.z/2, UnitDirection,

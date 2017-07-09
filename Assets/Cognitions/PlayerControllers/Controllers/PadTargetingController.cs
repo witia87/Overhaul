@@ -46,7 +46,8 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
             targetingVector = Quaternion.AngleAxis(45, Vector3.up)*targetingVector;
             TargetedPosition = cameraFocusPoint + targetingVector;
 
-            IsFirePressed = Input.GetAxis("Fire1") > 0.5f;
+            IsFirePressed = Input.GetButton("Fire Gun");
+            //IsFirePressed = Input.GetAxis("Fire Gun") > 0.5f;
         }
 
         public void OnDrawGizmos()

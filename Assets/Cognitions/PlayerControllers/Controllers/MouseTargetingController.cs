@@ -48,7 +48,7 @@ namespace Assets.Cognitions.PlayerControllers.Controllers
                 TargetedModule = null;
             }
 
-            IsFirePressed = Input.GetButton("Fire1");
+            IsFirePressed = Input.GetButton("Fire Gun");
         }
 
         public void OnDrawGizmos()

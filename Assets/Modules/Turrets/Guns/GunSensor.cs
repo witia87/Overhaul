@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Assets.Modules.Turrets.Vision;
-using Assets.Utilities;
 using UnityEngine;
 
 namespace Assets.Modules.Turrets.Guns
@@ -23,7 +21,7 @@ namespace Assets.Modules.Turrets.Guns
         {
             foreach (var collidingGameObject in CollidingGameObjects)
             {
-                if (collidingGameObject.layer == Layers.Guns)
+                if (collidingGameObject.tag == "Gun")
                 {
                     return true;
                 }

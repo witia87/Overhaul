@@ -1,4 +1,5 @@
-﻿using Assets.Modules.Turrets.Guns;
+﻿using Assets.Modules.Movement;
+using Assets.Modules.Turrets.Guns;
 using Assets.Modules.Turrets.Vision;
 using Assets.Utilities;
 using UnityEngine;
@@ -104,12 +105,20 @@ namespace Assets.Modules.Turrets
             }
         }
 
+        public MovementModule MovementModule;
         private void FixedUpdate()
         {
             if (_isTargetDirectionSet)
             {
-                var angle = Vector3.Angle(TargetGlobalDirection, TurretDirection);
-                if (Vector3.Dot(gameObject.transform.right, TargetGlobalDirection) < 0)
+                var targetGlobalDirection = TargetGlobalDirection;
+                if (Vector3.Angle(TargetGlobalDirection, MovementModule.UnitDirection) > 89)
+                {
+                    targetGlobalDirection = Vector3.RotateTowards(MovementModule.UnitDirection, TargetGlobalDirection,
+                        Mathf.Deg2Rad * 89, 0);
+                }
+
+                var angle = Vector3.Angle(targetGlobalDirection, TurretDirection);
+                if (Vector3.Dot(gameObject.transform.right, targetGlobalDirection) < 0)
                 {
                     angle *= -1;
                 }

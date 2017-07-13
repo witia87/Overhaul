@@ -97,7 +97,7 @@ namespace Assets.Modules.Movement
             globalDirection.y = 0;
             GlobalDirectionInWhichToMove = globalDirection;
 
-            if (Vector3.Dot(GlobalDirectionInWhichToMove, TurretModule.gameObject.transform.forward) >= 0)
+            if (Vector3.Dot(GlobalDirectionInWhichToMove, TurretModule.TargetGlobalDirection) >= 0)
             {
                 GlobalDirectionToTurnTowards = globalDirection;
                 MovementType = MovementType.Forward;
@@ -140,17 +140,17 @@ namespace Assets.Modules.Movement
             {
                 // Find a best way to reach the deasired direction
                 Vector3 torque;
-                if (Vector3.Angle(GlobalDirectionToTurnTowards, TurretModule.TurretDirection) < 90)
-                {
+                //if (Vector3.Angle(GlobalDirectionToTurnTowards, TurretModule.TurretDirection) < 90)
+                //{
                     // If desired direction is in front of the Torso, 
                     // then simply try to reach it the closest way.
                     torque = GetTorqueTowards(GlobalDirectionToTurnTowards);
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     //torque = Vector3.Dot(gameObject.transform.right, TurretModule.gameObject.transform.forward);
-                    torque = GetTorqueTowards(TurretModule.TurretDirection);
-                }
+                //    torque = GetTorqueTowards(TurretModule.TurretDirection);
+                //}
 
                 var speedModifier = 0.75f + 0.25f*Vector3.Dot(gameObject.transform.forward, MovementDirection);
                 Rigidbody.AddForce(GlobalDirectionInWhichToMove*acceleration*speedModifier, ForceMode.Acceleration);

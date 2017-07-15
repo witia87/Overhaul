@@ -10,31 +10,18 @@ namespace Assets.Modules.Movement
     public class MovementModule : Module, IMovementControl
     {
         public float Acceleration = 100;
-        public float AirAcceleration = 20;
         public float AngularAcceleration = 200;
-        public float AngularAirAcceleration = 30;
         protected Vector3 GlobalDirectionInWhichToMove;
         protected Vector3 GlobalDirectionToTurnTowards;
 
         protected bool IsSetToMove;
-
         protected bool IsSetToTurn;
-        public float JumpCooldown = 1;
 
+        public float JumpCooldown = 1;
         protected float JumpCooldownLeft;
         public float JumpVelocity = 100;
 
         public TurretModule TurretModule;
-
-        private bool IsTurretModulePresent
-        {
-            get { return TurretModule != null; }
-        }
-
-        public bool IsGrounded
-        {
-            get { return gameObject.transform.position.y <= 0.001; }
-        }
 
         public MovementType MovementType { get; private set; }
 
@@ -123,13 +110,20 @@ namespace Assets.Modules.Movement
             throw new NotImplementedException();
         }
 
+        public override void Mount(GameObject parentGameObject, Vector3 localPosition)
+        {
+            base.Mount(parentGameObject, localPosition);
+            Unit.Rigidbody.drag = Drag;
+            Unit.Rigidbody.angularDrag = AngularDrag;
+        }
+
         protected void FixedUpdate()
         {
             var acceleration = Acceleration;
             if (!IsGrounded)
             {
-                Rigidbody.drag = Drag*0.01f;
-                acceleration = AirAcceleration;
+                Rigidbody.drag = 0;
+                acceleration = 0;
             }
             else
             {
@@ -138,19 +132,7 @@ namespace Assets.Modules.Movement
 
             if (IsSetToMove)
             {
-                // Find a best way to reach the deasired direction
-                Vector3 torque;
-                //if (Vector3.Angle(GlobalDirectionToTurnTowards, TurretModule.TurretDirection) < 90)
-                //{
-                    // If desired direction is in front of the Torso, 
-                    // then simply try to reach it the closest way.
-                    torque = GetTorqueTowards(GlobalDirectionToTurnTowards);
-                //}
-                //else
-                //{
-                    //torque = Vector3.Dot(gameObject.transform.right, TurretModule.gameObject.transform.forward);
-                //    torque = GetTorqueTowards(TurretModule.TurretDirection);
-                //}
+                var torque = Vector3.Cross(gameObject.transform.forward, GlobalDirectionToTurnTowards);
 
                 var speedModifier = 0.75f + 0.25f*Vector3.Dot(gameObject.transform.forward, MovementDirection);
                 Rigidbody.AddForce(GlobalDirectionInWhichToMove*acceleration*speedModifier, ForceMode.Acceleration);
@@ -161,27 +143,15 @@ namespace Assets.Modules.Movement
             else
             {
                 var direction = ((gameObject.transform.forward + TurretModule.TargetGlobalDirection)/2).normalized;
-                var torque = GetTorqueTowards(direction);
-                var torqueToApply = torque*AngularAcceleration;
-                Rigidbody.AddTorque(torqueToApply);
+                var torque = Vector3.Cross(gameObject.transform.forward, direction) * AngularAcceleration;
+                Rigidbody.AddTorque(torque);
             }
         }
 
-        private Vector3 GetTorqueTowards(Vector3 direction)
+        public bool IsGrounded { get; private set; }
+        protected void Update()
         {
-            var torque = Vector3.Cross(gameObject.transform.forward, direction);
-            if (Vector3.Dot(direction, gameObject.transform.forward) < 0)
-            {
-                torque.y = Mathf.Sign(torque.y);
-            }
-            return torque;
-        }
-
-        public override void Mount(GameObject parentGameObject, Vector3 localPosition)
-        {
-            base.Mount(parentGameObject, localPosition);
-            Unit.Rigidbody.drag = Drag;
-            Unit.Rigidbody.angularDrag = AngularDrag;
+            IsGrounded = Physics.Raycast(transform.position + Vector3.up * 0.01f, -Vector3.up, 0.1f);
         }
 
         protected void OnDrawGizmos()

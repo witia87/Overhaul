@@ -11,15 +11,15 @@
         public static int BuiltinLayer6 = 1 << 6;
         public static int BuiltinLayer7 = 1 << 7;
 
-        public static int Map = 1 << 8;
-        public static int MapTransparent = 1 << 9;
-        public static int Environment = 1 << 10;
-        public static int EnvironmentTransparent = 2 << 11;
-        public static int Structure = 1 << 12;
-        public static int StructureTransparent = 1 << 13;
-        public static int Organism = 1 << 14;
-        public static int OrganismTransparent = 1 << 15;
-        public static int Floor = 1 << 16;
-        public static int Guns = 1 << 17;
+        public static int Floor = 1 << 8;
+        public static int Wall = 1 << 9;
+        public static int WallTransparent = 1 << 10;
+        public static int MovementModule = 2 << 11;
+        public static int TurretModule = 1 << 12;
+        public static int GunModule = 1 << 13;
+        public static int MovementModuleDetector = 1 << 14;
+        public static int TurretModuleDetector = 1 << 15;
+        public static int GunModuleDetector = 1 << 16;
+        public static int Bullet = 1 << 17;
     }
 }

@@ -5,9 +5,7 @@ namespace Assets.Map
 {
     public class MapInitializer : MonoBehaviour
     {
-        private readonly int _layerMask = Layers.Floor
-                                          | Layers.Map | Layers.MapTransparent
-                                          | Layers.Environment | Layers.EnvironmentTransparent;
+        private readonly int _layerMask = Layers.Floor | Layers.Wall | Layers.WallTransparent;
 
         private MapStore _mapStore;
         public int GridLength;

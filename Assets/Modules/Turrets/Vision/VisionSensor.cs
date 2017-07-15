@@ -6,8 +6,8 @@ namespace Assets.Modules.Turrets.Vision
 {
     public class VisionSensor : DiamondDetector, IVisionSensor
     {
-        private readonly int _layerMask = Layers.Map | Layers.Environment | Layers.Organism | Layers.Structure |
-                                          Layers.Floor;
+        private readonly int _layerMask = Layers.Floor | Layers.Wall | Layers.MovementModule | Layers.TurretModule |
+                                          Layers.GunModule;
 
         [Range(0.1f, Mathf.PI/2)] public float HorizontalAngleTolerance = Mathf.PI/3;
         public string TagToDetect = "Player";

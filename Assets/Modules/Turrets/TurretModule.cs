@@ -111,10 +111,10 @@ namespace Assets.Modules.Turrets
             if (_isTargetDirectionSet)
             {
                 var targetGlobalDirection = TargetGlobalDirection;
-                if (Vector3.Angle(TargetGlobalDirection, MovementModule.UnitDirection) > 89)
+                if (Vector3.Angle(TargetGlobalDirection, MovementModule.UnitDirection) > 85)
                 {
                     targetGlobalDirection = Vector3.RotateTowards(MovementModule.UnitDirection, TargetGlobalDirection,
-                        Mathf.Deg2Rad * 89, 0);
+                        Mathf.Deg2Rad * 85, 0);
                 }
 
                 var angle = Vector3.Angle(targetGlobalDirection, TurretDirection);

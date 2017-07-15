@@ -8,10 +8,9 @@ namespace Assets.Gui.MainCamera
         private readonly Camera _camera;
         private readonly int _floorLayerMask = Layers.Floor;
 
-        private readonly int _targetLayerMask = Layers.Map | Layers.MapTransparent
-                                                | Layers.Structure | Layers.StructureTransparent
-                                                | Layers.Environment | Layers.EnvironmentTransparent
-                                                | Layers.Organism | Layers.OrganismTransparent;
+        private readonly int _targetLayerMask = Layers.Floor | Layers.Wall
+                                                | Layers.WallTransparent | Layers.MovementModule
+                                                | Layers.TurretModule | Layers.GunModule;
 
         public RaycastsHelper(Camera camera)
         {

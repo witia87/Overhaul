@@ -1,7 +1,8 @@
 ﻿using Assets.Cognitions.PathFinders;
 using Assets.Map;
+using Assets.Modules;
 using Assets.Modules.Movement;
-using Assets.Modules.Turrets;
+using Assets.Modules.Targeting;
 using UnityEngine;
 
 namespace Assets.Cognitions
@@ -13,9 +14,7 @@ namespace Assets.Cognitions
 
         public IMapStore MapStore;
 
-        public MovementModule MovementModule;
-
-        public TurretModule TurretModule;
+        public Unit ConnectedUnit;
 
         public IPathFinder PathFinder { get; private set; }
 

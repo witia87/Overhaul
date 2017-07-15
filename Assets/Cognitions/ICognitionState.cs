@@ -3,8 +3,8 @@
     public interface ICognitionState<TStateIds>
     {
         TStateIds Id { get; }
-        ICognitionState<TStateIds> Update();
 
+        ICognitionState<TStateIds> Update();
         void OnDrawGizmos();
     }
 }

@@ -10,7 +10,7 @@ namespace Assets.Gui.MainCamera
 
         private readonly int _targetLayerMask = Layers.Floor | Layers.Wall
                                                 | Layers.WallTransparent | Layers.MovementModule
-                                                | Layers.TurretModule | Layers.GunModule;
+                                                | Layers.TargetingModule | Layers.GunModule;
 
         public RaycastsHelper(Camera camera)
         {

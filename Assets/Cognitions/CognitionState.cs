@@ -2,7 +2,7 @@
 using Assets.Map;
 using Assets.Modules;
 using Assets.Modules.Movement;
-using Assets.Modules.Turrets;
+using Assets.Modules.Targeting;
 using UnityEngine;
 
 namespace Assets.Cognitions
@@ -24,16 +24,11 @@ namespace Assets.Cognitions
             get { return ParentCognition.PathFinder; }
         }
 
-        protected IMovementControl MovementControl
+        protected IUnitControl Unit
         {
-            get { return ParentCognition.MovementModule; }
+            get { return ParentCognition.ConnectedUnit; }
         }
-
-        protected ITurretControl TurretControl
-        {
-            get { return ParentCognition.TurretModule; }
-        }
-
+        
         protected int Scale
         {
             get { return ParentCognition.Scale; }
@@ -51,9 +46,9 @@ namespace Assets.Cognitions
         {
             Module highestPriorityTargetSoFar = null;
             var minDistance = float.MaxValue;
-            if (TurretControl != null)
+            if (Unit.Targeting != null)
             {
-                var visionSensor = TurretControl.VisionSensor;
+                var visionSensor = Unit.Targeting.VisionSensor;
                 foreach (var testedModule in visionSensor.VisibleModules)
                 {
                     var currentDistance =

@@ -1,5 +1,5 @@
 ﻿using System;
-using Assets.Modules.Turrets;
+using Assets.Modules.Targeting;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -19,7 +19,7 @@ namespace Assets.Modules.Movement
         protected float JumpCooldownLeft;
         public float JumpVelocity = 100;
 
-        public TurretModule TurretModule;
+        public TargetingModule TargetingModule;
 
         public MovementType MovementType { get; private set; }
 
@@ -70,16 +70,18 @@ namespace Assets.Modules.Movement
             globalDirection.y = 0;
             GlobalDirectionInWhichToMove = globalDirection;
 
-            if (Vector3.Dot(GlobalDirectionInWhichToMove, TurretModule.TargetGlobalDirection) >= 0)
+            if (Vector3.Dot(GlobalDirectionInWhichToMove, TargetingModule.TargetGlobalDirection) >= 0)
             {
                 GlobalDirectionToTurnTowards = globalDirection;
-                MovementType = MovementType.Forward;
             }
             else
             {
                 GlobalDirectionToTurnTowards = -globalDirection;
-                MovementType = MovementType.Backward;
             }
+
+            MovementType = Vector3.Dot(GlobalDirectionInWhichToMove, transform.forward) >= 0
+                ? MovementType.Forward
+                : MovementType.Backward;
 
             GlobalDirectionToTurnTowards.Normalize();
 
@@ -120,7 +122,20 @@ namespace Assets.Modules.Movement
 
             if (IsSetToMove)
             {
-                var torque = Vector3.Cross(gameObject.transform.forward, GlobalDirectionToTurnTowards);
+                Vector3 torque;
+                if (Vector3.Dot(gameObject.transform.forward, GlobalDirectionToTurnTowards) < 0)
+                {
+                    // If legs are supposed to turn backwards they should do it toards the direction of torso.
+                    // Turn with maximal speed then.
+                    torque = Vector3.Cross(gameObject.transform.forward, TargetingModule.TargetingDirection);
+                    torque.Normalize();
+                }
+                else
+                {
+                    // If it is a small turn, then use the Cross Product modifier (v x v = 0)
+                    torque = Vector3.Cross(gameObject.transform.forward, GlobalDirectionToTurnTowards);
+
+                }
 
                 var speedModifier = 0.75f + 0.25f*Vector3.Dot(gameObject.transform.forward, MovementDirection);
                 Rigidbody.AddForce(GlobalDirectionInWhichToMove*acceleration*speedModifier, ForceMode.Acceleration);
@@ -130,7 +145,7 @@ namespace Assets.Modules.Movement
             }
             else
             {
-                var direction = ((gameObject.transform.forward + TurretModule.TargetGlobalDirection)/2).normalized;
+                var direction = ((gameObject.transform.forward + TargetingModule.TargetGlobalDirection)/2).normalized;
                 var torque = Vector3.Cross(gameObject.transform.forward, direction)*AngularAcceleration;
                 Rigidbody.AddTorque(torque);
             }

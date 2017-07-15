@@ -12,9 +12,10 @@ namespace Assets.Modules.Turrets
         private float _velocity;
 
         [SerializeField] private VisionSensor _visionSensor;
-        public GunModule Gun;
 
         public GunSensor GunSensor;
+
+        public MovementModule MovementModule;
 
         public Vector3 SightLocalOffset = new Vector3(0, 0.5f, 1);
         public float SmoothTime = 0.2f;
@@ -35,12 +36,12 @@ namespace Assets.Modules.Turrets
             get { return gameObject.transform.forward; }
         }
 
-        public bool AreGunControlsMounted
+        public bool IsGunMounted
         {
-            get { return GunControls.Length > 0; }
+            get { return Gun != null; }
         }
 
-        public IGunControl[] GunControls { get; private set; }
+        public IGunControl Gun { get; private set; }
 
         public void TurnTowards(Vector3 globalDirection)
         {
@@ -86,26 +87,15 @@ namespace Assets.Modules.Turrets
                     }
                 }
             }
-            ScanGunControls();
+            Gun = GetComponentInChildren<GunModule>();
         }
 
         protected override void Awake()
         {
             base.Awake();
-            ScanGunControls();
+            Gun = GetComponentInChildren<GunModule>();
         }
 
-        private void ScanGunControls()
-        {
-            var gunModules = GetComponentsInChildren<GunModule>();
-            GunControls = new IGunControl[gunModules.Length];
-            for (var i = 0; i < gunModules.Length; i++)
-            {
-                GunControls[i] = gunModules[i];
-            }
-        }
-
-        public MovementModule MovementModule;
         private void FixedUpdate()
         {
             if (_isTargetDirectionSet)
@@ -114,7 +104,7 @@ namespace Assets.Modules.Turrets
                 if (Vector3.Angle(TargetGlobalDirection, MovementModule.UnitDirection) > 85)
                 {
                     targetGlobalDirection = Vector3.RotateTowards(MovementModule.UnitDirection, TargetGlobalDirection,
-                        Mathf.Deg2Rad * 85, 0);
+                        Mathf.Deg2Rad*85, 0);
                 }
 
                 var angle = Vector3.Angle(targetGlobalDirection, TurretDirection);

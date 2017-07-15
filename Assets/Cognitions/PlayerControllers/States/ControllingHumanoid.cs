@@ -15,52 +15,43 @@ namespace Assets.Cognitions.PlayerControllers.States
 
         public override ICognitionState<PlayerControllerStateIds> Update()
         {
-            if (TurretControl != null)
-            {
-                TurretControl.LookAt(TargetingController.TargetedPosition);
+            TurretControl.LookAt(TargetingController.TargetedPosition);
 
-                if (ActionsController.IsDropWeaponPressed)
-                {
-                    TurretControl.DropGun();
-                }
-                else if (ActionsController.IsUsePressed)
-                {
-                    TurretControl.PickGun();
-                }
-                else
+            if (ActionsController.IsDropWeaponPressed)
+            {
+                TurretControl.DropGun();
+            }
+            else if (ActionsController.IsUsePressed)
+            {
+                TurretControl.PickGun();
+            }
+            else
+            {
+                if (TurretControl.IsGunMounted)
                 {
                     if (TargetingController.IsFirePressed)
                     {
-                        foreach (var gunControl in TurretControl.GunControls)
-                        {
-                            gunControl.Fire();
-                        }
+                        TurretControl.Gun.Fire();
                     }
                     else
                     {
-                        foreach (var gunControl in TurretControl.GunControls)
-                        {
-                            gunControl.StopFiring();
-                        }
+                        TurretControl.Gun.StopFiring();
                     }
                 }
             }
 
-            if (MovementControl != null)
+            if (MovementController.IsMovementPresent)
             {
-                if (MovementController.IsMovementPresent)
-                {
-                    MovementControl.MoveTowards(MovementController.MovementVector);
-                }
-                else
-                {
-                    MovementControl.StopMoving();
-                }
+                MovementControl.MoveTowards(MovementController.MovementVector);
+            }
+            else
+            {
+                MovementControl.StopMoving();
+            }
 
-                if (MovementController.IsJumpPressed)
-                {
-                    MovementControl.Jump(Vector3.up);
-                }
+            if (MovementController.IsJumpPressed)
+            {
+                MovementControl.Jump(Vector3.up);
             }
 
 

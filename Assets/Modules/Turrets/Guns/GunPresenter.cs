@@ -6,6 +6,7 @@ namespace Assets.Modules.Turrets.Guns
     internal class GunPresenter : ModuleSpritePresenter
     {
         public event Action ExampleEvent;
+
         public override void Update()
         {
             base.Update();

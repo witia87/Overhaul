@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Assets.Modules.Artilleries;
 using Assets.Modules.Turrets;
 using Assets.Utilities;
 using UnityEngine;
@@ -41,17 +39,6 @@ namespace Assets.Modules.Movement
             get { return Rigidbody.velocity.magnitude > 0 ? Rigidbody.velocity.normalized : Vector3.zero; }
         }
 
-        public List<IArtilleryControl> ArtilleryControls
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-
-        public bool AreArtilleryControlsMounted
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         public void StopTurning()
         {
             IsSetToTurn = false;
@@ -66,7 +53,6 @@ namespace Assets.Modules.Movement
         {
             IsSetToMove = false;
         }
-
 
         public void Jump(Vector3 localDirection)
         {
@@ -110,6 +96,8 @@ namespace Assets.Modules.Movement
             throw new NotImplementedException();
         }
 
+        public bool IsGrounded { get; private set; }
+
         public override void Mount(GameObject parentGameObject, Vector3 localPosition)
         {
             base.Mount(parentGameObject, localPosition);
@@ -143,15 +131,14 @@ namespace Assets.Modules.Movement
             else
             {
                 var direction = ((gameObject.transform.forward + TurretModule.TargetGlobalDirection)/2).normalized;
-                var torque = Vector3.Cross(gameObject.transform.forward, direction) * AngularAcceleration;
+                var torque = Vector3.Cross(gameObject.transform.forward, direction)*AngularAcceleration;
                 Rigidbody.AddTorque(torque);
             }
         }
 
-        public bool IsGrounded { get; private set; }
         protected void Update()
         {
-            IsGrounded = Physics.Raycast(transform.position + Vector3.up * 0.01f, -Vector3.up, 0.1f);
+            IsGrounded = Physics.Raycast(transform.position + Vector3.up*0.01f, -Vector3.up, 0.1f);
         }
 
         protected void OnDrawGizmos()

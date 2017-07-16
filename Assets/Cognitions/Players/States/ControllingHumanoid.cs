@@ -1,7 +1,7 @@
-﻿using Assets.Cognitions.Player.Controllers;
+﻿using Assets.Cognitions.Players.Controllers;
 using UnityEngine;
 
-namespace Assets.Cognitions.Player.States
+namespace Assets.Cognitions.Players.States
 {
     public class ControllingHumanoid : PlayerState
     {
@@ -42,7 +42,7 @@ namespace Assets.Cognitions.Player.States
 
             if (MovementController.IsMovementPresent)
             {
-                Unit.Movement.MoveTowards(MovementController.MovementVector);
+                Unit.Movement.Move(MovementController.MovementVector);
             }
             else
             {

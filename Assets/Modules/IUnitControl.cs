@@ -1,5 +1,6 @@
 ﻿using Assets.Modules.Movement;
 using Assets.Modules.Targeting;
+using UnityEngine;
 
 namespace Assets.Modules
 {
@@ -7,5 +8,8 @@ namespace Assets.Modules
     {
         IMovementControl Movement { get; }
         ITargetingControl Targeting { get; }
+
+        GameObject gameObject { get; }
+        Rigidbody Rigidbody { get; }
     }
 }

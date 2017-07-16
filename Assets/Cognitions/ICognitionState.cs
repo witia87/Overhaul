@@ -4,6 +4,8 @@
     {
         TStateIds Id { get; }
 
+        bool IsDisposed { get; }
+
         ICognitionState<TStateIds> Update();
         void OnDrawGizmos();
     }

@@ -38,17 +38,7 @@ namespace Assets.Modules.Movement
         {
             get { return Rigidbody.velocity.magnitude > 0 ? Rigidbody.velocity.normalized : Vector3.zero; }
         }
-
-        public void StopTurning()
-        {
-            IsSetToTurn = false;
-        }
-
-        public void JumpTowards(Vector3 globalDirection)
-        {
-            Jump(gameObject.transform.worldToLocalMatrix*globalDirection);
-        }
-
+        
         public void StopMoving()
         {
             IsSetToMove = false;
@@ -59,15 +49,16 @@ namespace Assets.Modules.Movement
             if (JumpCooldownLeft <= 0 && IsGrounded)
             {
                 localDirection *= JumpVelocity;
-                Rigidbody.AddRelativeForce(localDirection, ForceMode.VelocityChange);
+                Rigidbody.AddForce(localDirection, ForceMode.VelocityChange);
             }
             JumpCooldownLeft = Mathf.Max(0, JumpCooldownLeft - Time.deltaTime);
         }
 
 
-        public void MoveTowards(Vector3 globalDirection)
+        public void Move(Vector3 globalDirection)
         {
             globalDirection.y = 0;
+            globalDirection = globalDirection.normalized;
             GlobalDirectionInWhichToMove = globalDirection;
 
             if (Vector3.Dot(GlobalDirectionInWhichToMove, TargetingModule.TargetGlobalDirection) >= 0)
@@ -90,12 +81,7 @@ namespace Assets.Modules.Movement
 
         public void GoTo(Vector3 position)
         {
-            MoveTowards(position - gameObject.transform.position);
-        }
-
-        public void Move(Vector3 localDirection)
-        {
-            throw new NotImplementedException();
+            Move(position - gameObject.transform.position);
         }
 
         public bool IsGrounded { get; private set; }
@@ -134,7 +120,6 @@ namespace Assets.Modules.Movement
                 {
                     // If it is a small turn, then use the Cross Product modifier (v x v = 0)
                     torque = Vector3.Cross(gameObject.transform.forward, GlobalDirectionToTurnTowards);
-
                 }
 
                 var speedModifier = 0.75f + 0.25f*Vector3.Dot(gameObject.transform.forward, MovementDirection);

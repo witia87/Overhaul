@@ -27,6 +27,16 @@ namespace Assets.Modules.Targeting.Guns
             get { return _clipSize; }
         }
 
+        public Vector3 FirePosition
+        {
+            get { return _bulletFactories[_bulletFactories.Length/2].transform.position; }
+        }
+
+        public Vector3 FireDirection
+        {
+            get { return _bulletFactories[_bulletFactories.Length / 2].transform.forward; }
+        }
+
         public int TotalAmmoLeft
         {
             get { return _totalAmmoLeft; }

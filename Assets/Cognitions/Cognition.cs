@@ -1,26 +1,33 @@
-﻿using Assets.Cognitions.PathFinders;
+﻿using System.Collections.Generic;
+using Assets.Cognitions.PathFinders;
 using Assets.Map;
 using Assets.Modules;
-using Assets.Modules.Movement;
-using Assets.Modules.Targeting;
 using UnityEngine;
 
 namespace Assets.Cognitions
 {
     public abstract class Cognition<TStateUids> : MonoBehaviour
     {
-        protected ICognitionState<TStateUids> CurrentState;
+        private readonly List<ICognitionState<TStateUids>> _registeredStates = new List<ICognitionState<TStateUids>>();
+
+        [SerializeField] private readonly int _rememberedStatesCount = 10;
+
+        public Unit ConnectedUnit;
+        protected CognitionState<TStateUids> DefaultState;
         [Range(1, 5)] public int MapSamplingSize = 5;
 
         public IMapStore MapStore;
-
-        public Unit ConnectedUnit;
 
         public IPathFinder PathFinder { get; private set; }
 
         public int Scale
         {
             get { return MapSamplingSize; }
+        }
+
+        protected ICognitionState<TStateUids> CurrentState
+        {
+            get { return _registeredStates[_registeredStates.Count - 1]; }
         }
 
         protected virtual void Awake()
@@ -35,12 +42,36 @@ namespace Assets.Cognitions
 
         protected virtual void Update()
         {
-            CurrentState = CurrentState.Update();
+            if (_registeredStates.Count == 0)
+            {
+                _registeredStates.Add(DefaultState);
+            }
+            var newCurrentState = CurrentState.Update();
+            if (newCurrentState != null)
+            {
+                if (CurrentState.IsDisposed)
+                {
+                    _registeredStates.RemoveAt(_registeredStates.Count - 1);
+                }
+
+                if (CurrentState == null || CurrentState != newCurrentState)
+                {
+                    _registeredStates.Add(newCurrentState);
+                    if (_registeredStates.Count > _rememberedStatesCount)
+                    {
+                        _registeredStates.RemoveAt(0);
+                    }
+                }
+            }
+            else
+            {
+                _registeredStates.RemoveAt(_registeredStates.Count - 1);
+            }
         }
 
         private void OnDrawGizmos()
         {
-            if (CurrentState != null)
+            if (_registeredStates.Count > 0 && CurrentState != null)
             {
                 CurrentState.OnDrawGizmos();
             }

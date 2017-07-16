@@ -2,7 +2,7 @@
 
 namespace Assets.Modules
 {
-    public abstract class Module : MonoBehaviour
+    public abstract class Module : MonoBehaviour, IModuleControl
     {
         private Rigidbody _rigidbody;
         public float AngularDrag;
@@ -15,6 +15,11 @@ namespace Assets.Modules
         public bool IsConntectedToUnit
         {
             get { return Unit != null; }
+        }
+
+        public Vector3 Center
+        {
+            get { return new Vector3(transform.position.x, transform.position.y + Size.y, transform.position.z); }
         }
 
         public Rigidbody Rigidbody

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Modules.Targeting
 {
-    public interface ITargetingControl : ITargetingParameters
+    public interface ITargetingControl : ITargetingParameters, IModuleControl
     {
         IVisionSensor VisionSensor { get; }
         bool IsGunMounted { get; }

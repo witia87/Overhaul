@@ -20,7 +20,7 @@ namespace Assets.Cognitions.Players
             _targetingController.Start();
             _movementController.Start();
 
-            CurrentState = new ControllingHumanoid(this, _targetingController, _movementController, _actionsController);
+            DefaultState = new ControllingHumanoid(this, _targetingController, _movementController, _actionsController);
         }
 
         protected override void Update()

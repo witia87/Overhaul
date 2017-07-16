@@ -1,7 +1,12 @@
-﻿namespace Assets.Modules.Targeting.Guns
+﻿using UnityEngine;
+
+namespace Assets.Modules.Targeting.Guns
 {
-    public interface IGunControl
+    public interface IGunControl: IModuleControl
     {
+        Vector3 FirePosition { get; }
+        Vector3 FireDirection { get; }
+
         int TotalAmmoLeft { get; }
         int ClipSize { get; }
         int AmmoLeftInTheClip { get; }

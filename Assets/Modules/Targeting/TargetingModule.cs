@@ -63,12 +63,11 @@ namespace Assets.Modules.Targeting
             {
                 var module = gunSlot.MountedModule;
                 module.gameObject.transform.position = module.gameObject.transform.position +
-                                                        gameObject.transform.forward;
+                                                       gameObject.transform.forward;
                 gunSlot.UnmountModule();
                 Gun = null;
                 module.Rigidbody.AddForce(gameObject.transform.forward*15f, ForceMode.Impulse);
             }
-            
         }
 
         public void PickGun()

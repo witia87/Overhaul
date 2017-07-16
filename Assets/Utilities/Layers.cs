@@ -14,12 +14,12 @@
         public static int Floor = 1 << 8;
         public static int Wall = 1 << 9;
         public static int WallTransparent = 1 << 10;
-        public static int MovementModule = 2 << 11;
+        public static int MovementModule = 1 << 11;
         public static int TargetingModule = 1 << 12;
         public static int GunModule = 1 << 13;
-        public static int MovementModuleDetector = 1 << 14;
-        public static int TargetingModuleDetector = 1 << 15;
-        public static int GunModuleDetector = 1 << 16;
-        public static int Bullet = 1 << 17;
+        public static int ModuleDetector = 1 << 14;
+        public static int GunModuleDetector = 1 << 15;
+        public static int Bullet = 1 << 16;
+        public static int BulletDetector = 1 << 17;
     }
 }

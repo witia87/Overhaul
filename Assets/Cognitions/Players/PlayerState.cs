@@ -1,6 +1,6 @@
-﻿using Assets.Cognitions.Player.Controllers;
+﻿using Assets.Cognitions.Players.Controllers;
 
-namespace Assets.Cognitions.Player
+namespace Assets.Cognitions.Players
 {
     public abstract class PlayerState : CognitionState<PlayerStateIds>
     {

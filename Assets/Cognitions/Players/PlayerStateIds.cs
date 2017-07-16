@@ -1,4 +1,4 @@
-﻿namespace Assets.Cognitions.Player
+﻿namespace Assets.Cognitions.Players
 {
     public enum PlayerStateIds
     {

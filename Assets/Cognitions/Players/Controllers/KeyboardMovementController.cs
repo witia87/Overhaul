@@ -1,14 +1,14 @@
 ﻿using Assets.Gui.MainCamera;
 using UnityEngine;
 
-namespace Assets.Cognitions.Player.Controllers
+namespace Assets.Cognitions.Players.Controllers
 {
-    public class PadMovementController : IMovementController
+    public class KeyboardMovementController : IMovementController
     {
         private readonly ICameraStore _cameraStore;
         private Quaternion _rotationQuaternion;
 
-        public PadMovementController(ICameraStore cameraStore)
+        public KeyboardMovementController(ICameraStore cameraStore)
         {
             _cameraStore = cameraStore;
         }

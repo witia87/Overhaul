@@ -1,8 +1,8 @@
-﻿using Assets.Cognitions.Player.Controllers;
-using Assets.Cognitions.Player.States;
+﻿using Assets.Cognitions.Players.Controllers;
+using Assets.Cognitions.Players.States;
 using Assets.Gui.MainCamera;
 
-namespace Assets.Cognitions.Player
+namespace Assets.Cognitions.Players
 {
     public class Player : Cognition<PlayerStateIds>
     {

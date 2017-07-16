@@ -1,7 +1,7 @@
 ﻿using Assets.Modules;
 using UnityEngine;
 
-namespace Assets.Cognitions.Player.Controllers
+namespace Assets.Cognitions.Players.Controllers
 {
     public interface ITargetingController
     {

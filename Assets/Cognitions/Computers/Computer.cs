@@ -1,4 +1,6 @@
 ﻿using Assets.Cognitions.Computers.States;
+using Assets.Cognitions.Helpers;
+using UnityEngine;
 
 namespace Assets.Cognitions.Computers
 {
@@ -6,8 +8,8 @@ namespace Assets.Cognitions.Computers
     {
         protected override void Start()
         {
-            DefaultState = new Idle(this);
             base.Start();
+            DefaultState = new Watching(new MovementHelper(Unit, Map), new TargetingHelper(Unit, Map), Unit, Map, Vector3.left);
         }
     }
 }

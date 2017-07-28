@@ -2,26 +2,23 @@
 
 namespace Assets.Modules.Movement
 {
-    internal class MovementModulePresenter : ModuleSpritePresenter
+    internal class MovementModulePresenter : ModuleSpritePresenter<IMovementModuleParameters>
 
     {
-        private IMovementModuleParameters _movementModuleParameters;
-
         protected override void Start()
         {
             base.Start();
-            _movementModuleParameters = Module as MovementModule;
         }
 
         public override void Update()
         {
             base.Update();
             var direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)*
-                            _movementModuleParameters.UnitDirection;
+                            Module.UnitDirection;
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);
-            Animator.SetFloat("Speed", _movementModuleParameters.MovementSpeed);
-            Animator.SetBool("IsMovingForward", _movementModuleParameters.MovementType == MovementType.Forward);
+            Animator.SetFloat("Speed", Module.MovementSpeed);
+            Animator.SetBool("IsMovingForward", Module.MovementType == MovementType.Forward);
         }
     }
 }

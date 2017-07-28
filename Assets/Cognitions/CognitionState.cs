@@ -1,49 +1,49 @@
-﻿using Assets.Cognitions.PathFinders;
-using Assets.Map;
+﻿using Assets.Cognitions.Helpers;
+using Assets.Maps;
 using Assets.Modules;
 
 namespace Assets.Cognitions
 {
-    public abstract class CognitionState<TStateIds> : ICognitionState<TStateIds>
+    public abstract class CognitionState<TStateIds>
     {
-        protected readonly IMapStore MapStore;
-        protected readonly Cognition<TStateIds> ParentCognition;
+        private readonly NextStateBuilder<TStateIds> _nextStateBuilder;
+        protected readonly IMap Map;
+        protected readonly IUnitControl Unit;
+        protected readonly MovementHelper MovementHelper;
+        protected readonly TargetingHelper TargetingHelper;
 
-        protected CognitionState(Cognition<TStateIds> parentCognition, TStateIds id)
+        protected CognitionState(TStateIds id, MovementHelper movementHelper, TargetingHelper targetingHelper, IUnitControl unit, IMap map)
         {
             Id = id;
-            ParentCognition = parentCognition;
-            MapStore = parentCognition.MapStore;
-        }
-
-        protected IPathFinder PathFinder
-        {
-            get { return ParentCognition.PathFinder; }
-        }
-
-        protected IUnitControl Unit
-        {
-            get { return ParentCognition.ConnectedUnit; }
-        }
-
-        protected int Scale
-        {
-            get { return ParentCognition.Scale; }
+            Unit = unit;
+            Map = map;
+            MovementHelper = movementHelper;
+            TargetingHelper = targetingHelper;
+            _nextStateBuilder = new NextStateBuilder<TStateIds>(this);
         }
 
         public TStateIds Id { get; private set; }
 
-        public abstract ICognitionState<TStateIds> Update();
+        public abstract CognitionState<TStateIds> Update();
 
         public virtual void OnDrawGizmos()
         {
         }
 
-        public bool IsDisposed { get; private set; }
+        public virtual void OnGUI()
+        {
+        }
 
-        public void Dispose()
+        public bool IsDisposed { get; private set; }
+        protected IExtendedStateBuilder<TStateIds> DisposeCurrent()
         {
             IsDisposed = true;
+            return _nextStateBuilder;
+        }
+
+        protected IStateBuilder<TStateIds> RememberCurrent()
+        {
+            return _nextStateBuilder;
         }
     }
 }

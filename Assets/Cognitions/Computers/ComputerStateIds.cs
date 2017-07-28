@@ -2,8 +2,11 @@
 {
     public enum ComputerStateIds
     {
-        Idle,
-        ChasingEnemy,
-        Investigate
+        Watching,
+        Chasing,
+        Searching,
+        Strafing,
+        Firing,
+        Backing
     }
 }

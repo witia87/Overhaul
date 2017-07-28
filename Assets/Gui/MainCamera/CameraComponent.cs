@@ -47,6 +47,8 @@ namespace Assets.Gui.MainCamera
             get { return FocusObject.transform.position; }
         }
 
+        [SerializeField] private LayerMask _floorLayerMask;
+        [SerializeField] private LayerMask _targetLayerMask;
         public RaycastsHelper Raycasts { get; private set; }
 
         private void Awake()
@@ -57,7 +59,7 @@ namespace Assets.Gui.MainCamera
             MainCamera.cameraType = CameraType.Game;
             MainCamera.orthographic = true;
 
-            Raycasts = new RaycastsHelper(MainCamera);
+            Raycasts = new RaycastsHelper(MainCamera, _floorLayerMask, _targetLayerMask);
 
             _cameraHook = new GameObject("Camera Hook");
             _cameraHook.transform.localEulerAngles = gameObject.transform.localEulerAngles;

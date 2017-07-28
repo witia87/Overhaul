@@ -1,19 +1,19 @@
 ﻿using Assets.Cognitions.Players.Controllers;
+using Assets.Maps;
+using Assets.Modules;
 using UnityEngine;
 
 namespace Assets.Cognitions.Players.States
 {
     public class ControllingHumanoid : PlayerState
     {
-        public ControllingHumanoid(Cognition<PlayerStateIds> parentCognition,
-            ITargetingController targetingController, IMovementController movementController,
-            IActionsController actionsController)
-            : base(parentCognition, targetingController, movementController, actionsController,
-                PlayerStateIds.ControllingHumanoid)
+        public ControllingHumanoid( IUnitControl unit, IMap map, int scale,
+            ITargetingController targetingController, IMovementController movementController, IActionsController actionsController) :
+            base(PlayerStateIds.ControllingHumanoid, unit, map, targetingController, movementController, actionsController)
         {
         }
 
-        public override ICognitionState<PlayerStateIds> Update()
+        public override CognitionState<PlayerStateIds> Update()
         {
             Unit.Targeting.LookAt(TargetingController.TargetedPosition);
 

@@ -1,4 +1,7 @@
-﻿using Assets.Cognitions.Players.Controllers;
+﻿using Assets.Cognitions.Helpers;
+using Assets.Cognitions.Players.Controllers;
+using Assets.Maps;
+using Assets.Modules;
 
 namespace Assets.Cognitions.Players
 {
@@ -8,12 +11,11 @@ namespace Assets.Cognitions.Players
         protected IMovementController MovementController;
         protected ITargetingController TargetingController;
 
-        protected PlayerState(Cognition<PlayerStateIds> parentCognition,
+        protected PlayerState(PlayerStateIds id, IUnitControl unit, IMap map,
             ITargetingController targetingController,
             IMovementController movementController,
-            IActionsController actionsController,
-            PlayerStateIds id)
-            : base(parentCognition, id)
+            IActionsController actionsController) :
+            base(id, new MovementHelper(unit, map), new TargetingHelper(unit, map), unit, map)
         {
             TargetingController = targetingController;
             MovementController = movementController;

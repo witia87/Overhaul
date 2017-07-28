@@ -17,6 +17,14 @@ namespace Assets.Modules.Targeting.Guns
 
         [SerializeField] private int _totalAmmoLeft = 90;
 
+        [SerializeField] private Vector2 _efectiveRange = new Vector2(5, 10);
+        public Vector2 EfectiveRange
+        {
+            get { return _efectiveRange; }
+        }
+
+        public bool IsDangerous;
+
         public float ReloadTimeLeft { get; private set; }
         public bool IsFiring { get; private set; }
 
@@ -61,6 +69,14 @@ namespace Assets.Modules.Targeting.Guns
 
         public void Fire()
         {
+            _verticalDirectionCorection = 0;
+            IsFiring = true;
+        }
+
+        private float _verticalDirectionCorection;
+        public void Fire(float distance, float bulletHeightAtAGivenDisntance)
+        {
+            _verticalDirectionCorection = new Vector3(0, bulletHeightAtAGivenDisntance - FirePosition.y, distance).normalized.y;
             IsFiring = true;
         }
 
@@ -80,6 +96,7 @@ namespace Assets.Modules.Targeting.Guns
 
         protected override void Awake()
         {
+            base.Awake();
             AmmoLeftInTheClip = ClipSize;
             _bulletFactories = GetComponentsInChildren<BulletsFactory>();
         }
@@ -103,7 +120,11 @@ namespace Assets.Modules.Targeting.Guns
                 CooldownTimeLeft = CooldownTime;
                 foreach (var bulletsFactory in _bulletFactories)
                 {
-                    bulletsFactory.Create();
+                    bulletsFactory.Create(_verticalDirectionCorection);
+                }
+                if (IsDangerous)
+                {
+                    MapStore.Dangers.RegisterLineOfFire(transform.position, transform.forward, 0.5f);
                 }
             }
         }

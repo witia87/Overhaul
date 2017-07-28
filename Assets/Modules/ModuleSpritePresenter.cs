@@ -3,26 +3,29 @@ using UnityEngine;
 
 namespace Assets.Modules
 {
-    public class ModuleSpritePresenter : Presenter
+    public class ModuleSpritePresenter<TParameters> : Presenter
     {
         private Vector3 _offset;
         private float _projectionHeight;
-        protected Animator Animator;
 
-        public Module Module;
+        private Module _module;
 
         protected SpriteRenderer SpriteRenderer;
         protected Vector2 SpriteSize;
+        protected Animator Animator;
+        protected TParameters Module;
 
         protected virtual void Start()
         {
             Animator = GetComponent<Animator>();
             SpriteRenderer = GetComponent<SpriteRenderer>();
             SpriteSize = SpriteRenderer.sprite.rect.size;
+            Module = transform.parent.GetComponent<TParameters>();
 
             var alpha = Mathf.Deg2Rad*CameraStore.CameraEulerAngles.x;
 
-            var moduleSize = Mathf.Max(Module.Size.x, Module.Size.y, Module.Size.z);
+            _module = transform.parent.GetComponent<Module>();
+            var moduleSize = Mathf.Max(_module.Size.x, _module.Size.y, _module.Size.z);
 
             var spriteHeight = SpriteSize.y/SpriteRenderer.sprite.pixelsPerUnit;
             _projectionHeight = moduleSize*Mathf.Cos(alpha);
@@ -38,7 +41,7 @@ namespace Assets.Modules
 
 
             gameObject.transform.position =
-                CameraStore.Pixelation.GetClosestPixelatedPosition(Module.transform.position);
+                CameraStore.Pixelation.GetClosestPixelatedPosition(_module.transform.position);
             gameObject.transform.position = gameObject.transform.position + _offset;
         }
 
@@ -46,18 +49,18 @@ namespace Assets.Modules
         {
             gameObject.transform.eulerAngles = CameraStore.CameraEulerAngles;
 
-            if (Module.IsConntectedToUnit)
+            if (_module.IsConntectedToUnit)
             {
-                var pixelatedOffset = CameraStore.Pixelation.GetPixelatedOffset(Module.Unit.transform.position,
-                    Module.transform.position);
+                var pixelatedOffset = CameraStore.Pixelation.GetPixelatedOffset(_module.Unit.transform.position,
+                    _module.transform.position);
                 gameObject.transform.position =
-                    CameraStore.Pixelation.GetClosestPixelatedPosition(Module.Unit.transform.position) +
+                    CameraStore.Pixelation.GetClosestPixelatedPosition(_module.Unit.transform.position) +
                     pixelatedOffset + _offset;
             }
             else
             {
                 gameObject.transform.position =
-                    CameraStore.Pixelation.GetClosestPixelatedPosition(Module.transform.position) + _offset;
+                    CameraStore.Pixelation.GetClosestPixelatedPosition(_module.transform.position) + _offset;
             }
         }
     }

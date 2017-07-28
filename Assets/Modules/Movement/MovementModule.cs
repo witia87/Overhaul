@@ -122,7 +122,7 @@ namespace Assets.Modules.Movement
                     torque = Vector3.Cross(gameObject.transform.forward, GlobalDirectionToTurnTowards);
                 }
 
-                var speedModifier = 0.75f + 0.25f*Vector3.Dot(gameObject.transform.forward, MovementDirection);
+                var speedModifier = 0.75f + 0.25f*Vector3.Dot(MovementDirection, TargetingModule.TargetingDirection);
                 Rigidbody.AddForce(GlobalDirectionInWhichToMove*acceleration*speedModifier, ForceMode.Acceleration);
 
                 var torqueToApply = torque*AngularAcceleration;

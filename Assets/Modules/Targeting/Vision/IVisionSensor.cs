@@ -7,6 +7,6 @@ namespace Assets.Modules.Targeting.Vision
     {
         Vector3 SightDirection { get; }
         Vector3 SightPosition { get; }
-        List<Unit> VisibleUnits { get; }
+        List<ITarget> VisibleTargets { get; }
     }
 }

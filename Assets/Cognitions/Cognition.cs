@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Assets.Cognitions.PathFinders;
-using Assets.Map;
+using Assets.Maps;
+using Assets.Maps.PathFinders;
 using Assets.Modules;
 using UnityEngine;
 
@@ -8,24 +8,20 @@ namespace Assets.Cognitions
 {
     public abstract class Cognition<TStateUids> : MonoBehaviour
     {
-        private readonly List<ICognitionState<TStateUids>> _registeredStates = new List<ICognitionState<TStateUids>>();
+        private readonly List<CognitionState<TStateUids>> _registeredStates = new List<CognitionState<TStateUids>>();
 
         [SerializeField] private readonly int _rememberedStatesCount = 10;
 
-        public Unit ConnectedUnit;
+        public Unit Unit;
         protected CognitionState<TStateUids> DefaultState;
-        [Range(1, 5)] public int MapSamplingSize = 5;
+        [Range(0, 5)] public int Scale = 1;
 
         public IMapStore MapStore;
+        public FractionId Fraction = FractionId.Enemy;
 
         public IPathFinder PathFinder { get; private set; }
-
-        public int Scale
-        {
-            get { return MapSamplingSize; }
-        }
-
-        protected ICognitionState<TStateUids> CurrentState
+        
+        protected CognitionState<TStateUids> CurrentState
         {
             get { return _registeredStates[_registeredStates.Count - 1]; }
         }
@@ -35,9 +31,10 @@ namespace Assets.Cognitions
             MapStore = FindObjectOfType<MapStore>();
         }
 
+        protected IMap Map;
         protected virtual void Start()
         {
-            PathFinder = new SimplePathFinder(MapStore, MapSamplingSize);
+            Map = MapStore.GetMap(Scale, Fraction);
         }
 
         protected virtual void Update()
@@ -74,6 +71,14 @@ namespace Assets.Cognitions
             if (_registeredStates.Count > 0 && CurrentState != null)
             {
                 CurrentState.OnDrawGizmos();
+            }
+        }
+
+        private void OnGUI()
+        {
+            if (_registeredStates.Count > 0 && CurrentState != null)
+            {
+                CurrentState.OnGUI();
             }
         }
     }

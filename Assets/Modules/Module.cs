@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Maps;
+using UnityEngine;
 
 namespace Assets.Modules
 {
@@ -9,6 +10,8 @@ namespace Assets.Modules
         public float Drag;
         public float Mass;
         public Vector3 Size;
+
+        protected IMapStore MapStore;
 
         public Unit Unit { get; private set; }
 
@@ -30,6 +33,7 @@ namespace Assets.Modules
         protected virtual void Awake()
         {
             AttachRigidbody();
+            MapStore = FindObjectOfType<MapStore>();
         }
 
         public virtual void Mount(GameObject parentGameObject, Vector3 localPosition)

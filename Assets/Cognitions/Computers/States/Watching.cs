@@ -8,13 +8,13 @@ namespace Assets.Cognitions.Computers.States
 {
     public class Watching : ComputerState
     {
-        private readonly Vector3 _preferedLookDirection;
         private readonly bool _isLimited;
+        private readonly Vector3? _preferedLookDirection;
         private readonly float _timeLimit;
         private float _timeSpent;
-        
+
         public Watching(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnitControl unit, IMap map,
-            Vector3 preferedLookDirection, float timeLimit = 0)
+            Vector3? preferedLookDirection, float timeLimit = 0)
             : base(ComputerStateIds.Watching, movementHelper, targetingHelper, unit, map)
         {
             _preferedLookDirection = preferedLookDirection;
@@ -33,17 +33,33 @@ namespace Assets.Cognitions.Computers.States
                 return DisposeCurrent().AndReturnToThePreviousState();
             }
 
-            Unit.Movement.StopMoving();
-            ProbabilisticTriggering.PerformOnAverageOnceEvery(
-                Vector3.Dot(Unit.Targeting.TargetingDirection, _preferedLookDirection) < 0 ? 0.5f : 5,
-                TargetingHelper.ChangeSightDirection);
-
-            if (Unit.Targeting.VisionSensor.VisibleTargets.Count > 0)
+            if (Map.IsPositionDangorous(Unit.gameObject.transform.position))
             {
-                var target = TargetingHelper.GetHighestPriorityTarget();
+                ProbabilisticTriggering.PerformOnAverageOnceEvery(0.1f, ChangeDirection);
+            }
+
+            Unit.Movement.StopMoving();
+            ProbabilisticTriggering.PerformOnAverageOnceEvery(2, ChangeDirection);
+
+            if (Unit.Targeting.VisionSensor.VisibleTargetsCount > 0)
+            {
+                var target = Unit.Targeting.VisionSensor.GetClosestTarget();
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateChasing(target));
             }
             return this;
+        }
+
+        private void ChangeDirection()
+        {
+            if (_preferedLookDirection.HasValue && ProbabilisticTriggering.TestProbabilisty(0.3f))
+            {
+                Unit.Targeting.TurnTowards(_preferedLookDirection.Value);
+            }
+            else
+            {
+                var directions = Unit.Targeting.VisionSensor.GetThreeClosestDirections();
+                Unit.Targeting.TurnTowards(directions[Mathf.FloorToInt(Random.value * 3)]);
+            }
         }
     }
 }

@@ -25,12 +25,15 @@ namespace Assets.Cognitions.Computers.States
         {
             if (!Map.IsPositionDangorous(Unit.gameObject.transform.position))
             {
-                DisposeCurrent().AndReturnToThePreviousState();
+                return DisposeCurrent().AndReturnToThePreviousState();
             }
             ProbabilisticTriggering.PerformOnAverageOnceEvery(0.3f,
                 () => _path = Map.PathFinder.FindSafespot(Unit.gameObject.transform.position));
             MovementHelper.ManageMovingAlongThePath(_path);
-            TargetingHelper.ManageAimingAtTheTarget(_target);
+            if (_target.IsVisible)
+            {
+                TargetingHelper.ManageAimingAtTheTarget(_target);
+            }
             return this;
         }
 

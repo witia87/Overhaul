@@ -16,7 +16,7 @@ namespace Assets.Cognitions.Helpers
             _map = map;
         }
 
-        public virtual ITarget GetHighestPriorityTarget()
+        /*public virtual ITarget GetHighestPriorityTarget()
         {
             ITarget highestPriorityTargetSoFar = null;
             var minDistance = float.MaxValue;
@@ -26,7 +26,7 @@ namespace Assets.Cognitions.Helpers
                 foreach (var testedTarget in visionSensor.VisibleTargets)
                 {
                     var currentDistance =
-                        (testedTarget.LastSeenPosition - visionSensor.SightPosition).magnitude;
+                        (testedTarget.Position - visionSensor.SightPosition).magnitude;
                     if (currentDistance < minDistance)
                     {
                         highestPriorityTargetSoFar = testedTarget;
@@ -35,7 +35,7 @@ namespace Assets.Cognitions.Helpers
                 }
             }
             return highestPriorityTargetSoFar;
-        }
+        }*/
 
         public void ManageAimingAtTheTarget(ITarget target)
         {
@@ -53,13 +53,6 @@ namespace Assets.Cognitions.Helpers
                     _unit.Targeting.Gun.StopFiring();
                 }
             }
-        }
-
-        public void ChangeSightDirection()
-        {
-            var circle = Random.insideUnitCircle.normalized;
-            var directionCandidate = new Vector3(circle.x, 0, circle.y);
-            _unit.Targeting.TurnTowards(directionCandidate);
         }
     }
 }

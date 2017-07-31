@@ -25,17 +25,20 @@ namespace Assets.Modules.Targeting.Vision
             get { return gameObject.transform.position; }
         }
 
-        [SerializeField] private float _targetRememberingTime = 10;
-        private readonly List<Target> _targetsArchive = new List<Target>();
-        private readonly List<float> _targetsArchivisionTime = new List<float>();
-        public List<ITarget> VisibleTargets { get; private set; }
+        private readonly List<Target> _visibleTargets = new List<Target>();
+        public int VisibleTargetsCount { get { return _visibleTargets.Count; } }
+
+        public ITarget GetClosestTarget()
+        {
+            return _visibleTargets[0];
+        }
+
 
         protected override void Awake()
         {
             Length = VisionLenght;
             Width = Mathf.Tan(HorizontalAngleTolerance) * VisionLenght;
             Height = Mathf.Tan(VerticalAngleTolerance) * VisionLenght;
-            VisibleTargets = new List<ITarget>();
             base.Awake();
         }
 
@@ -47,8 +50,10 @@ namespace Assets.Modules.Targeting.Vision
 
         public void Update()
         {
-            VisibleTargets.Clear();
-
+            foreach (var visibleTarget in _visibleTargets)
+            {
+                visibleTarget.IsVisible = false;
+            }
             foreach (var collidingObject in CollidingGameObjects)
             {
                 var ray = collidingObject.transform.position + Vector3.up / 2 - gameObject.transform.position;
@@ -59,13 +64,7 @@ namespace Assets.Modules.Targeting.Vision
                     var unit = collidingObject.transform.root.GetComponent<Unit>();
                     if (unit != null)
                     {
-                        var target = FindInArchiveOrCreateTarget(unit);
-                        target.TargetLastSeenTime = Time.time;
-                        target.LastSeenPosition = unit.gameObject.transform.position;
-                        target.LastSeenMovementDirection = unit.Rigidbody.velocity.magnitude > 0.01
-                            ? unit.Rigidbody.velocity.normalized
-                            : Vector3.zero;
-                        VisibleTargets.Add(target);
+                        UpdateOrAddTarget(unit);
                     }
 
                     DrawArrow.ForDebug(gameObject.transform.position,
@@ -77,28 +76,73 @@ namespace Assets.Modules.Targeting.Vision
                         ray, Color.red, 0.1f, 0);
                 }
             }
+
+            RemoveNotVisibleTargets();
         }
 
-        private Target FindInArchiveOrCreateTarget(Unit unit)
+        private void UpdateOrAddTarget(Unit unit)
         {
-            for (var i = 0; i < _targetsArchive.Count; i++)
+            for (var i = 0; i < _visibleTargets.Count; i++)
             {
-                if (_targetsArchive[i].Unit == unit)
+                if (_visibleTargets[i].Unit == unit)
                 {
-                    _targetsArchivisionTime[i] = Time.time;
-                    return _targetsArchive[i];
+                    _visibleTargets[i].IsVisible = true;
+                    return;
                 }
-                if (_targetsArchivisionTime[i] < Time.time - _targetRememberingTime)
+            }
+
+            _visibleTargets.Add(new Target(unit));
+        }
+
+        private void RemoveNotVisibleTargets()
+        {
+            for (var i = 0; i < _visibleTargets.Count; i++)
+            {
+                if (!_visibleTargets[i].IsVisible)
                 {
-                    _targetsArchive.RemoveAt(i);
-                    _targetsArchivisionTime.RemoveAt(i);
+                    _visibleTargets[i].Memorize();
+                    _visibleTargets.RemoveAt(i);
                     i--;
                 }
             }
-                
-            _targetsArchive.Add(new Target(unit));
-            _targetsArchivisionTime.Add(Time.time);
-            return _targetsArchive[_targetsArchive.Count - 1];
+        }
+
+        readonly Vector3[] _raysToMeasureDistances = {
+            new Vector3(1,0,0),
+            new Vector3(1,0,1),
+            new Vector3(0,0,1),
+            new Vector3(-1,0,1),
+            new Vector3(-1,0,0),
+            new Vector3(-1,0,-1),
+            new Vector3(0,0,-1),
+            new Vector3(1,0,-1),
+        };
+
+        [SerializeField] private LayerMask _wallLayerMask;
+        public List<Vector3> GetThreeClosestDirections()
+        {
+            var distances = new List<float>();
+            var directions = new List<Vector3>(_raysToMeasureDistances);
+            for (int j = 0; j < 8; j++)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(gameObject.transform.position, _raysToMeasureDistances[j], out hit, _wallLayerMask))
+                {
+                    distances.Add(hit.distance);
+                }
+            }
+
+            var i = Mathf.FloorToInt(Random.value * 8);
+            while (directions.Count > 3)
+            {
+                if (distances[i] < distances[(i + 1) % directions.Count])
+                {
+                    distances.RemoveAt(i);
+                    directions.RemoveAt(i);
+                }
+                i = (i + 1) % directions.Count;
+            }
+            return directions;
         }
     }
 }

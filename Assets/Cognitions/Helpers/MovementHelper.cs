@@ -15,15 +15,18 @@ namespace Assets.Cognitions.Helpers
             _unit = unit;
             _map = map;
         }
-
+        
         public void ManageMovingAlongThePath(List<Vector3> path)
         {
-            TrimPath(path);
-
-            if (path.Count > 0)
+            int nodesToBeBypassedCount = FindClearRectangleIndex(path);
+            if (nodesToBeBypassedCount > 0)
             {
-                var targetPosition = FindShortcut(path);
-                _unit.Movement.GoTo(targetPosition);
+                path.RemoveRange(0, nodesToBeBypassedCount);
+            }
+
+            if (!_map.ArePositionsOnTheSameTile(_unit.gameObject.transform.position, path[0]))
+            {
+                _unit.Movement.GoTo(path[0]);
             }
             else
             {
@@ -31,28 +34,15 @@ namespace Assets.Cognitions.Helpers
             }
         }
 
-        private void TrimPath(List<Vector3> path)
+        private int FindClearRectangleIndex(List<Vector3> path)
         {
-            var i = 0;
-            while (i < path.Count && !_map.ArePositionsOnTheSameTile(_unit.gameObject.transform.position, path[i]))
+            var nodesToBeBypassedCount = 1;
+            while (nodesToBeBypassedCount < path.Count &&
+                   _map.IsRectangleClear(_unit.gameObject.transform.position, path[nodesToBeBypassedCount - 1]))
             {
-                i++;
+                nodesToBeBypassedCount++;
             }
-            if (i < path.Count)
-            {
-                path.RemoveRange(0, i + 1);
-            }
-        }
-
-        private Vector3 FindShortcut(List<Vector3> path)
-        {
-            var shortcutLength = 0;
-            while (shortcutLength < path.Count - 1 &&
-                   _map.IsRectangleClear(_unit.gameObject.transform.position, path[shortcutLength]))
-            {
-                shortcutLength++;
-            }
-            return path[shortcutLength];
+            return nodesToBeBypassedCount - 1;
         }
     }
 }

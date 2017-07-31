@@ -18,28 +18,33 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            Unit.Movement.StopMoving();
-            if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
+            if (Map.IsPositionDangorous(Unit.gameObject.transform.position))
             {
-                var distanceToTarget = (_target.LastSeenPosition - Unit.gameObject.transform.position).magnitude;
-                if (!_target.IsVisible)
-                {
-                    return DisposeCurrent().AndReturnToThePreviousState();
-                }
-
-                if (distanceToTarget > Unit.Targeting.Gun.EfectiveRange.y)
-                {
-                    return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateChasing(_target));
-                }
-
-                if (distanceToTarget < Unit.Targeting.Gun.EfectiveRange.x)
-                {
-                    return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateBacking(_target));
-                }
+                return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
             }
 
-            TargetingHelper.ManageAimingAtTheTarget(_target);
-            return this;
+            if (_target.IsVisible)
+            {
+                if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
+                {
+                    var distanceToTarget = (_target.Position - Unit.gameObject.transform.position).magnitude;
+                    if (distanceToTarget > Unit.Targeting.Gun.EfectiveRange.y)
+                    {
+                        return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateChasing(_target));
+                    }
+
+                    if (distanceToTarget < Unit.Targeting.Gun.EfectiveRange.x)
+                    {
+                        return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateBacking(_target));
+                    }
+
+                }
+                TargetingHelper.ManageAimingAtTheTarget(_target);
+                return this;
+            }
+
+            if (Unit.Targeting.IsGunMounted) Unit.Targeting.Gun.StopFiring();
+            return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateSearching(_target));
         }
     }
 }

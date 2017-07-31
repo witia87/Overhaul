@@ -3,12 +3,11 @@ using UnityEngine;
 
 namespace Assets.Modules.Targeting.Vision
 {
-    public interface ITarget
+    public interface ITarget: ITargetMemory
     {
         bool IsVisible { get; }
-        Vector3 LastSeenPosition { get; }
-        Vector3 LastSeenMovementDirection { get; }
+        Vector3 Position { get; }
+        Vector3 Velocity { get; }
         Vector3 Center { get; }
-        Vector3 MovementDirectionPrediction { get; }
     }
 }

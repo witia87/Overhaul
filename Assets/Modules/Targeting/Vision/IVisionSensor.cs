@@ -7,6 +7,8 @@ namespace Assets.Modules.Targeting.Vision
     {
         Vector3 SightDirection { get; }
         Vector3 SightPosition { get; }
-        List<ITarget> VisibleTargets { get; }
+        int VisibleTargetsCount { get; }
+        ITarget GetClosestTarget();
+        List<Vector3> GetThreeClosestDirections();
     }
 }

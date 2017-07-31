@@ -25,9 +25,10 @@ namespace Assets.Cognitions.Computers.States
 
         private void FindPath()
         {
-            if (Map.PathFinder.TryGetClosestAvailablePosition(Unit.gameObject.transform.position
-                                                              + (_target.LastSeenPosition - Unit.gameObject.transform
-                                                                     .position).normalized * 5,
+            var offset = (_target.Position - Unit.gameObject.transform
+                              .position).normalized * 5;
+            if (!Map.PathFinder.TryGetClosestAvailablePosition(Unit.gameObject.transform.position
+                                                              - offset,
                 10, out _backingPosition))
             {
                 _backingPosition = Unit.gameObject.transform.position;
@@ -45,9 +46,9 @@ namespace Assets.Cognitions.Computers.States
 
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
             {
-                var distanceToTarget = (_target.LastSeenPosition - Unit.gameObject.transform.position).magnitude;
                 if (_target.IsVisible)
                 {
+                    var distanceToTarget = (_target.Position - Unit.gameObject.transform.position).magnitude;
                     if (Unit.Targeting.IsGunMounted 
                         && distanceToTarget > Unit.Targeting.Gun.EfectiveRange.x
                         && distanceToTarget < Unit.Targeting.Gun.EfectiveRange.y)

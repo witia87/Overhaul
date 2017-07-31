@@ -19,12 +19,11 @@ namespace Assets.Cognitions.Computers.States
         {
             _target = target;
             _path = Map.PathFinder.FindPath(Unit.gameObject.transform.position,
-                _target.LastSeenPosition);
+                _target.Position);
         }
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            Unit.Targeting.Gun.StopFiring();
             if (Map.IsPositionDangorous(Unit.gameObject.transform.position))
             {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
@@ -32,24 +31,25 @@ namespace Assets.Cognitions.Computers.States
 
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
             {
-                var distanceToTarget = (_target.LastSeenPosition - Unit.gameObject.transform.position).magnitude;
                 if (_target.IsVisible)
                 {
+                    var distanceToTarget = (_target.Position - Unit.gameObject.transform.position).magnitude;
                     if (Unit.Targeting.IsGunMounted 
                         && distanceToTarget > Unit.Targeting.Gun.EfectiveRange.x
                         && distanceToTarget < Unit.Targeting.Gun.EfectiveRange.y)
                     {
+                        Unit.Movement.StopMoving();
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateFiring(_target));
                     }
                     _path = Map.PathFinder.FindPath(Unit.gameObject.transform.position,
-                        _target.LastSeenPosition);
+                        _target.Position);
                     TargetingHelper.ManageAimingAtTheTarget(_target);
                     MovementHelper.ManageMovingAlongThePath(_path);
                 }
                 else
                 {
+                    if (Unit.Targeting.IsGunMounted) Unit.Targeting.Gun.StopFiring();
                     return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateSearching(_target));
-
                 }
             }
             return this;

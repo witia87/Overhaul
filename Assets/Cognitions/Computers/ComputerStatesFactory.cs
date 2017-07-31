@@ -23,7 +23,7 @@ namespace Assets.Cognitions.Computers
             _targetingHelper = targetingHelper;
         }
 
-        public Watching CreateWatching(Vector3 lookDirection, float timeLimit = 0)
+        public Watching CreateWatching(Vector3? lookDirection, float timeLimit = 0)
         {
             return new Watching(_movementHelper, _targetingHelper, _unit, _map, lookDirection, timeLimit);
         }
@@ -46,6 +46,11 @@ namespace Assets.Cognitions.Computers
         public Searching CreateSearching(ITarget target)
         {
             return new Searching(_movementHelper, _targetingHelper, _unit, _map, target);
+        }
+
+        public Moving CreateMoving(Vector3 targetPosition)
+        {
+            return new Moving(_movementHelper, _targetingHelper, _unit, _map, targetPosition);
         }
 
         public Backing CreateBacking(ITarget target)

@@ -36,6 +36,8 @@ namespace Assets.Maps.Dangers
 
         public void OnDrawGizmos()
         {
+            var offset = new Vector3(0.2f, 0, 0.2f);
+            var offset2 = new Vector3(-0.2f, 0, 0.2f);
             for (var z = 0; z < _baseGrid.GetLength(0); z++)
             {
                 for (var x = 0; x < _baseGrid.GetLength(1); x++)
@@ -44,13 +46,19 @@ namespace Assets.Maps.Dangers
                     {
                         if (_baseGrid[z, x].IsDangerous)
                         {
-                            DrawArrow.ForDebug(_baseGrid[z, x].Position + Vector3.up,
-                                Vector3.down, Color.red, 0.1f, 0);
+                            Gizmos.color = Color.red;
+                            //Gizmos.DrawCube(_baseGrid[z, x].Position, new Vector3(1,0.1f,1));
+                            DrawArrow.ForDebug(_baseGrid[z, x].Position - offset, 
+                                2 * offset, Color.red, 0.1f, 0);
+                            DrawArrow.ForDebug(_baseGrid[z, x].Position - offset2,
+                                2 * offset2, Color.red, 0.1f, 0);
                         }
                         else
                         {
-                            DrawArrow.ForDebug(_baseGrid[z, x].Position + Vector3.up,
-                                Vector3.down, Color.green, 0.1f, 0);
+                            //Gizmos.color = Color.green;
+                            //Gizmos.DrawCube(_baseGrid[z, x].Position, new Vector3(1, 0.1f, 1));
+                            //DrawArrow.ForDebug(_baseGrid[z, x].Position + Vector3.up,
+                            //    Vector3.down, Color.green, 0.1f, 0);
                         }
                     }
                 }

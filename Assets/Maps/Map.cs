@@ -108,10 +108,11 @@ namespace Assets.Maps
             var x = Mathf.FloorToInt(position.x - 0.5f * _scale);
             var z = Mathf.FloorToInt(position.z - 0.5f * _scale);
 
-            var sgnX = Mathf.RoundToInt(Mathf.Sign(position.x - Mathf.Round(position.x) - 0.5f));
-            var sgnZ = Mathf.RoundToInt(Mathf.Sign(position.z - Mathf.Round(position.z) - 0.5f));
+            var nodePosition = GetNodePosition(x, z);
+            var sgnX = Mathf.RoundToInt(Mathf.Sign(position.x - nodePosition.x));
+            var sgnZ = Mathf.RoundToInt(Mathf.Sign(position.z - nodePosition.z));
             var i = 0;
-            while ((new Vector3(x + sgnX * i + _scale * 0.5f, 0, z + sgnZ * i + _scale * 0.5f) - position).magnitude < distanceTolerance)
+            while ((GetNodePosition(x + sgnX * i, z + sgnZ * i) - position).magnitude < distanceTolerance)
             {
                 if (TrySetNode(x + sgnX * i, z, out node) ||
                     TrySetNode(x, z + sgnZ * i, out node) ||
@@ -130,14 +131,19 @@ namespace Assets.Maps
             return false;
         }
 
+        private Vector3 GetNodePosition(int x, int z)
+        {
+            return new Vector3(x + (_scale + 1) * 0.5f, 0, z + (_scale + 1) * 0.5f);
+        }
+
         private bool TrySetNode(int x, int z, out INode node)
         {
             if (x >= 0 && x < Grid.GetLength(1) &&
                 z >= 0 && z < Grid.GetLength(0) &&
-                Grid[x, z] != null
+                Grid[z, x] != null
             )
             {
-                node = Grid[x, z];
+                node = Grid[z, x];
                 return true;
             }
             node = null;

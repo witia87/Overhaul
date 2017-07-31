@@ -62,6 +62,7 @@ namespace Assets.Maps
 
         void OnDrawGizmos()
         {
+            if(_dangers != null)
             _dangers.OnDrawGizmos();
         }
     }

@@ -55,12 +55,15 @@ namespace Assets.Maps.PathFinders
         private List<Vector3> RecreatePath(INode startNode, INode endNode)
         {
             var list = new List<Vector3>();
+            list.Add(endNode.Position);
             var currentNode = endNode;
+
             while (currentNode != startNode)
             {
-                list.Add(currentNode.Position);
                 currentNode = _visitedNodes[currentNode.z, currentNode.x];
+                list.Add(currentNode.Position);
             }
+
             list.Reverse();
 
             return list;

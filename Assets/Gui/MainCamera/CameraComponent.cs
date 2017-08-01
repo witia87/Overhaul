@@ -63,7 +63,7 @@ namespace Assets.Gui.MainCamera
 
             _cameraHook = new GameObject("Camera Hook");
             _cameraHook.transform.localEulerAngles = gameObject.transform.localEulerAngles;
-            _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, -10));
+            _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, 0));
 
             PixelsPerUnit = _pixelsPerOneUnitInHeight/Mathf.Cos(CameraEulerAngles.x*Mathf.Deg2Rad);
 

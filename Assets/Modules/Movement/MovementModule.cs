@@ -30,8 +30,8 @@ namespace Assets.Modules.Movement
 
         public Vector3 UnitDirection
         {
-            get { return gameObject.transform.forward; }
-            set { gameObject.transform.forward = value; }
+            get { return transform.forward; }
+            set { transform.forward = value; }
         }
 
         public Vector3 MovementDirection
@@ -81,7 +81,7 @@ namespace Assets.Modules.Movement
 
         public void GoTo(Vector3 position)
         {
-            Move(position - gameObject.transform.position);
+            Move(position - transform.position);
         }
 
         public bool IsGrounded { get; private set; }
@@ -109,17 +109,17 @@ namespace Assets.Modules.Movement
             if (IsSetToMove)
             {
                 Vector3 torque;
-                if (Vector3.Dot(gameObject.transform.forward, GlobalDirectionToTurnTowards) < 0)
+                if (Vector3.Dot(transform.forward, GlobalDirectionToTurnTowards) < 0)
                 {
                     // If legs are supposed to turn backwards they should do it toards the direction of torso.
                     // Turn with maximal speed then.
-                    torque = Vector3.Cross(gameObject.transform.forward, TargetingModule.TargetingDirection);
+                    torque = Vector3.Cross(transform.forward, TargetingModule.TargetingDirection);
                     torque.Normalize();
                 }
                 else
                 {
                     // If it is a small turn, then use the Cross Product modifier (v x v = 0)
-                    torque = Vector3.Cross(gameObject.transform.forward, GlobalDirectionToTurnTowards);
+                    torque = Vector3.Cross(transform.forward, GlobalDirectionToTurnTowards);
                 }
 
                 var speedModifier = 0.75f + 0.25f*Vector3.Dot(MovementDirection, TargetingModule.TargetingDirection);
@@ -130,8 +130,8 @@ namespace Assets.Modules.Movement
             }
             else
             {
-                var direction = ((gameObject.transform.forward + TargetingModule.TargetGlobalDirection)/2).normalized;
-                var torque = Vector3.Cross(gameObject.transform.forward, direction)*AngularAcceleration;
+                var direction = ((transform.forward + TargetingModule.TargetGlobalDirection)/2).normalized;
+                var torque = Vector3.Cross(transform.forward, direction)*AngularAcceleration;
                 Rigidbody.AddTorque(torque);
             }
         }
@@ -143,7 +143,7 @@ namespace Assets.Modules.Movement
 
         protected void OnDrawGizmos()
         {
-            DrawArrow.ForDebug(gameObject.transform.position + UnitDirection*Size.z/2, UnitDirection,
+            DrawArrow.ForDebug(transform.position + UnitDirection*Size.z/2, UnitDirection,
                 Color.magenta, 0.1f, 20);
         }
     }

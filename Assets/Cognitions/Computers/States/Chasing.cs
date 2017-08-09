@@ -18,13 +18,13 @@ namespace Assets.Cognitions.Computers.States
             : base(ComputerStateIds.Chasing, movementHelper, targetingHelper, unit, map)
         {
             _target = target;
-            _path = Map.PathFinder.FindPath(Unit.gameObject.transform.position,
+            _path = Map.PathFinder.FindPath(Unit.Position,
                 _target.Position);
         }
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            if (Map.IsPositionDangorous(Unit.gameObject.transform.position))
+            if (Map.IsPositionDangorous(Unit.Position))
             {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
             }
@@ -33,7 +33,7 @@ namespace Assets.Cognitions.Computers.States
             {
                 if (_target.IsVisible)
                 {
-                    var distanceToTarget = (_target.Position - Unit.gameObject.transform.position).magnitude;
+                    var distanceToTarget = (_target.Position - Unit.Position).magnitude;
                     if (Unit.Targeting.IsGunMounted 
                         && distanceToTarget > Unit.Targeting.Gun.EfectiveRange.x
                         && distanceToTarget < Unit.Targeting.Gun.EfectiveRange.y)
@@ -41,7 +41,7 @@ namespace Assets.Cognitions.Computers.States
                         Unit.Movement.StopMoving();
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateFiring(_target));
                     }
-                    _path = Map.PathFinder.FindPath(Unit.gameObject.transform.position,
+                    _path = Map.PathFinder.FindPath(Unit.Position,
                         _target.Position);
                     TargetingHelper.ManageAimingAtTheTarget(_target);
                     MovementHelper.ManageMovingAlongThePath(_path);

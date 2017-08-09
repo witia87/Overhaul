@@ -14,7 +14,7 @@ namespace Assets.Modules.Targeting.Guns
 
         public Vector3 SightPosition
         {
-            get { return gameObject.transform.position; }
+            get { return transform.position; }
         }
 
         public bool IsGunVisible()

@@ -18,7 +18,7 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            if (Map.IsPositionDangorous(Unit.gameObject.transform.position))
+            if (Map.IsPositionDangorous(Unit.Position))
             {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
             }
@@ -27,7 +27,7 @@ namespace Assets.Cognitions.Computers.States
             {
                 if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
                 {
-                    var distanceToTarget = (_target.Position - Unit.gameObject.transform.position).magnitude;
+                    var distanceToTarget = (_target.Position - Unit.Position).magnitude;
                     if (distanceToTarget > Unit.Targeting.Gun.EfectiveRange.y)
                     {
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateChasing(_target));

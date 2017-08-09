@@ -23,7 +23,7 @@ namespace Assets.Modules.Targeting
 
         public Vector3 SightPosition
         {
-            get { return gameObject.transform.TransformPoint(SightLocalOffset); }
+            get { return transform.TransformPoint(SightLocalOffset); }
         }
 
         public IVisionSensor VisionSensor
@@ -33,7 +33,7 @@ namespace Assets.Modules.Targeting
 
         public Vector3 TargetingDirection
         {
-            get { return gameObject.transform.forward; }
+            get { return transform.forward; }
         }
 
         public bool IsGunMounted
@@ -53,7 +53,7 @@ namespace Assets.Modules.Targeting
 
         public void LookAt(Vector3 point)
         {
-            TurnTowards(point - gameObject.transform.position);
+            TurnTowards(point - transform.position);
         }
 
         public void DropGun()
@@ -62,11 +62,11 @@ namespace Assets.Modules.Targeting
             if (gunSlot && gunSlot.IsModuleMounted)
             {
                 var module = gunSlot.MountedModule;
-                module.gameObject.transform.position = module.gameObject.transform.position +
-                                                       gameObject.transform.forward;
+                module.transform.position = module.transform.position +
+                                                       transform.forward;
                 gunSlot.UnmountModule();
                 Gun = null;
-                module.Rigidbody.AddForce(gameObject.transform.forward*15f, ForceMode.Impulse);
+                module.Rigidbody.AddForce(transform.forward*15f, ForceMode.Impulse);
             }
         }
 
@@ -104,12 +104,12 @@ namespace Assets.Modules.Targeting
                 }
 
                 var angle = Vector3.Angle(targetGlobalDirection, TargetingDirection);
-                if (Vector3.Dot(gameObject.transform.right, targetGlobalDirection) < 0)
+                if (Vector3.Dot(transform.right, targetGlobalDirection) < 0)
                 {
                     angle *= -1;
                 }
                 var angleToTurn = Mathf.SmoothDampAngle(0, angle, ref _velocity, SmoothTime);
-                gameObject.transform.forward = Quaternion.Euler(0, angleToTurn, 0)*gameObject.transform.forward;
+                transform.forward = Quaternion.Euler(0, angleToTurn, 0)*transform.forward;
                 if (Mathf.Abs(angle) < 1)
                 {
                     _isTargetDirectionSet = false;
@@ -120,7 +120,7 @@ namespace Assets.Modules.Targeting
 
         private void OnDrawGizmos()
         {
-            DrawArrow.ForGizmo(gameObject.transform.position, gameObject.transform.forward*2, Color.red);
+            DrawArrow.ForGizmo(transform.position, transform.forward*2, Color.red);
         }
     }
 }

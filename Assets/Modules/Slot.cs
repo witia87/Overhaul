@@ -47,7 +47,7 @@ namespace Assets.Modules
         {
             if (IsModuleMounted)
             {
-                MountedModule.transform.parent = gameObject.transform;
+                MountedModule.transform.parent = transform;
                 MountedModule.transform.localPosition = Position;
             }
         }
@@ -55,7 +55,7 @@ namespace Assets.Modules
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(gameObject.transform.TransformPoint(Position), 0.02f);
+            Gizmos.DrawSphere(transform.TransformPoint(Position), 0.02f);
         }
     }
 }

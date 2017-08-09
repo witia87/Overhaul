@@ -52,7 +52,7 @@ namespace Assets.Gui
                 new Vector3(+screenWidth/2, -screenHeight/2, 0),
                 new Vector3(-screenWidth/2, +screenHeight/2, 0),
                 new Vector3(+screenWidth/2, +screenHeight/2, 0));
-            _background.transform.parent = gameObject.transform;
+            _background.transform.parent = transform;
             _background.transform.localEulerAngles = Vector3.zero;
             _background.transform.localPosition = Vector3.back;
         }
@@ -72,7 +72,7 @@ namespace Assets.Gui
                 new Vector3(+boardWidth/2, -boardHeight/2, 0),
                 new Vector3(-boardWidth/2, +boardHeight/2, 0),
                 new Vector3(+boardWidth/2, +boardHeight/2, 0));
-            _board.transform.parent = gameObject.transform;
+            _board.transform.parent = transform;
             _board.transform.localEulerAngles = Vector3.zero;
             _board.transform.localPosition = Vector3.back;
         }
@@ -80,7 +80,7 @@ namespace Assets.Gui
         private void CreateGuiCamera(float screenWidth, float screenHeight)
         {
             GuiCamera = new GameObject("Gui Camera").AddComponent<Camera>();
-            GuiCamera.transform.parent = gameObject.transform;
+            GuiCamera.transform.parent = transform;
             GuiCamera.cameraType = CameraType.Preview;
             GuiCamera.orthographic = true;
             GuiCamera.transform.localPosition = Vector3.back*10;

@@ -20,7 +20,7 @@ namespace Assets.Cognitions.Computers.States
             : base(ComputerStateIds.Searching, movementHelper, targetingHelper, unit, map)
         {
             _targetMemory = targetMemory;
-            _initialDistance = (_targetMemory.LastSeenPosition - Unit.gameObject.transform.position).magnitude;
+            _initialDistance = (_targetMemory.LastSeenPosition - Unit.Position).magnitude;
 
             FindPath();
         }
@@ -33,13 +33,13 @@ namespace Assets.Cognitions.Computers.States
             {
                 _targetPositionPrediction = _targetMemory.LastSeenPosition;
             }
-            _path = Map.PathFinder.FindPath(Unit.gameObject.transform.position, _targetPositionPrediction);
+            _path = Map.PathFinder.FindPath(Unit.Position, _targetPositionPrediction);
         }
         
         public override CognitionState<ComputerStateIds> Update()
         {
             Unit.Targeting.Gun.StopFiring();
-            if (Map.ArePositionsOnTheSameTile(Unit.gameObject.transform.position, _path[0]))
+            if (Map.ArePositionsOnTheSameTile(Unit.Position, _path[0]))
             {
                 return DisposeCurrent()
                     .AndChangeStateTo(StatesFactory.CreateMoving(_targetMemory.LastSeenPosition));

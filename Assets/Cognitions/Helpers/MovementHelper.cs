@@ -24,7 +24,7 @@ namespace Assets.Cognitions.Helpers
                 path.RemoveRange(0, nodesToBeBypassedCount);
             }
 
-            if (!_map.ArePositionsOnTheSameTile(_unit.gameObject.transform.position, path[0]))
+            if (!_map.ArePositionsOnTheSameTile(_unit.Position, path[0]))
             {
                 _unit.Movement.GoTo(path[0]);
             }
@@ -38,7 +38,7 @@ namespace Assets.Cognitions.Helpers
         {
             var nodesToBeBypassedCount = 1;
             while (nodesToBeBypassedCount < path.Count &&
-                   _map.IsRectangleClear(_unit.gameObject.transform.position, path[nodesToBeBypassedCount - 1]))
+                   _map.IsRectangleClear(_unit.Position, path[nodesToBeBypassedCount - 1]))
             {
                 nodesToBeBypassedCount++;
             }

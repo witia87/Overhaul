@@ -12,7 +12,6 @@ namespace Assets.Modules.Targeting.Guns
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);
             Animator.SetBool("IsFiring", Module.IsFiring);
-
         }
     }
 }

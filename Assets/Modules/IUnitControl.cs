@@ -8,8 +8,8 @@ namespace Assets.Modules
     {
         IMovementControl Movement { get; }
         ITargetingControl Targeting { get; }
-
-        GameObject gameObject { get; }
+        
+        Vector3 Position { get; }
         Rigidbody Rigidbody { get; }
     }
 }

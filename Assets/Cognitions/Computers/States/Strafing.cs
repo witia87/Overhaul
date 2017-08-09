@@ -18,17 +18,17 @@ namespace Assets.Cognitions.Computers.States
             : base(ComputerStateIds.Strafing, movementHelper, targetingHelper, unit, map)
         {
             _target = target;
-            _path = Map.PathFinder.FindSafespot(Unit.gameObject.transform.position);
+            _path = Map.PathFinder.FindSafespot(Unit.Position);
         }
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            if (!Map.IsPositionDangorous(Unit.gameObject.transform.position))
+            if (!Map.IsPositionDangorous(Unit.Position))
             {
                 return DisposeCurrent().AndReturnToThePreviousState();
             }
             ProbabilisticTriggering.PerformOnAverageOnceEvery(0.3f,
-                () => _path = Map.PathFinder.FindSafespot(Unit.gameObject.transform.position));
+                () => _path = Map.PathFinder.FindSafespot(Unit.Position));
             MovementHelper.ManageMovingAlongThePath(_path);
             if (_target.IsVisible)
             {

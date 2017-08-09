@@ -6,6 +6,11 @@ namespace Assets.Modules
 {
     public class Unit : MonoBehaviour, IUnitControl
     {
+        public Vector3 Position
+        {
+            get { return transform.position; }
+        }
+
         public Rigidbody Rigidbody { get; private set; }
 
         public IMovementControl Movement { get; private set; }

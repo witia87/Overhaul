@@ -15,7 +15,7 @@ namespace Assets.Modules.Targeting.Guns.Bullets
         public void Create(float horrizontalCorrection)
         {
             var bullet = (GameObject) Instantiate(Resources.Load("Prefabs\\Modules\\Targeting\\Guns\\Bullets\\Bullet"));
-            bullet.transform.parent = gameObject.transform;
+            bullet.transform.parent = transform;
             bullet.transform.localScale = BulletsSize;
             bullet.transform.localPosition = Vector3.zero;
             bullet.transform.localEulerAngles = new Vector3((Random.value - 0.5f)*2*AngleOfImprecision,

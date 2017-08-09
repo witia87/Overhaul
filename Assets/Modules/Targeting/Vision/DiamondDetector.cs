@@ -65,7 +65,7 @@ namespace Assets.Modules.Targeting.Vision
 
         protected virtual void OnTriggerExit(Collider other)
         {
-            var localPosition = gameObject.transform.InverseTransformPoint(other.transform.position);
+            var localPosition = transform.InverseTransformPoint(other.transform.position);
             if (CollidingGameObjects.Contains(other.gameObject) &&
                 Mathf.Abs(localPosition.x/(Width/2))
                 + Mathf.Abs(localPosition.y/(Height/2))

@@ -13,7 +13,7 @@ namespace Assets.Modules
 
         protected IMapStore MapStore;
 
-        public Unit Unit { get; private set; }
+        public IUnitControl Unit { get; private set; }
 
         public bool IsConntectedToUnit
         {
@@ -38,10 +38,10 @@ namespace Assets.Modules
 
         public virtual void Mount(GameObject parentGameObject, Vector3 localPosition)
         {
-            gameObject.transform.parent = parentGameObject.transform;
-            gameObject.transform.localPosition = localPosition;
-            gameObject.transform.localEulerAngles = Vector3.zero;
-            Unit = gameObject.transform.root.gameObject.GetComponent<Unit>();
+            transform.parent = parentGameObject.transform;
+            transform.localPosition = localPosition;
+            transform.localEulerAngles = Vector3.zero;
+            Unit = transform.root.gameObject.GetComponent<Unit>();
             DestroyImmediate(_rigidbody);
             Unit.Rigidbody.mass += Mass;
         }
@@ -49,7 +49,7 @@ namespace Assets.Modules
         public virtual void Unmount()
         {
             Unit.Rigidbody.mass -= Mass;
-            gameObject.transform.parent = null;
+            transform.parent = null;
             Unit = null;
             AttachRigidbody();
         }

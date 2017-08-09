@@ -39,7 +39,7 @@ namespace Assets.Gui.MainCamera
 
         public Vector3 CameraEulerAngles
         {
-            get { return gameObject.transform.localEulerAngles; }
+            get { return transform.localEulerAngles; }
         }
 
         public Vector3 FocusPoint
@@ -62,7 +62,7 @@ namespace Assets.Gui.MainCamera
             Raycasts = new RaycastsHelper(MainCamera, _floorLayerMask, _targetLayerMask);
 
             _cameraHook = new GameObject("Camera Hook");
-            _cameraHook.transform.localEulerAngles = gameObject.transform.localEulerAngles;
+            _cameraHook.transform.localEulerAngles = transform.localEulerAngles;
             _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, 0));
 
             PixelsPerUnit = _pixelsPerOneUnitInHeight/Mathf.Cos(CameraEulerAngles.x*Mathf.Deg2Rad);
@@ -77,11 +77,12 @@ namespace Assets.Gui.MainCamera
             MainCamera.aspect = FieldOfViewWidth/FieldOfViewHeight;
             MainCamera.targetTexture = _guiStore.BoardTexture;
             Update();
+            //MainCamera.SetReplacementShader(Resources.Load("Materials/Shaders/Outline", typeof(Shader)) as Shader, "Outline");
         }
 
         private void Update()
         {
-            var position = FocusObject.transform.position - gameObject.transform.TransformDirection(Vector3.forward*30);
+            var position = FocusObject.transform.position - transform.TransformDirection(Vector3.forward*30);
             MainCamera.transform.position = Pixelation.GetClosestPixelatedPosition(position);
         }
     }

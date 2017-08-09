@@ -17,12 +17,12 @@ namespace Assets.Modules.Targeting.Vision
 
         public Vector3 SightDirection
         {
-            get { return gameObject.transform.forward; }
+            get { return transform.forward; }
         }
 
         public Vector3 SightPosition
         {
-            get { return gameObject.transform.position; }
+            get { return transform.position; }
         }
 
         private readonly List<Target> _visibleTargets = new List<Target>();
@@ -56,9 +56,9 @@ namespace Assets.Modules.Targeting.Vision
             }
             foreach (var collidingObject in CollidingGameObjects)
             {
-                var ray = collidingObject.transform.position + Vector3.up / 2 - gameObject.transform.position;
+                var ray = collidingObject.transform.position + Vector3.up / 2 - transform.position;
                 RaycastHit hit;
-                if (Physics.Raycast(gameObject.transform.position, ray, out hit, VisionLenght, _layerMask)
+                if (Physics.Raycast(transform.position, ray, out hit, VisionLenght, _layerMask)
                     && collidingObject.transform.root == hit.transform.root)
                 {
                     var unit = collidingObject.transform.root.GetComponent<Unit>();
@@ -67,12 +67,12 @@ namespace Assets.Modules.Targeting.Vision
                         UpdateOrAddTarget(unit);
                     }
 
-                    DrawArrow.ForDebug(gameObject.transform.position,
+                    DrawArrow.ForDebug(transform.position,
                         ray, Color.green, 0.1f, 0);
                 }
                 else
                 {
-                    DrawArrow.ForDebug(gameObject.transform.position,
+                    DrawArrow.ForDebug(transform.position,
                         ray, Color.red, 0.1f, 0);
                 }
             }
@@ -126,7 +126,7 @@ namespace Assets.Modules.Targeting.Vision
             for (int j = 0; j < 8; j++)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(gameObject.transform.position, _raysToMeasureDistances[j], out hit, _wallLayerMask))
+                if (Physics.Raycast(transform.position, _raysToMeasureDistances[j], out hit, _wallLayerMask))
                 {
                     distances.Add(hit.distance);
                 }

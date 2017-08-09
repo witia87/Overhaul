@@ -15,7 +15,7 @@ namespace Assets.Modules.Targeting.Vision
                 {
                     throw new ApplicationException("Target is no longer visible, and must be treated as a memory.");
                 }
-                return Unit.transform.position;
+                return Unit.Position;
             }
         }
 
@@ -31,7 +31,7 @@ namespace Assets.Modules.Targeting.Vision
             }
         }
 
-        public Unit Unit { get; private set; }
+        public IUnitControl Unit { get; private set; }
 
         public Vector3 Center
         {
@@ -61,7 +61,7 @@ namespace Assets.Modules.Targeting.Vision
                 throw new ApplicationException("Target already memorized."); // TODO: Remove later
             }
             _isMemorized = true;
-            _memorizedLastSeenPosition = Unit.transform.position;
+            _memorizedLastSeenPosition = Unit.Position;
             _memorizedLastSeenVelocity = Unit.Rigidbody.velocity;
             _memorizedLastSeenTime = Time.time;
 
@@ -88,7 +88,7 @@ namespace Assets.Modules.Targeting.Vision
                 {
                     return _memorizedLastSeenPosition;
                 }
-                return Unit.transform.position;
+                return Unit.Position;
             }
         }
 

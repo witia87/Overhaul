@@ -18,7 +18,7 @@ namespace Assets.Cognitions.Computers.States
             : base(ComputerStateIds.Searching, movementHelper, targetingHelper, unit, map)
         {
             _targetPositoon = targetPosition;
-            _path = Map.PathFinder.FindPath(Unit.gameObject.transform.position, _targetPositoon);
+            _path = Map.PathFinder.FindPath(Unit.Position, _targetPositoon);
         }
 
         public override CognitionState<ComputerStateIds> Update()
@@ -27,7 +27,7 @@ namespace Assets.Cognitions.Computers.States
 
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
             {
-                if (Map.ArePositionsOnTheSameTile(Unit.gameObject.transform.position, _path[0]))
+                if (Map.ArePositionsOnTheSameTile(Unit.Position, _path[0]))
                 {
                     return DisposeCurrent()
                         .AndChangeStateTo(StatesFactory.CreateWatching(null, 3));

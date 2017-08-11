@@ -1,12 +1,14 @@
-﻿Shader "Overhaul/Outline"
+﻿Shader "Overhaul/BoardShader"
 {
 	Properties
 	{
-		[PerRendererData] _MainTex("Base (RGB)", 2D) = "white" {}
+		_MainTex("Base (RGB)", 2D) = "white" {}
+		_BackgroundColor("Background Color", Color) = (0,0,1,0)
 	}
 
 	CGINCLUDE
 	#include "UnityCG.cginc"
+	#include "./ShaderUtilities.cginc"
 	ENDCG
 
 	SubShader
@@ -26,11 +28,10 @@
 		ZWrite Off
 		Fog{ Mode Off }
 		Blend SrcAlpha OneMinusSrcAlpha
-
+			
 		Pass
 		{
 			CGPROGRAM
-
 			#pragma vertex vert
 			#pragma fragment frag
 
@@ -39,6 +40,7 @@
 			int _OutlineSize;
 			int _TexWidth;
 			int _TexHeight;
+			float4 _BackgroundColor;
 
 			struct vertexInput {
 				float4 vertex: POSITION;
@@ -60,25 +62,45 @@
 				return output;
 			}
 
+			bool equalsBackground(float4 color) {
+				return color.r == _BackgroundColor.r &&
+					color.g == _BackgroundColor.g &&
+					color.b == _BackgroundColor.b;
+			}
+
+			bool equals(float4 a, float4 b) {
+				return a.r == b.r &&
+					a.g == b.g &&
+					a.b == b.b;
+			}
+
+
 			float4 frag(vertexOutput input) : COLOR
 			{
 				float4 centerColor = tex2D(_MainTex, input.texcoord);
 				float4 upColor = tex2D(_MainTex, input.texcoord + float2(0, _OutlineSize / (float)_TexHeight));
-				float4 downColor = tex2D(_MainTex, input.texcoord + float2(0, - _OutlineSize / (float)_TexHeight));
+				float4 downColor = tex2D(_MainTex, input.texcoord + float2(0, -_OutlineSize / (float)_TexHeight));
 				float4 leftColor = tex2D(_MainTex, input.texcoord + float2(-_OutlineSize / (float)_TexWidth, 0));
 				float4 rightColor = tex2D(_MainTex, input.texcoord + float2(_OutlineSize / (float)_TexWidth, 0));
+				
+				/*if (equalsBackground(centerColor) &&
+					(!(equalsBackground(upColor) &&
+						equalsBackground(downColor) &&
+						equalsBackground(leftColor) &&
+						equalsBackground(rightColor))))
+				{
+					return float4(1, 0, 0, 0.5);
+				}*/
 
-				float value;
-				if (centerColor.a > 0) {
-					value = centerColor.a;
-					return float4(0,0,0,0);
+				if (equals(centerColor, float4(1,0,0,1)))
+				{
+					return float4(1, 0, 0, 0.5);
 				}
-				else {
-					value = min(1.0, centerColor.a + upColor.a + downColor.a + leftColor.a + rightColor.a);
-					return float4(value, 0, 0, value);
-				}
+
+				return float4(0, 0, 0, 0);
+				
 			}
-			ENDCG	
+			ENDCG
 		}
-	}	
+	}
 }

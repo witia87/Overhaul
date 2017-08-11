@@ -1,4 +1,4 @@
-﻿using Assets.Gui.MainCamera;
+﻿using Assets.Gui.Cameras;
 using UnityEngine;
 
 namespace Assets.Cognitions.Players.Controllers

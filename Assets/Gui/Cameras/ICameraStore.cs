@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Gui.MainCamera
+namespace Assets.Gui.Cameras
 {
     public interface ICameraStore
     {

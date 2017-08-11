@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Gui.MainCamera
+namespace Assets.Gui.Cameras
 {
     public class CameraComponent : MonoBehaviour, ICameraStore
     {
@@ -75,8 +75,8 @@ namespace Assets.Gui.MainCamera
             MainCamera.orthographicSize = FieldOfViewHeight/2;
             MainCamera.targetTexture = _guiStore.BoardTexture;
             MainCamera.aspect = FieldOfViewWidth/FieldOfViewHeight;
-            MainCamera.targetTexture = _guiStore.BoardTexture;
             Update();
+            GetComponentInChildren<OutlineCameraComponent>().Initialize();
             //MainCamera.SetReplacementShader(Resources.Load("Materials/Shaders/Outline", typeof(Shader)) as Shader, "Outline");
         }
 

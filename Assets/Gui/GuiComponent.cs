@@ -5,12 +5,13 @@ namespace Assets.Gui
     public class GuiComponent : MonoBehaviour, IGuiStore
     {
         private GameObject _background;
-
         private GameObject _board;
 
         [SerializeField] public int _pixelationSize = 4;
 
         [HideInInspector] public float GuiFragmentSizeInUnits = 0.1f;
+
+        [SerializeField] public int _outlineSize = 1;
 
         public Camera GuiCamera { get; private set; }
 
@@ -21,6 +22,10 @@ namespace Assets.Gui
             get { return _pixelationSize; }
         }
 
+        public int OutlineSize
+        {
+            get { return _outlineSize; }
+        }
 
         public int BoardPixelWidth
         {
@@ -40,6 +45,8 @@ namespace Assets.Gui
             CreateBackground(screenWidth, screenHeight);
 
             CreateBoard(screenWidth, screenHeight);
+
+            CreateOutlineBoard(screenWidth, screenHeight);
 
             CreateGuiCamera(screenWidth, screenHeight);
         }
@@ -67,6 +74,7 @@ namespace Assets.Gui
 
             var boardMaterial = Resources.Load("Materials/BoardMaterial", typeof (Material)) as Material;
             boardMaterial.mainTexture = BoardTexture;
+            
             _board = PrecisionQuadFactory.Create("Board Quad", boardMaterial,
                 new Vector3(-boardWidth/2, -boardHeight/2, 0),
                 new Vector3(+boardWidth/2, -boardHeight/2, 0),
@@ -75,6 +83,35 @@ namespace Assets.Gui
             _board.transform.parent = transform;
             _board.transform.localEulerAngles = Vector3.zero;
             _board.transform.localPosition = Vector3.back;
+        }
+
+
+        public RenderTexture OutlineTexture { get; private set; }
+        private GameObject _outlineBoard;
+        private void CreateOutlineBoard(float screenWidth, float screenHeight)
+        {
+            OutlineTexture = new RenderTexture(BoardPixelWidth, BoardPixelHeight, 256);
+            OutlineTexture.filterMode = FilterMode.Point;
+
+            var boardWidth = BoardPixelWidth * PixelationSize * GuiFragmentSizeInUnits;
+            var boardHeight = BoardPixelHeight * PixelationSize * GuiFragmentSizeInUnits;
+
+            var boardMaterial = Resources.Load("Materials/OutlineBoard", typeof(Material)) as Material;
+            boardMaterial.mainTexture = OutlineTexture;
+            _outlineBoard = PrecisionQuadFactory.Create("Outline Quad", boardMaterial,
+                new Vector3(-boardWidth / 2, -boardHeight / 2, 0),
+                new Vector3(+boardWidth / 2, -boardHeight / 2, 0),
+                new Vector3(-boardWidth / 2, +boardHeight / 2, 0),
+                new Vector3(+boardWidth / 2, +boardHeight / 2, 0));
+            _outlineBoard.transform.parent = transform;
+            _outlineBoard.transform.localEulerAngles = Vector3.zero;
+            _outlineBoard.transform.localPosition = 2 * Vector3.back;
+
+
+            var renderer = _outlineBoard.GetComponent<MeshRenderer>();
+            renderer.material.SetInt("_TexWidth", BoardTexture.width);
+            renderer.material.SetInt("_TexHeight", BoardTexture.height);
+            renderer.material.SetInt("_OutlineSize", _outlineSize);
         }
 
         private void CreateGuiCamera(float screenWidth, float screenHeight)

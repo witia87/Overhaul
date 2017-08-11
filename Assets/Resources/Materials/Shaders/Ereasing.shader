@@ -1,9 +1,8 @@
-﻿Shader "Overhaul/InteriorShader"
+﻿Shader "Overhaul/Ereasing"
 {
 	Properties
 	{
 		[PerRendererData] _MainTex("Base (RGB)", 2D) = "white" {}
-		_Color("Interior Color", Color) = (0,0,0,1)
 	}
 
 	CGINCLUDE
@@ -20,6 +19,7 @@
 			"RenderType" = "Transparent"
 			"PreviewType" = "Plane"
 			"CanUseSpriteAtlas" = "True"
+			"Ereasing" = "True"
 		}
 		Cull Off
 		Lighting Off
@@ -34,11 +34,11 @@
 			#pragma vertex vert
 			#pragma fragment frag
 
-
-		float _PixelSize;
-		sampler2D _MainTex;
-		float4 _MainTex_ST;
-		float4 _Color;
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			int _OutlineSize;
+			int _TexWidth;
+			int _TexHeight;
 
 			struct vertexInput {
 				float4 vertex: POSITION;
@@ -62,9 +62,10 @@
 
 			float4 frag(vertexOutput input) : COLOR
 			{
-				float4 inputColor = tex2D(_MainTex, input.texcoord);
-				_Color.a = inputColor.a;
-				return _Color;
+				float4 centerColor = tex2D(_MainTex, input.texcoord);
+
+				float value;
+				return float4(0,0,0,0);
 			}
 			ENDCG	
 		}

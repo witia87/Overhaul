@@ -18,11 +18,15 @@ namespace Assets.Modules
 
         protected virtual void Start()
         {
-            var outliningObject = CreateOutliningObject();
+            //var outliningObject = CreateOutliningObject();
             Animator = GetComponent<Animator>();
             SpriteRenderer = GetComponent<SpriteRenderer>();
             SpriteRenderer.sortingLayerName = "Units";
             SpriteRenderer.sortingOrder = 2;
+            
+            SpriteRenderer.sortingLayerName = "Units";
+            SpriteRenderer.material.SetInt("_OutlineSize", 1);
+
             SpriteSize = SpriteRenderer.sprite.rect.size;
             Module = transform.parent.GetComponent<TParameters>();
 
@@ -69,17 +73,16 @@ namespace Assets.Modules
             }
         }
 
-
-        private GameObject CreateOutliningObject()
+        private int _prevWidth;
+        private void LateUpdate()
         {
-            var outliningObject = new GameObject("Outline");
-            outliningObject.transform.parent = transform;
-            outliningObject.transform.localPosition = Vector3.zero;
-            outliningObject.transform.localEulerAngles = Vector3.zero;
-            outliningObject.transform.localScale = new Vector3(1,1,1);
-            outliningObject.AddComponent<OutlinePresenter>();
-
-            return outliningObject;
+            SpriteRenderer.sprite = SpriteRenderer.sprite;
+            if (_prevWidth != SpriteRenderer.sprite.texture.width)
+            {
+                _prevWidth = SpriteRenderer.sprite.texture.width;
+                SpriteRenderer.material.SetInt("_TexWidth", SpriteRenderer.sprite.texture.width);
+                SpriteRenderer.material.SetInt("_TexHeight", SpriteRenderer.sprite.texture.height);
+            }
         }
     }
 }

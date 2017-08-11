@@ -6,6 +6,8 @@ namespace Assets.Gui
     {
         int PixelationSize { get; }
 
+        int OutlineSize { get; }
+
         int BoardPixelWidth { get; }
 
         int BoardPixelHeight { get; }
@@ -13,5 +15,6 @@ namespace Assets.Gui
         Camera GuiCamera { get; }
 
         RenderTexture BoardTexture { get; }
+        RenderTexture OutlineTexture { get; }
     }
 }

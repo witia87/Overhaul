@@ -6,7 +6,7 @@ namespace Assets.Modules.Movement
     {
         void Move(Vector3 globalDirection);
         void GoTo(Vector3 position);
-        
+
         void Jump(Vector3 direction);
 
         void StopMoving();

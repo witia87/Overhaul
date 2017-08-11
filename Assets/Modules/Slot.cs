@@ -20,19 +20,29 @@ namespace Assets.Modules
         public virtual void MountModule(TMountableModule module)
         {
             if (IsModuleMounted)
+            {
                 throw new ApplicationException("Module already mounted onto the MovementModule.");
+            }
             MountedModule = module;
             MountedModule.Mount(gameObject, Position);
-            if (ModuleHasBeenMounted != null) ModuleHasBeenMounted();
+            if (ModuleHasBeenMounted != null)
+            {
+                ModuleHasBeenMounted();
+            }
         }
 
         public virtual void UnmountModule()
         {
             if (!IsModuleMounted)
+            {
                 throw new ApplicationException("Module is not mounted onto the MovementModule.");
+            }
             MountedModule.Unmount();
             MountedModule = null;
-            if (ModuleHasBeenUnmounted != null) ModuleHasBeenUnmounted();
+            if (ModuleHasBeenUnmounted != null)
+            {
+                ModuleHasBeenUnmounted();
+            }
         }
 
         private void Start()

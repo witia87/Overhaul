@@ -7,13 +7,14 @@ namespace Assets.Cognitions.Computers
 {
     public abstract class ComputerState : CognitionState<ComputerStateIds>
     {
-        protected ComputerState(ComputerStateIds id, MovementHelper movementHelper, TargetingHelper targetingHelper, IUnitControl unit, IMap map) : 
+        protected readonly ComputerStatesFactory StatesFactory;
+
+        protected ComputerState(ComputerStateIds id, MovementHelper movementHelper, TargetingHelper targetingHelper,
+            IUnitControl unit, IMap map) :
             base(id, movementHelper, targetingHelper, unit, map)
         {
             StatesFactory = new ComputerStatesFactory(map, unit, movementHelper, targetingHelper);
         }
-
-        protected readonly ComputerStatesFactory StatesFactory;
 
         public override void OnGUI()
         {

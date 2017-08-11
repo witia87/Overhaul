@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Assets.Maps.Nodes;
 using UnityEngine;
 
 namespace Assets.Maps.PathFinders

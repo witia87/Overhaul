@@ -3,8 +3,19 @@ using UnityEngine;
 
 namespace Assets.Modules.Targeting.Vision
 {
-    public class Target: ITarget
+    public class Target : ITarget
     {
+        private bool _isMemorized;
+        private Vector3 _memorizedLastSeenPosition;
+        private float _memorizedLastSeenTime;
+        private Vector3 _memorizedLastSeenVelocity;
+
+        public Target(Unit unit)
+        {
+            Unit = unit;
+        }
+
+        public IUnitControl Unit { get; private set; }
         public bool IsVisible { get; set; }
 
         public Vector3 Position
@@ -31,8 +42,6 @@ namespace Assets.Modules.Targeting.Vision
             }
         }
 
-        public IUnitControl Unit { get; private set; }
-
         public Vector3 Center
         {
             get
@@ -43,28 +52,6 @@ namespace Assets.Modules.Targeting.Vision
                 }
                 return Unit.Targeting.Center;
             }
-        }
-
-        public Target(Unit unit)
-        {
-            Unit = unit;
-        }
-
-        private bool _isMemorized;
-        private Vector3 _memorizedLastSeenPosition;
-        private Vector3 _memorizedLastSeenVelocity;
-        private float _memorizedLastSeenTime;
-        public void Memorize()
-        {
-            if (_isMemorized)
-            {
-                throw new ApplicationException("Target already memorized."); // TODO: Remove later
-            }
-            _isMemorized = true;
-            _memorizedLastSeenPosition = Unit.Position;
-            _memorizedLastSeenVelocity = Unit.Rigidbody.velocity;
-            _memorizedLastSeenTime = Time.time;
-
         }
 
 
@@ -104,5 +91,16 @@ namespace Assets.Modules.Targeting.Vision
             }
         }
 
+        public void Memorize()
+        {
+            if (_isMemorized)
+            {
+                throw new ApplicationException("Target already memorized."); // TODO: Remove later
+            }
+            _isMemorized = true;
+            _memorizedLastSeenPosition = Unit.Position;
+            _memorizedLastSeenVelocity = Unit.Rigidbody.velocity;
+            _memorizedLastSeenTime = Time.time;
+        }
     }
 }

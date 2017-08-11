@@ -16,9 +16,9 @@ namespace Assets.Gui.Cameras
         public Vector3 GetClosestPixelatedPosition(Vector3 position)
         {
             var focusPointInCameraSpace = _cameraHook.transform.InverseTransformPoint(position);
-            focusPointInCameraSpace.x = Mathf.Round(focusPointInCameraSpace.x*_parent.PixelsPerUnit)/
+            focusPointInCameraSpace.x = Mathf.Round(focusPointInCameraSpace.x * _parent.PixelsPerUnit) /
                                         _parent.PixelsPerUnit;
-            focusPointInCameraSpace.y = Mathf.Round(focusPointInCameraSpace.y*_parent.PixelsPerUnit)/
+            focusPointInCameraSpace.y = Mathf.Round(focusPointInCameraSpace.y * _parent.PixelsPerUnit) /
                                         _parent.PixelsPerUnit;
             return _cameraHook.transform.TransformPoint(focusPointInCameraSpace);
         }
@@ -26,9 +26,9 @@ namespace Assets.Gui.Cameras
         public Vector3 GetPixelatedOffset(Vector3 from, Vector3 to)
         {
             var focusPointInCameraSpace = _cameraHook.transform.InverseTransformPoint(to - from);
-            focusPointInCameraSpace.x = Mathf.Round(focusPointInCameraSpace.x*_parent.PixelsPerUnit)/
+            focusPointInCameraSpace.x = Mathf.Round(focusPointInCameraSpace.x * _parent.PixelsPerUnit) /
                                         _parent.PixelsPerUnit;
-            focusPointInCameraSpace.y = Mathf.Round(focusPointInCameraSpace.y*_parent.PixelsPerUnit)/
+            focusPointInCameraSpace.y = Mathf.Round(focusPointInCameraSpace.y * _parent.PixelsPerUnit) /
                                         _parent.PixelsPerUnit;
             return _cameraHook.transform.TransformPoint(focusPointInCameraSpace);
         }

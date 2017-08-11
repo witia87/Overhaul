@@ -16,8 +16,8 @@ namespace Assets.Maps.PathFinders
         }
 
         /// <summary>
-        /// Returns the path from start to end.
-        /// Start is never on the list, so if start and end are on the same tile, then it returns empty list;
+        ///     Returns the path from start to end.
+        ///     Start is never on the list, so if start and end are on the same tile, then it returns empty list;
         /// </summary>
         public List<Vector3> FindPath(Vector3 start, Vector3 end)
         {

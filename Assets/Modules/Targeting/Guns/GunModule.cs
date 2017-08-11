@@ -13,19 +13,23 @@ namespace Assets.Modules.Targeting.Guns
 
         [SerializeField] private float _cooldownTime = 0.5f;
 
+        [SerializeField] private Vector2 _efectiveRange = new Vector2(5, 10);
+
         [SerializeField] private float _reloadTime = 2f;
 
         [SerializeField] private int _totalAmmoLeft = 90;
 
-        [SerializeField] private Vector2 _efectiveRange = new Vector2(5, 10);
+        private float _verticalDirectionCorection;
+
+        public bool IsDangerous;
+
+        public float ReloadTimeLeft { get; private set; }
+
         public Vector2 EfectiveRange
         {
             get { return _efectiveRange; }
         }
 
-        public bool IsDangerous;
-
-        public float ReloadTimeLeft { get; private set; }
         public bool IsFiring { get; private set; }
 
         public int AmmoLeftInTheClip { get; private set; }
@@ -37,7 +41,7 @@ namespace Assets.Modules.Targeting.Guns
 
         public Vector3 FirePosition
         {
-            get { return _bulletFactories[_bulletFactories.Length/2].transform.position; }
+            get { return _bulletFactories[_bulletFactories.Length / 2].transform.position; }
         }
 
         public Vector3 FireDirection
@@ -73,10 +77,10 @@ namespace Assets.Modules.Targeting.Guns
             IsFiring = true;
         }
 
-        private float _verticalDirectionCorection;
         public void Fire(float distance, float bulletHeightAtAGivenDisntance)
         {
-            _verticalDirectionCorection = new Vector3(0, bulletHeightAtAGivenDisntance - FirePosition.y, distance).normalized.y;
+            _verticalDirectionCorection = new Vector3(0, bulletHeightAtAGivenDisntance - FirePosition.y, distance)
+                .normalized.y;
             IsFiring = true;
         }
 

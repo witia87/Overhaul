@@ -74,8 +74,10 @@ namespace Assets.Maps.Nodes
             for (var i = 0; i < _validNeighbors.Count; i++)
             {
                 // perform random swap
-                var index1 = Mathf.Min(_validNeighbors.Count - 1, Mathf.FloorToInt(Random.value*_validNeighbors.Count));
-                var index2 = Mathf.Min(_validNeighbors.Count - 1, Mathf.FloorToInt(Random.value*_validNeighbors.Count));
+                var index1 = Mathf.Min(_validNeighbors.Count - 1,
+                    Mathf.FloorToInt(Random.value * _validNeighbors.Count));
+                var index2 = Mathf.Min(_validNeighbors.Count - 1,
+                    Mathf.FloorToInt(Random.value * _validNeighbors.Count));
                 var temp = _validNeighbors[index2];
                 _validNeighbors[index2] = _validNeighbors[index1];
                 _validNeighbors[index1] = temp;

@@ -5,9 +5,12 @@ namespace Assets.Gui.Cameras
     public class CameraComponent : MonoBehaviour, ICameraStore
     {
         private GameObject _cameraHook;
+
+        [SerializeField] private LayerMask _floorLayerMask;
         private IGuiStore _guiStore;
 
         [SerializeField] private float _pixelsPerOneUnitInHeight;
+        [SerializeField] private LayerMask _targetLayerMask;
 
         public GameObject FocusObject;
 
@@ -15,12 +18,12 @@ namespace Assets.Gui.Cameras
 
         public float FieldOfViewWidth
         {
-            get { return _guiStore.BoardPixelWidth/PixelsPerUnit; }
+            get { return _guiStore.BoardPixelWidth / PixelsPerUnit; }
         }
 
         public float FieldOfViewHeight
         {
-            get { return _guiStore.BoardPixelHeight/PixelsPerUnit; }
+            get { return _guiStore.BoardPixelHeight / PixelsPerUnit; }
         }
 
         /// <summary>
@@ -47,8 +50,6 @@ namespace Assets.Gui.Cameras
             get { return FocusObject.transform.position; }
         }
 
-        [SerializeField] private LayerMask _floorLayerMask;
-        [SerializeField] private LayerMask _targetLayerMask;
         public RaycastsHelper Raycasts { get; private set; }
 
         private void Awake()
@@ -65,16 +66,16 @@ namespace Assets.Gui.Cameras
             _cameraHook.transform.localEulerAngles = transform.localEulerAngles;
             _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, 0));
 
-            PixelsPerUnit = _pixelsPerOneUnitInHeight/Mathf.Cos(CameraEulerAngles.x*Mathf.Deg2Rad);
+            PixelsPerUnit = _pixelsPerOneUnitInHeight / Mathf.Cos(CameraEulerAngles.x * Mathf.Deg2Rad);
 
             Pixelation = new PixelatedPositionsCalculator(this, _cameraHook);
         }
 
         private void Start()
         {
-            MainCamera.orthographicSize = FieldOfViewHeight/2;
+            MainCamera.orthographicSize = FieldOfViewHeight / 2;
             MainCamera.targetTexture = _guiStore.BoardTexture;
-            MainCamera.aspect = FieldOfViewWidth/FieldOfViewHeight;
+            MainCamera.aspect = FieldOfViewWidth / FieldOfViewHeight;
             Update();
             GetComponentInChildren<OutlineCameraComponent>().Initialize();
             //MainCamera.SetReplacementShader(Resources.Load("Materials/Shaders/Outline", typeof(Shader)) as Shader, "Outline");
@@ -82,7 +83,7 @@ namespace Assets.Gui.Cameras
 
         private void Update()
         {
-            var position = FocusObject.transform.position - transform.TransformDirection(Vector3.forward*30);
+            var position = FocusObject.transform.position - transform.TransformDirection(Vector3.forward * 30);
             MainCamera.transform.position = Pixelation.GetClosestPixelatedPosition(position);
         }
     }

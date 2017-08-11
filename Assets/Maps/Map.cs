@@ -73,7 +73,7 @@ namespace Assets.Maps
         {
             var x = Mathf.FloorToInt(position.x - 0.5f * _scale);
             var z = Mathf.FloorToInt(position.z - 0.5f * _scale);
-            
+
             if (Grid[z, x] != null) // This is a direct hit, slight optimization
             {
                 node = Grid[z, x];

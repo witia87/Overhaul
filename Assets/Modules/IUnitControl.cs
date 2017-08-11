@@ -8,7 +8,7 @@ namespace Assets.Modules
     {
         IMovementControl Movement { get; }
         ITargetingControl Targeting { get; }
-        
+
         Vector3 Position { get; }
         Rigidbody Rigidbody { get; }
     }

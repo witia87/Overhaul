@@ -1,6 +1,5 @@
 ﻿using Assets.Cognitions.Computers.States;
 using Assets.Cognitions.Helpers;
-using UnityEngine;
 
 namespace Assets.Cognitions.Computers
 {

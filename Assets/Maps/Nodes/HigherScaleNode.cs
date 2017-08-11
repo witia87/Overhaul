@@ -14,7 +14,7 @@ namespace Assets.Maps.Nodes
             _grid = grid;
             this.x = x;
             this.z = z;
-            this.Scale = scale;
+            Scale = scale;
             Position = position;
         }
 
@@ -22,7 +22,7 @@ namespace Assets.Maps.Nodes
         public int z { get; private set; }
         public int Scale { get; private set; }
         public Vector3 Position { get; private set; }
-        
+
         public bool IsOccupied { get; private set; }
 
         public IEnumerator<INode> GetDirectedNeighborsEnumerator(Vector3 direction)

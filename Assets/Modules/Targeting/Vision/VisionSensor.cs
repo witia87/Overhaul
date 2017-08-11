@@ -6,7 +6,22 @@ namespace Assets.Modules.Targeting.Vision
 {
     public class VisionSensor : DiamondDetector, IVisionSensor
     {
+        private readonly Vector3[] _raysToMeasureDistances =
+        {
+            new Vector3(1, 0, 0),
+            new Vector3(1, 0, 1),
+            new Vector3(0, 0, 1),
+            new Vector3(-1, 0, 1),
+            new Vector3(-1, 0, 0),
+            new Vector3(-1, 0, -1),
+            new Vector3(0, 0, -1),
+            new Vector3(1, 0, -1)
+        };
+
+        private readonly List<Target> _visibleTargets = new List<Target>();
         [SerializeField] private LayerMask _layerMask;
+
+        [SerializeField] private LayerMask _wallLayerMask;
 
         [Range(0.1f, Mathf.PI / 2)] public float HorizontalAngleTolerance = Mathf.PI / 3;
         public string TagToDetect = "Player";
@@ -25,12 +40,40 @@ namespace Assets.Modules.Targeting.Vision
             get { return transform.position; }
         }
 
-        private readonly List<Target> _visibleTargets = new List<Target>();
-        public int VisibleTargetsCount { get { return _visibleTargets.Count; } }
+        public int VisibleTargetsCount
+        {
+            get { return _visibleTargets.Count; }
+        }
 
         public ITarget GetClosestTarget()
         {
             return _visibleTargets[0];
+        }
+
+        public List<Vector3> GetThreeClosestDirections()
+        {
+            var distances = new List<float>();
+            var directions = new List<Vector3>(_raysToMeasureDistances);
+            for (var j = 0; j < 8; j++)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, _raysToMeasureDistances[j], out hit, _wallLayerMask))
+                {
+                    distances.Add(hit.distance);
+                }
+            }
+
+            var i = Mathf.FloorToInt(Random.value * 8);
+            while (directions.Count > 3)
+            {
+                if (distances[i] < distances[(i + 1) % directions.Count])
+                {
+                    distances.RemoveAt(i);
+                    directions.RemoveAt(i);
+                }
+                i = (i + 1) % directions.Count;
+            }
+            return directions;
         }
 
 
@@ -45,7 +88,9 @@ namespace Assets.Modules.Targeting.Vision
         protected override void OnTriggerEnter(Collider other)
         {
             if (other.tag == TagToDetect)
+            {
                 CollidingGameObjects.Add(other.gameObject);
+            }
         }
 
         public void Update()
@@ -105,44 +150,6 @@ namespace Assets.Modules.Targeting.Vision
                     i--;
                 }
             }
-        }
-
-        readonly Vector3[] _raysToMeasureDistances = {
-            new Vector3(1,0,0),
-            new Vector3(1,0,1),
-            new Vector3(0,0,1),
-            new Vector3(-1,0,1),
-            new Vector3(-1,0,0),
-            new Vector3(-1,0,-1),
-            new Vector3(0,0,-1),
-            new Vector3(1,0,-1),
-        };
-
-        [SerializeField] private LayerMask _wallLayerMask;
-        public List<Vector3> GetThreeClosestDirections()
-        {
-            var distances = new List<float>();
-            var directions = new List<Vector3>(_raysToMeasureDistances);
-            for (int j = 0; j < 8; j++)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, _raysToMeasureDistances[j], out hit, _wallLayerMask))
-                {
-                    distances.Add(hit.distance);
-                }
-            }
-
-            var i = Mathf.FloorToInt(Random.value * 8);
-            while (directions.Count > 3)
-            {
-                if (distances[i] < distances[(i + 1) % directions.Count])
-                {
-                    distances.RemoveAt(i);
-                    directions.RemoveAt(i);
-                }
-                i = (i + 1) % directions.Count;
-            }
-            return directions;
         }
     }
 }

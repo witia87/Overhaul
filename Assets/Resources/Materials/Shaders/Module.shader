@@ -1,8 +1,8 @@
-﻿Shader "Overhaul/Interior"
+﻿Shader "Overhaul/Module"
 {
 	Properties
 	{
-		[PerRendererData] _MainTex("Base (RGB)", 2D) = "white" {}
+		_MainTex("Base (RGB)", 2D) = "white" {}
 		_Color("Interior Color", Color) = (0,0,0,1)
 	}
 
@@ -13,30 +13,26 @@
 	{
 		Tags
 		{
+			"Queue" = "Geometry"
+			"RenderType" = "Geometry"
 			"IgnoreProjector" = "True"
 			"PreviewType" = "Plane"
 			"CanUseSpriteAtlas" = "True"
 		}
 		Cull Off
+		ZWrite Off
+		ZTest On
 		Lighting Off
 		Fog{ Mode Off }
 
 		Pass
 		{
-			Tags
-			{
-				"Queue" = "Transparent+2"
-				"RenderType" = "Transparent+2"
-			}
-			ZWrite Off
-			ZTest On
 			Blend DstAlpha OneMinusSrcAlpha
 			CGPROGRAM
 
 			#pragma vertex vert
 			#pragma fragment frag
 
-			float _PixelSize;
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			float4 _OutlineColor;
@@ -75,7 +71,6 @@
 				if (centerColor.a + upColor.a + downColor.a + leftColor.a + rightColor.a >= 1) {
 					return float4(1, 0, 0, 1);
 				}
-
 				return float4(0, 0, 0, 0);
 			}
 			ENDCG
@@ -83,29 +78,14 @@
 
 			Pass
 			{
-				Tags
-				{
-					"Queue" = "Transparent+1"
-					"RenderType" = "Transparent+1"
-				}
-
-
-				ZWrite On
-				ZTest Off
-				BlendOp Sub
 				Blend DstAlpha OneMinusSrcAlpha
 				CGPROGRAM
 
 			#pragma vertex vert
 			#pragma fragment frag
 
-			float _PixelSize;
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
-			float4 _OutlineColor;
-			int _OutlineSize;
-			int _TexWidth;
-			int _TexHeight;
 
 			struct vertexInput {
 				float4 vertex: POSITION;
@@ -132,12 +112,12 @@
 				float4 centerColor = tex2D(_MainTex, input.texcoord);
 
 				if (centerColor.a > 0) {
-					return float4(1,1,1,1);
+					return float4(0,0,0,1);
 				}
 
 				return float4(0, 0, 0, 0);
 			}
-				ENDCG
+			ENDCG
 		}
 	}	
 }

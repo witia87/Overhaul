@@ -63,10 +63,10 @@ namespace Assets.Modules.Targeting
             {
                 var module = gunSlot.MountedModule;
                 module.transform.position = module.transform.position +
-                                                       transform.forward;
+                                            transform.forward;
                 gunSlot.UnmountModule();
                 Gun = null;
-                module.Rigidbody.AddForce(transform.forward*15f, ForceMode.Impulse);
+                module.Rigidbody.AddForce(transform.forward * 15f, ForceMode.Impulse);
             }
         }
 
@@ -100,7 +100,7 @@ namespace Assets.Modules.Targeting
                 if (Vector3.Angle(TargetGlobalDirection, MovementModule.UnitDirection) > 85)
                 {
                     targetGlobalDirection = Vector3.RotateTowards(MovementModule.UnitDirection, TargetGlobalDirection,
-                        Mathf.Deg2Rad*85, 0);
+                        Mathf.Deg2Rad * 85, 0);
                 }
 
                 var angle = Vector3.Angle(targetGlobalDirection, TargetingDirection);
@@ -109,7 +109,7 @@ namespace Assets.Modules.Targeting
                     angle *= -1;
                 }
                 var angleToTurn = Mathf.SmoothDampAngle(0, angle, ref _velocity, SmoothTime);
-                transform.forward = Quaternion.Euler(0, angleToTurn, 0)*transform.forward;
+                transform.forward = Quaternion.Euler(0, angleToTurn, 0) * transform.forward;
                 if (Mathf.Abs(angle) < 1)
                 {
                     _isTargetDirectionSet = false;
@@ -120,7 +120,7 @@ namespace Assets.Modules.Targeting
 
         private void OnDrawGizmos()
         {
-            DrawArrow.ForGizmo(transform.position, transform.forward*2, Color.red);
+            DrawArrow.ForGizmo(transform.position, transform.forward * 2, Color.red);
         }
     }
 }

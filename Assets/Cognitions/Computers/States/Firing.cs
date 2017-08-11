@@ -10,7 +10,8 @@ namespace Assets.Cognitions.Computers.States
     {
         private readonly ITarget _target;
 
-        public Firing(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnitControl unit, IMap map, ITarget target)
+        public Firing(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnitControl unit, IMap map,
+            ITarget target)
             : base(ComputerStateIds.Firing, movementHelper, targetingHelper, unit, map)
         {
             _target = target;
@@ -37,13 +38,15 @@ namespace Assets.Cognitions.Computers.States
                     {
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateBacking(_target));
                     }
-
                 }
                 TargetingHelper.ManageAimingAtTheTarget(_target);
                 return this;
             }
 
-            if (Unit.Targeting.IsGunMounted) Unit.Targeting.Gun.StopFiring();
+            if (Unit.Targeting.IsGunMounted)
+            {
+                Unit.Targeting.Gun.StopFiring();
+            }
             return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateSearching(_target));
         }
     }

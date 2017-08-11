@@ -7,8 +7,8 @@ namespace Assets.Cognitions.Helpers
 {
     public class TargetingHelper
     {
-        private readonly IUnitControl _unit;
         private readonly IMap _map;
+        private readonly IUnitControl _unit;
 
         public TargetingHelper(IUnitControl unit, IMap map)
         {

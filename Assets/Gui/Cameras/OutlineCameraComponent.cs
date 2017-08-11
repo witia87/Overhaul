@@ -17,7 +17,6 @@ namespace Assets.Gui.Cameras
             OutlineCamera = GetComponent<Camera>();
             OutlineCamera.cameraType = CameraType.Game;
             OutlineCamera.orthographic = true;
-            
         }
 
         public void Initialize()
@@ -28,8 +27,7 @@ namespace Assets.Gui.Cameras
             //OutlineCamera.SetReplacementShader(Resources.Load("Materials/Shaders/OutlineBoard", typeof(Shader)) as Shader, "OutlineType");
             OutlineCamera.transform.localEulerAngles = Vector3.zero;
             OutlineCamera.transform.localPosition = Vector3.zero;
-            OutlineCamera.transform.localScale = new Vector3(1,1,1);
+            OutlineCamera.transform.localScale = new Vector3(1, 1, 1);
         }
-        
     }
 }

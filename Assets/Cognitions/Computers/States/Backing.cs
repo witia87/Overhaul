@@ -11,9 +11,9 @@ namespace Assets.Cognitions.Computers.States
     public class Backing : ComputerState
     {
         private readonly ITarget _target;
-        private List<Vector3> _path;
 
         private Vector3 _backingPosition;
+        private List<Vector3> _path;
 
         public Backing(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnitControl unit, IMap map,
             ITarget target)
@@ -27,7 +27,7 @@ namespace Assets.Cognitions.Computers.States
         {
             var offset = (_target.Position - Unit.Position).normalized * 5;
             if (!Map.PathFinder.TryGetClosestAvailablePosition(Unit.Position
-                                                              - offset,
+                                                               - offset,
                 10, out _backingPosition))
             {
                 _backingPosition = Unit.Position;
@@ -48,7 +48,7 @@ namespace Assets.Cognitions.Computers.States
                 if (_target.IsVisible)
                 {
                     var distanceToTarget = (_target.Position - Unit.Position).magnitude;
-                    if (Unit.Targeting.IsGunMounted 
+                    if (Unit.Targeting.IsGunMounted
                         && distanceToTarget > Unit.Targeting.Gun.EfectiveRange.x
                         && distanceToTarget < Unit.Targeting.Gun.EfectiveRange.y)
                     {

@@ -8,11 +8,12 @@ namespace Assets.Cognitions
     {
         private readonly NextStateBuilder<TStateIds> _nextStateBuilder;
         protected readonly IMap Map;
-        protected readonly IUnitControl Unit;
         protected readonly MovementHelper MovementHelper;
         protected readonly TargetingHelper TargetingHelper;
+        protected readonly IUnitControl Unit;
 
-        protected CognitionState(TStateIds id, MovementHelper movementHelper, TargetingHelper targetingHelper, IUnitControl unit, IMap map)
+        protected CognitionState(TStateIds id, MovementHelper movementHelper, TargetingHelper targetingHelper,
+            IUnitControl unit, IMap map)
         {
             Id = id;
             Unit = unit;
@@ -24,6 +25,8 @@ namespace Assets.Cognitions
 
         public TStateIds Id { get; private set; }
 
+        public bool IsDisposed { get; private set; }
+
         public abstract CognitionState<TStateIds> Update();
 
         public virtual void OnDrawGizmos()
@@ -34,7 +37,6 @@ namespace Assets.Cognitions
         {
         }
 
-        public bool IsDisposed { get; private set; }
         protected IExtendedStateBuilder<TStateIds> DisposeCurrent()
         {
             IsDisposed = true;

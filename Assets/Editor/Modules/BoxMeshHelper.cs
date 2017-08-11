@@ -6,21 +6,21 @@ namespace Assets.Editor.Modules
     {
         public static Mesh Create(float width, float height, float length, float spikeRatio)
         {
-            var spikeHeight = spikeRatio*height;
+            var spikeHeight = spikeRatio * height;
             var mesh = new Mesh
             {
                 vertices = new[]
                 {
                     new Vector3(0, 0, 0), //spike
 
-                    new Vector3(-width/2, spikeHeight, -length/2),
-                    new Vector3(-width/2, spikeHeight, length/2),
-                    new Vector3(width/2, spikeHeight, length/2),
-                    new Vector3(width/2, spikeHeight, -length/2),
-                    new Vector3(-width/2, height, -length/2),
-                    new Vector3(-width/2, height, length/2),
-                    new Vector3(width/2, height, length/2),
-                    new Vector3(width/2, height, -length/2)
+                    new Vector3(-width / 2, spikeHeight, -length / 2),
+                    new Vector3(-width / 2, spikeHeight, length / 2),
+                    new Vector3(width / 2, spikeHeight, length / 2),
+                    new Vector3(width / 2, spikeHeight, -length / 2),
+                    new Vector3(-width / 2, height, -length / 2),
+                    new Vector3(-width / 2, height, length / 2),
+                    new Vector3(width / 2, height, length / 2),
+                    new Vector3(width / 2, height, -length / 2)
                 },
                 triangles = new[]
                 {

@@ -15,10 +15,10 @@ namespace Assets.Cognitions.Helpers
             _unit = unit;
             _map = map;
         }
-        
+
         public void ManageMovingAlongThePath(List<Vector3> path)
         {
-            int nodesToBeBypassedCount = FindClearRectangleIndex(path);
+            var nodesToBeBypassedCount = FindClearRectangleIndex(path);
             if (nodesToBeBypassedCount > 0)
             {
                 path.RemoveRange(0, nodesToBeBypassedCount);

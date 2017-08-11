@@ -18,8 +18,8 @@ namespace Assets.Modules.Targeting.Guns.Bullets
             bullet.transform.parent = transform;
             bullet.transform.localScale = BulletsSize;
             bullet.transform.localPosition = Vector3.zero;
-            bullet.transform.localEulerAngles = new Vector3((Random.value - 0.5f)*2*AngleOfImprecision,
-                (Random.value - 0.5f)*2*AngleOfImprecision,
+            bullet.transform.localEulerAngles = new Vector3((Random.value - 0.5f) * 2 * AngleOfImprecision,
+                (Random.value - 0.5f) * 2 * AngleOfImprecision,
                 0);
             bullet.transform.forward = new Vector3(bullet.transform.forward.x,
                 bullet.transform.forward.y + horrizontalCorrection, bullet.transform.forward.z);
@@ -29,7 +29,7 @@ namespace Assets.Modules.Targeting.Guns.Bullets
             bulletRigidbody.mass = BulletsMass;
             bulletRigidbody.drag = BulletsDrag;
             bulletRigidbody.angularDrag = BulletsAngularDrag;
-            bulletRigidbody.AddRelativeForce(Vector3.forward*InitialVelocity, ForceMode.VelocityChange);
+            bulletRigidbody.AddRelativeForce(Vector3.forward * InitialVelocity, ForceMode.VelocityChange);
         }
     }
 }

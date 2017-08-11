@@ -7,9 +7,11 @@ namespace Assets.Cognitions.Players.States
 {
     public class ControllingHumanoid : PlayerState
     {
-        public ControllingHumanoid( IUnitControl unit, IMap map, int scale,
-            ITargetingController targetingController, IMovementController movementController, IActionsController actionsController) :
-            base(PlayerStateIds.ControllingHumanoid, unit, map, targetingController, movementController, actionsController)
+        public ControllingHumanoid(IUnitControl unit, IMap map, int scale,
+            ITargetingController targetingController, IMovementController movementController,
+            IActionsController actionsController) :
+            base(PlayerStateIds.ControllingHumanoid, unit, map, targetingController, movementController,
+                actionsController)
         {
         }
 

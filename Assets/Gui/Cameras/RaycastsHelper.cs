@@ -5,9 +5,9 @@ namespace Assets.Gui.Cameras
     public class RaycastsHelper
     {
         private readonly Camera _camera;
-        private LayerMask _floorLayerMask;
+        private readonly LayerMask _floorLayerMask;
 
-        private LayerMask _targetLayerMask;
+        private readonly LayerMask _targetLayerMask;
 
         public RaycastsHelper(Camera camera, LayerMask floorLayerMask, LayerMask targetLayerMask)
         {

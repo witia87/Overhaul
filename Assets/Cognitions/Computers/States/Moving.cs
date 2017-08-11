@@ -2,7 +2,6 @@
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
 using Assets.Modules;
-using Assets.Modules.Targeting.Vision;
 using Assets.Utilities;
 using UnityEngine;
 

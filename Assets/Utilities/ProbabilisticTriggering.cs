@@ -16,8 +16,8 @@ namespace Assets.Utilities
 
         public static bool TestOnAverageOnceEvery(float howManySeconds)
         {
-            var fixedUpdatesPerDeclaredTime = howManySeconds/Time.fixedDeltaTime;
-            var randomizedValue = Random.value*fixedUpdatesPerDeclaredTime;
+            var fixedUpdatesPerDeclaredTime = howManySeconds / Time.fixedDeltaTime;
+            var randomizedValue = Random.value * fixedUpdatesPerDeclaredTime;
             return randomizedValue < 1;
         }
     }
@@ -34,8 +34,8 @@ namespace Assets.Utilities
 
         public static bool TestOnAverageOnceEvery(float howManySeconds)
         {
-            var updatesPerDeclaredTime = howManySeconds/Time.deltaTime;
-            var randomizedValue = Random.value*updatesPerDeclaredTime;
+            var updatesPerDeclaredTime = howManySeconds / Time.deltaTime;
+            var randomizedValue = Random.value * updatesPerDeclaredTime;
             return randomizedValue < 1;
         }
 

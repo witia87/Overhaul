@@ -13,7 +13,7 @@ namespace Assets.Modules.Movement
         public override void Update()
         {
             base.Update();
-            var direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)*
+            var direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up) *
                             Module.UnitDirection;
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);

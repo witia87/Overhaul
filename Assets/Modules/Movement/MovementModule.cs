@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Modules.Targeting;
+﻿using Assets.Modules.Targeting;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -38,7 +37,7 @@ namespace Assets.Modules.Movement
         {
             get { return Rigidbody.velocity.magnitude > 0 ? Rigidbody.velocity.normalized : Vector3.zero; }
         }
-        
+
         public void StopMoving()
         {
             IsSetToMove = false;
@@ -122,28 +121,28 @@ namespace Assets.Modules.Movement
                     torque = Vector3.Cross(transform.forward, GlobalDirectionToTurnTowards);
                 }
 
-                var speedModifier = 0.75f + 0.25f*Vector3.Dot(MovementDirection, TargetingModule.TargetingDirection);
-                Rigidbody.AddForce(GlobalDirectionInWhichToMove*acceleration*speedModifier, ForceMode.Acceleration);
+                var speedModifier = 0.75f + 0.25f * Vector3.Dot(MovementDirection, TargetingModule.TargetingDirection);
+                Rigidbody.AddForce(GlobalDirectionInWhichToMove * acceleration * speedModifier, ForceMode.Acceleration);
 
-                var torqueToApply = torque*AngularAcceleration;
+                var torqueToApply = torque * AngularAcceleration;
                 Rigidbody.AddTorque(torqueToApply);
             }
             else
             {
-                var direction = ((transform.forward + TargetingModule.TargetGlobalDirection)/2).normalized;
-                var torque = Vector3.Cross(transform.forward, direction)*AngularAcceleration;
+                var direction = ((transform.forward + TargetingModule.TargetGlobalDirection) / 2).normalized;
+                var torque = Vector3.Cross(transform.forward, direction) * AngularAcceleration;
                 Rigidbody.AddTorque(torque);
             }
         }
 
         protected void Update()
         {
-            IsGrounded = Physics.Raycast(transform.position + Vector3.up*0.01f, -Vector3.up, 0.1f);
+            IsGrounded = Physics.Raycast(transform.position + Vector3.up * 0.01f, -Vector3.up, 0.1f);
         }
 
         protected void OnDrawGizmos()
         {
-            DrawArrow.ForDebug(transform.position + UnitDirection*Size.z/2, UnitDirection,
+            DrawArrow.ForDebug(transform.position + UnitDirection * Size.z / 2, UnitDirection,
                 Color.magenta, 0.1f, 20);
         }
     }

@@ -8,7 +8,7 @@ namespace Assets.Maps
         private readonly int _gridLength;
 
         private readonly int _gridWidth;
-        private LayerMask _layerMask;
+        private readonly LayerMask _layerMask;
 
 
         public MapInitializer(int gridWidth, int gridLength, LayerMask layerMask)

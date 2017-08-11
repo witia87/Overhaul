@@ -48,17 +48,10 @@ namespace Assets.Maps.Dangers
                         {
                             Gizmos.color = Color.red;
                             //Gizmos.DrawCube(_baseGrid[z, x].Position, new Vector3(1,0.1f,1));
-                            DrawArrow.ForDebug(_baseGrid[z, x].Position - offset, 
+                            DrawArrow.ForDebug(_baseGrid[z, x].Position - offset,
                                 2 * offset, Color.red, 0.1f, 0);
                             DrawArrow.ForDebug(_baseGrid[z, x].Position - offset2,
                                 2 * offset2, Color.red, 0.1f, 0);
-                        }
-                        else
-                        {
-                            //Gizmos.color = Color.green;
-                            //Gizmos.DrawCube(_baseGrid[z, x].Position, new Vector3(1, 0.1f, 1));
-                            //DrawArrow.ForDebug(_baseGrid[z, x].Position + Vector3.up,
-                            //    Vector3.down, Color.green, 0.1f, 0);
                         }
                     }
                 }

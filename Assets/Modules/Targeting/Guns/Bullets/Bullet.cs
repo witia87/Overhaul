@@ -19,7 +19,7 @@ namespace Assets.Modules.Targeting.Guns.Bullets
         private void FixedUpdate()
         {
             _maximalVelocity = Mathf.Max(_maximalVelocity, _rigidbody.velocity.magnitude);
-            _rigidbody.AddForce(Physics.gravity*(1 - _rigidbody.velocity.magnitude/_maximalVelocity),
+            _rigidbody.AddForce(Physics.gravity * (1 - _rigidbody.velocity.magnitude / _maximalVelocity),
                 ForceMode.Acceleration);
         }
     }

@@ -36,7 +36,7 @@ namespace Assets.Cognitions.Players.Controllers
                 _verticalAxis = Input.GetAxis("VerticalLook");
             }
             var targetingVector = new Vector3(_horizontalAxis, 0, _verticalAxis);
-            targetingVector = Quaternion.AngleAxis(45, Vector3.up)*targetingVector;
+            targetingVector = Quaternion.AngleAxis(45, Vector3.up) * targetingVector;
             TargetedPosition = cameraFocusPoint + targetingVector;
 
             IsFirePressed = Input.GetButton("Fire Gun");

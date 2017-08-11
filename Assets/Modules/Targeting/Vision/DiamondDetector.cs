@@ -36,10 +36,10 @@ namespace Assets.Modules.Targeting.Vision
                 vertices = new[]
                 {
                     new Vector3(0, 0, 0),
-                    new Vector3(0, -Height/2, Length/2),
-                    new Vector3(Width, 0, Length/2),
-                    new Vector3(0, Height, Length/2),
-                    new Vector3(-Width, 0, Length/2),
+                    new Vector3(0, -Height / 2, Length / 2),
+                    new Vector3(Width, 0, Length / 2),
+                    new Vector3(0, Height, Length / 2),
+                    new Vector3(-Width, 0, Length / 2),
                     new Vector3(0, 0, Length)
                 },
                 triangles = new[]
@@ -67,9 +67,9 @@ namespace Assets.Modules.Targeting.Vision
         {
             var localPosition = transform.InverseTransformPoint(other.transform.position);
             if (CollidingGameObjects.Contains(other.gameObject) &&
-                Mathf.Abs(localPosition.x/(Width/2))
-                + Mathf.Abs(localPosition.y/(Height/2))
-                + Mathf.Abs(localPosition.z/(Length/2)) > 0.95)
+                Mathf.Abs(localPosition.x / (Width / 2))
+                + Mathf.Abs(localPosition.y / (Height / 2))
+                + Mathf.Abs(localPosition.z / (Length / 2)) > 0.95)
             {
                 CollidingGameObjects.Remove(other.gameObject);
             }

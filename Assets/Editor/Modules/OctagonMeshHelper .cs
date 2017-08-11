@@ -6,7 +6,7 @@ namespace Assets.Editor.Modules
     {
         public static Mesh Create(Vector3 size, float bottomSpikeRatio, float topSpikeRatio)
         {
-            var sqrt = 1/Mathf.Sqrt(2);
+            var sqrt = 1 / Mathf.Sqrt(2);
             size.x /= 2;
             size.z /= 2;
             var verts = new[]
@@ -65,7 +65,7 @@ namespace Assets.Editor.Modules
                     8, 15, 16,
                     8, 16, 1, //
 
-                    
+
                     17, 9, 10,
                     17, 10, 11,
                     17, 11, 12,

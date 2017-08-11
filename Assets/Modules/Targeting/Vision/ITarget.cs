@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Modules.Targeting.Vision
 {
-    public interface ITarget: ITargetMemory
+    public interface ITarget : ITargetMemory
     {
         bool IsVisible { get; }
         Vector3 Position { get; }

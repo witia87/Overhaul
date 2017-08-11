@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Modules.Targeting.Vision
 {
@@ -7,6 +6,6 @@ namespace Assets.Modules.Targeting.Vision
     {
         float LastSeenTime { get; }
         Vector3 LastSeenPosition { get; }
-        Vector3 LastSeenVelocity{ get; }
+        Vector3 LastSeenVelocity { get; }
     }
 }

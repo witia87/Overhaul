@@ -11,10 +11,10 @@ namespace Assets.Editor.Modules
                 vertices = new[]
                 {
                     new Vector3(0, 0, 0),
-                    new Vector3(0, -Mathf.Tan(verticalAngleTolerance)*visionLenght/2, visionLenght/2),
-                    new Vector3(Mathf.Tan(horizontalAngleTolerance)*visionLenght/2, 0, visionLenght/2),
-                    new Vector3(0, Mathf.Tan(verticalAngleTolerance)*visionLenght/2, visionLenght/2),
-                    new Vector3(-Mathf.Tan(horizontalAngleTolerance)*visionLenght/2, 0, visionLenght/2),
+                    new Vector3(0, -Mathf.Tan(verticalAngleTolerance) * visionLenght / 2, visionLenght / 2),
+                    new Vector3(Mathf.Tan(horizontalAngleTolerance) * visionLenght / 2, 0, visionLenght / 2),
+                    new Vector3(0, Mathf.Tan(verticalAngleTolerance) * visionLenght / 2, visionLenght / 2),
+                    new Vector3(-Mathf.Tan(horizontalAngleTolerance) * visionLenght / 2, 0, visionLenght / 2),
                     new Vector3(0, 0, visionLenght)
                 },
                 triangles = new[]

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Editor.Modules
 {
-    [CustomEditor(typeof (Module), true)]
+    [CustomEditor(typeof(Module), true)]
     public class ModuleEditor : UnityEditor.Editor
     {
         public float BottomSpikeRatio = 0.2f;

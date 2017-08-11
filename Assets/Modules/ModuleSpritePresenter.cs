@@ -1,20 +1,20 @@
-﻿
-using Assets.Gui;
+﻿using Assets.Gui;
 using UnityEngine;
 
 namespace Assets.Modules
 {
     public class ModuleSpritePresenter<TParameters> : Presenter
     {
-        private Vector3 _offset;
-        private float _projectionHeight;
-
         private Module _module;
+        private Vector3 _offset;
+
+        private int _prevWidth;
+        private float _projectionHeight;
+        protected Animator Animator;
+        protected TParameters Module;
 
         protected SpriteRenderer SpriteRenderer;
         protected Vector2 SpriteSize;
-        protected Animator Animator;
-        protected TParameters Module;
 
         protected virtual void Start()
         {
@@ -23,7 +23,7 @@ namespace Assets.Modules
             SpriteRenderer = GetComponent<SpriteRenderer>();
             SpriteRenderer.sortingLayerName = "Units";
             SpriteRenderer.sortingOrder = 2;
-            
+
             SpriteRenderer.sortingLayerName = "Units";
             SpriteRenderer.material.SetInt("_OutlineSize", 1);
 
@@ -51,7 +51,6 @@ namespace Assets.Modules
             transform.position =
                 CameraStore.Pixelation.GetClosestPixelatedPosition(_module.transform.position);
             transform.position = transform.position + _offset;
-
         }
 
         public virtual void Update()
@@ -73,7 +72,6 @@ namespace Assets.Modules
             }
         }
 
-        private int _prevWidth;
         private void LateUpdate()
         {
             SpriteRenderer.sprite = SpriteRenderer.sprite;

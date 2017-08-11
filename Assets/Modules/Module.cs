@@ -8,10 +8,10 @@ namespace Assets.Modules
         private Rigidbody _rigidbody;
         public float AngularDrag;
         public float Drag;
-        public float Mass;
-        public Vector3 Size;
 
         protected IMapStore MapStore;
+        public float Mass;
+        public Vector3 Size;
 
         public IUnitControl Unit { get; private set; }
 
@@ -20,14 +20,14 @@ namespace Assets.Modules
             get { return Unit != null; }
         }
 
-        public Vector3 Center
-        {
-            get { return new Vector3(transform.position.x, transform.position.y + Size.y, transform.position.z); }
-        }
-
         public Rigidbody Rigidbody
         {
             get { return IsConntectedToUnit ? Unit.Rigidbody : _rigidbody; }
+        }
+
+        public Vector3 Center
+        {
+            get { return new Vector3(transform.position.x, transform.position.y + Size.y, transform.position.z); }
         }
 
         protected virtual void Awake()

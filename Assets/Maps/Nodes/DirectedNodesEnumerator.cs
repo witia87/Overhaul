@@ -32,14 +32,14 @@ namespace Assets.Maps.Nodes
 
         public bool MoveNext()
         {
-            if ((_currentStep == 0 && CheckDirection(_directionX, _directionZ))
-                || (_currentStep == 1 && CheckDirection(
-                    _directionX != 0 ? 0 : _directionZ*_rotationDirection,
-                    _directionZ != 0 ? 0 : _directionX*_rotationDirection))
-                || (_currentStep == 2 && CheckDirection(
-                    _directionX != 0 ? 0 : -_directionZ*_rotationDirection,
-                    _directionZ != 0 ? 0 : -_directionX*_rotationDirection))
-                || (_currentStep == 3 && CheckDirection(-_directionX, -_directionZ)))
+            if (_currentStep == 0 && CheckDirection(_directionX, _directionZ)
+                || _currentStep == 1 && CheckDirection(
+                    _directionX != 0 ? 0 : _directionZ * _rotationDirection,
+                    _directionZ != 0 ? 0 : _directionX * _rotationDirection)
+                || _currentStep == 2 && CheckDirection(
+                    _directionX != 0 ? 0 : -_directionZ * _rotationDirection,
+                    _directionZ != 0 ? 0 : -_directionX * _rotationDirection)
+                || _currentStep == 3 && CheckDirection(-_directionX, -_directionZ))
             {
                 return true;
             }
@@ -61,11 +61,11 @@ namespace Assets.Maps.Nodes
                     case 1:
                         return _grid[_z + _directionZ, _x + _directionX];
                     case 2:
-                        return _grid[_z + (_directionZ != 0 ? 0 : _directionX*_rotationDirection),
-                            _x + (_directionX != 0 ? 0 : _directionZ*_rotationDirection)];
+                        return _grid[_z + (_directionZ != 0 ? 0 : _directionX * _rotationDirection),
+                            _x + (_directionX != 0 ? 0 : _directionZ * _rotationDirection)];
                     case 3:
-                        return _grid[_z - (_directionZ != 0 ? 0 : _directionX*_rotationDirection),
-                            _x - (_directionX != 0 ? 0 : _directionZ*_rotationDirection)];
+                        return _grid[_z - (_directionZ != 0 ? 0 : _directionX * _rotationDirection),
+                            _x - (_directionX != 0 ? 0 : _directionZ * _rotationDirection)];
                     case 4:
                         return _grid[_z - _directionZ, _x - _directionX];
                     default:

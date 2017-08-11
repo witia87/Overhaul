@@ -10,8 +10,8 @@ namespace Assets.Cognitions.Computers.States
 {
     public class Searching : ComputerState
     {
-        private readonly ITargetMemory _targetMemory;
         private readonly float _initialDistance;
+        private readonly ITargetMemory _targetMemory;
         private List<Vector3> _path;
         private Vector3 _targetPositionPrediction;
 
@@ -28,14 +28,15 @@ namespace Assets.Cognitions.Computers.States
         private void FindPath()
         {
             if (!Map.PathFinder.TryGetClosestAvailablePosition(_targetMemory.LastSeenPosition +
-                                                              _targetMemory.LastSeenVelocity.normalized * _initialDistance,
+                                                               _targetMemory.LastSeenVelocity.normalized *
+                                                               _initialDistance,
                 10, out _targetPositionPrediction))
             {
                 _targetPositionPrediction = _targetMemory.LastSeenPosition;
             }
             _path = Map.PathFinder.FindPath(Unit.Position, _targetPositionPrediction);
         }
-        
+
         public override CognitionState<ComputerStateIds> Update()
         {
             Unit.Targeting.Gun.StopFiring();

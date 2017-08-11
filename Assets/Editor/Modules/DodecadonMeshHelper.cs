@@ -17,7 +17,7 @@ namespace Assets.Editor.Modules
 
             size.x /= 2;
             size.z /= 2;
-            var flat = flatPartsRatio/2;
+            var flat = flatPartsRatio / 2;
             var verts = new[]
             {
                 new Vector3(0, 0, 0), // bottom spike

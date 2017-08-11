@@ -6,9 +6,9 @@ namespace Assets.Modules.Targeting.Guns
 {
     public class GunSensor : DiamondDetector
     {
-        [Range(0.1f, Mathf.PI/2)] public float HorizontalAngleTolerance = Mathf.PI/3;
+        [Range(0.1f, Mathf.PI / 2)] public float HorizontalAngleTolerance = Mathf.PI / 3;
 
-        [Range(0.1f, Mathf.PI/2)] public float VerticalAngleTolerance = Mathf.PI/4;
+        [Range(0.1f, Mathf.PI / 2)] public float VerticalAngleTolerance = Mathf.PI / 4;
 
         [Range(0.1f, 100)] public float VisionLenght = 10;
 
@@ -44,8 +44,8 @@ namespace Assets.Modules.Targeting.Guns
         protected override void Awake()
         {
             Length = VisionLenght;
-            Width = Mathf.Tan(HorizontalAngleTolerance)*VisionLenght;
-            Height = Mathf.Tan(VerticalAngleTolerance)*VisionLenght;
+            Width = Mathf.Tan(HorizontalAngleTolerance) * VisionLenght;
+            Height = Mathf.Tan(VerticalAngleTolerance) * VisionLenght;
             base.Awake();
         }
     }

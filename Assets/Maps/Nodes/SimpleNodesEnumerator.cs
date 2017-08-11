@@ -22,10 +22,10 @@ namespace Assets.Maps.Nodes
 
         public bool MoveNext()
         {
-            if ((_currentStep == 0 && CheckDirection(-1, 0))
-                || (_currentStep == 1 && CheckDirection(0, 1))
-                || (_currentStep == 2 && CheckDirection(1, 0))
-                || (_currentStep == 3 && CheckDirection(0, -1)))
+            if (_currentStep == 0 && CheckDirection(-1, 0)
+                || _currentStep == 1 && CheckDirection(0, 1)
+                || _currentStep == 2 && CheckDirection(1, 0)
+                || _currentStep == 3 && CheckDirection(0, -1))
             {
                 return true;
             }

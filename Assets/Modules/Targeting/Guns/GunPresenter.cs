@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Modules.Targeting.Guns
 {
@@ -8,7 +7,7 @@ namespace Assets.Modules.Targeting.Guns
         public override void Update()
         {
             base.Update();
-            var direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up)* Module.FireDirection;
+            var direction = Quaternion.AngleAxis(-CameraStore.CameraEulerAngles.y, Vector3.up) * Module.FireDirection;
             Animator.SetFloat("H", direction.x);
             Animator.SetFloat("V", direction.z);
             Animator.SetBool("IsFiring", Module.IsFiring);

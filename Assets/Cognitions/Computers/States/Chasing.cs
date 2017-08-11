@@ -34,7 +34,7 @@ namespace Assets.Cognitions.Computers.States
                 if (_target.IsVisible)
                 {
                     var distanceToTarget = (_target.Position - Unit.Position).magnitude;
-                    if (Unit.Targeting.IsGunMounted 
+                    if (Unit.Targeting.IsGunMounted
                         && distanceToTarget > Unit.Targeting.Gun.EfectiveRange.x
                         && distanceToTarget < Unit.Targeting.Gun.EfectiveRange.y)
                     {
@@ -48,7 +48,10 @@ namespace Assets.Cognitions.Computers.States
                 }
                 else
                 {
-                    if (Unit.Targeting.IsGunMounted) Unit.Targeting.Gun.StopFiring();
+                    if (Unit.Targeting.IsGunMounted)
+                    {
+                        Unit.Targeting.Gun.StopFiring();
+                    }
                     return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateSearching(_target));
                 }
             }

@@ -11,16 +11,18 @@ namespace Assets.Cognitions
         private readonly List<CognitionState<TStateUids>> _registeredStates = new List<CognitionState<TStateUids>>();
 
         [SerializeField] private readonly int _rememberedStatesCount = 10;
-
-        public Unit Unit;
         protected CognitionState<TStateUids> DefaultState;
-        [Range(0, 5)] public int Scale = 1;
-
-        public IMapStore MapStore;
         public FractionId Fraction = FractionId.Enemy;
 
+        protected IMap Map;
+
+        public IMapStore MapStore;
+        [Range(0, 5)] public int Scale = 1;
+
+        public Unit Unit;
+
         public IPathFinder PathFinder { get; private set; }
-        
+
         protected CognitionState<TStateUids> CurrentState
         {
             get { return _registeredStates[_registeredStates.Count - 1]; }
@@ -31,7 +33,6 @@ namespace Assets.Cognitions
             MapStore = FindObjectOfType<MapStore>();
         }
 
-        protected IMap Map;
         protected virtual void Start()
         {
             Map = MapStore.GetMap(Scale, Fraction);

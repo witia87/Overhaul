@@ -30,6 +30,19 @@ namespace Assets.Modules.Targeting.Guns
             get { return _efectiveRange; }
         }
 
+        public void SetFire(bool isSetToFire)
+        {
+            _verticalDirectionCorection = 0;
+            IsFiring = isSetToFire;
+        }
+
+        public void SetFire(float distance, float bulletHeightAtAGivenDisntance)
+        {
+            _verticalDirectionCorection = new Vector3(0, bulletHeightAtAGivenDisntance - FirePosition.y, distance)
+                .normalized.y;
+            IsFiring = true;
+        }
+
         public bool IsFiring { get; private set; }
 
         public int AmmoLeftInTheClip { get; private set; }
@@ -69,24 +82,6 @@ namespace Assets.Modules.Targeting.Guns
         public bool IsReloading
         {
             get { return ReloadTimeLeft > 0; }
-        }
-
-        public void Fire()
-        {
-            _verticalDirectionCorection = 0;
-            IsFiring = true;
-        }
-
-        public void Fire(float distance, float bulletHeightAtAGivenDisntance)
-        {
-            _verticalDirectionCorection = new Vector3(0, bulletHeightAtAGivenDisntance - FirePosition.y, distance)
-                .normalized.y;
-            IsFiring = true;
-        }
-
-        public void StopFiring()
-        {
-            IsFiring = false;
         }
 
         public void Reload()

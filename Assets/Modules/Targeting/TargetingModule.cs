@@ -88,12 +88,7 @@ namespace Assets.Modules.Targeting
             Gun = GetComponentInChildren<GunModule>();
         }
 
-        public void Crouch()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void StopCrouching()
+        public void SetCrouch(bool isCrouching)
         {
             throw new System.NotImplementedException();
         }

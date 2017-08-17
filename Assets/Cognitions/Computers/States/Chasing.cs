@@ -50,7 +50,7 @@ namespace Assets.Cognitions.Computers.States
                 {
                     if (Unit.Targeting.IsGunMounted)
                     {
-                        Unit.Targeting.Gun.StopFiring();
+                        Unit.Targeting.Gun.SetFire(false);
                     }
                     return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateSearching(_target));
                 }

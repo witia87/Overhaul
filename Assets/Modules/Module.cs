@@ -1,5 +1,4 @@
-﻿using Assets.Editor.Modules;
-using Assets.Maps;
+﻿using Assets.Maps;
 using UnityEngine;
 
 namespace Assets.Modules
@@ -17,9 +16,6 @@ namespace Assets.Modules
         public IUnitControl Unit { get; private set; }
 
         protected MeshCollider MeshCollider { get; private set; }
-        protected Mesh InitialMesh { get; private set; }
-
-        protected MeshHelper MeshHelper;
 
         public bool IsConntectedToUnit
         {
@@ -41,7 +37,6 @@ namespace Assets.Modules
             AttachRigidbody();
             MapStore = FindObjectOfType<MapStore>();
             MeshCollider = GetComponent<MeshCollider>();
-            MeshHelper = new MeshHelper(MeshCollider.sharedMesh);
         }
 
         public virtual void Mount(GameObject parentGameObject, Vector3 localPosition)

@@ -37,7 +37,7 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            Unit.Targeting.Gun.StopFiring();
+            Unit.Targeting.Gun.SetFire(false);
             if (Map.IsPositionDangorous(Unit.Position))
             {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));

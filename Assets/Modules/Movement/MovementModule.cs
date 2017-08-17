@@ -84,7 +84,7 @@ namespace Assets.Modules.Movement
         }
 
         public bool IsGrounded { get; private set; }
-        public float CrouchLevel { get { return Crouchable.CrouchLevel; } }
+        public float CrouchLevel { get { return _crouchHelper.CrouchLevel; } }
 
         public override void Mount(GameObject parentGameObject, Vector3 localPosition)
         {
@@ -96,25 +96,18 @@ namespace Assets.Modules.Movement
         protected override void Awake()
         {
             base.Awake();
-
-            _meshCollider = GetComponent<MeshCollider>();
-            _initialMesh = _meshCollider.sharedMesh;
-            _initialVerts = _initialMesh.vertices;
-            _crouchHelper = new CrouchHelper();
+            
+            _crouchHelper = new CrouchHelper(GetComponent<MeshCollider>(), _crouchTime, _minimalCrouchLevel);
         }
 
 
         [SerializeField] private float _crouchTime = 0.2f;
+        [SerializeField] private float _minimalCrouchLevel; // max is always 1
         private CrouchHelper _crouchHelper;
-
-        public void Crouch()
+        
+        public void SetCrouch(bool isSetToCrouch)
         {
-            Crouchable.Crouch();
-        }
-
-        public void StopCrouching()
-        {
-            Crouchable.StopCrouching();
+            //_crouchHelper.SetCrouch(isSetToCrouch);
         }
 
         protected void FixedUpdate()
@@ -163,7 +156,6 @@ namespace Assets.Modules.Movement
         protected void Update()
         {
             IsGrounded = Physics.Raycast(transform.position + Vector3.up * 0.01f, -Vector3.up, 0.1f);
-            TargetingModule.transform.position = transform.position + Vector3.up * CrouchLevel;
         }
 
         protected void OnDrawGizmos()

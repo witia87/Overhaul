@@ -22,7 +22,7 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            Unit.Targeting.Gun.StopFiring();
+            Unit.Targeting.Gun.SetFire(false);
 
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
             {

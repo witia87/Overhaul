@@ -11,7 +11,6 @@ namespace Assets.Modules.Movement
 
         void StopMoving();
 
-        void Crouch();
-        void StopCrouching();
+        void SetCrouch(bool isCrouching);
     }
 }

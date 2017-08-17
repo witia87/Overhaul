@@ -46,11 +46,11 @@ namespace Assets.Cognitions.Helpers
                 ray.y = 0;
                 if (Vector3.Angle(ray, _unit.Targeting.Gun.FireDirection) < 10)
                 {
-                    _unit.Targeting.Gun.Fire(ray.magnitude, target.Center.y);
+                    _unit.Targeting.Gun.SetFire(ray.magnitude, target.Center.y);
                 }
                 else
                 {
-                    _unit.Targeting.Gun.StopFiring();
+                    _unit.Targeting.Gun.SetFire(false);
                 }
             }
         }

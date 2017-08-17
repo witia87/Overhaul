@@ -39,7 +39,7 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            Unit.Targeting.Gun.StopFiring();
+            Unit.Targeting.Gun.SetFire(false);
             if (Map.ArePositionsOnTheSameTile(Unit.Position, _path[0]))
             {
                 return DisposeCurrent()

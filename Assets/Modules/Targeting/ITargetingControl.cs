@@ -14,7 +14,6 @@ namespace Assets.Modules.Targeting
         void DropGun();
         void PickGun();
 
-        void Crouch();
-        void StopCrouching();
+        void SetCrouch(bool isCrouching);
     }
 }

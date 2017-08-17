@@ -5,9 +5,8 @@ namespace Assets.Modules.Targeting.Guns
     public interface IGunControl : IModuleControl, IGunParameters
     {
         Vector2 EfectiveRange { get; }
-        void Fire();
-        void Fire(float distance, float bulletHeightAtAGivenDisntance);
-        void StopFiring();
+        void SetFire(bool isSetToFire);
+        void SetFire(float distance, float bulletHeightAtAGivenDisntance);
         void Reload();
     }
 }

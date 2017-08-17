@@ -7,7 +7,7 @@ namespace Assets.Cognitions.Players.States
 {
     public class ControllingHumanoid : PlayerState
     {
-        public ControllingHumanoid(IUnitControl unit, IMap map, int scale,
+        public ControllingHumanoid(IUnitControl unit, IMap map,
             ITargetingController targetingController, IMovementController movementController,
             IActionsController actionsController) :
             base(PlayerStateIds.ControllingHumanoid, unit, map, targetingController, movementController,
@@ -31,14 +31,7 @@ namespace Assets.Cognitions.Players.States
             {
                 if (Unit.Targeting.IsGunMounted)
                 {
-                    if (TargetingController.IsFirePressed)
-                    {
-                        Unit.Targeting.Gun.Fire();
-                    }
-                    else
-                    {
-                        Unit.Targeting.Gun.StopFiring();
-                    }
+                    Unit.Targeting.Gun.SetFire(TargetingController.IsFirePressed);
                 }
             }
 
@@ -56,15 +49,7 @@ namespace Assets.Cognitions.Players.States
                 Unit.Movement.Jump(Vector3.up);
             }
 
-            if (MovementController.IsCrouchPressed)
-            {
-                Unit.Movement.Crouch();
-            }
-            else
-            {
-                Unit.Movement.StopCrouching();
-            }
-
+            Unit.Movement.SetCrouch(MovementController.IsCrouchPressed);
 
             return this;
         }

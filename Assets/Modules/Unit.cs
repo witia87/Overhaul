@@ -13,14 +13,21 @@ namespace Assets.Modules
 
         public Rigidbody Rigidbody { get; private set; }
 
-        public IMovementControl Movement { get; private set; }
-        public ITargetingControl Targeting { get; private set; }
+        private MovementModule _movementModule;
+        public IMovementControl Movement { get { return _movementModule; } }
+        private TargetingModule _targetingModule;
+        public ITargetingControl Targeting { get { return _targetingModule; } }
 
         private void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
-            Movement = GetComponentInChildren<MovementModule>();
-            Targeting = GetComponentInChildren<TargetingModule>();
+            _movementModule = GetComponentInChildren<MovementModule>();
+            _targetingModule = GetComponentInChildren<TargetingModule>();
+        }
+
+        private void LateUpdate()
+        {
+            //_targetingModule.transform.position = transform.position + Vector3.up * Movement.CrouchLevel;
         }
 
         private void Update()

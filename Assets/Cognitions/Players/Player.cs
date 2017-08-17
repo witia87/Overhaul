@@ -20,7 +20,7 @@ namespace Assets.Cognitions.Players
             _targetingController.Start();
             _movementController.Start();
 
-            DefaultState = new ControllingHumanoid(Unit, Map, Scale, _targetingController, _movementController,
+            DefaultState = new ControllingHumanoid(Unit, Map, _targetingController, _movementController,
                 _actionsController);
         }
 

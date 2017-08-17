@@ -6,6 +6,10 @@ namespace Assets.Modules.Movement
 {
     public class MovementModule : Module, IMovementControl
     {
+        private CrouchHelper _crouchHelper;
+
+        [SerializeField] private readonly float _crouchTime = 0.2f;
+        [SerializeField] private float _minimalCrouchLevel; // max is always 1
         public float Acceleration = 100;
         public float AngularAcceleration = 200;
         protected Vector3 GlobalDirectionInWhichToMove;
@@ -84,7 +88,16 @@ namespace Assets.Modules.Movement
         }
 
         public bool IsGrounded { get; private set; }
-        public float CrouchLevel { get { return _crouchHelper.CrouchLevel; } }
+
+        public float CrouchLevel
+        {
+            get { return _crouchHelper.CrouchLevel; }
+        }
+
+        public void SetCrouch(bool isSetToCrouch)
+        {
+            _crouchHelper.SetCrouch(isSetToCrouch);
+        }
 
         public override void Mount(GameObject parentGameObject, Vector3 localPosition)
         {
@@ -96,18 +109,8 @@ namespace Assets.Modules.Movement
         protected override void Awake()
         {
             base.Awake();
-            
+
             _crouchHelper = new CrouchHelper(GetComponent<MeshCollider>(), _crouchTime, _minimalCrouchLevel);
-        }
-
-
-        [SerializeField] private float _crouchTime = 0.2f;
-        [SerializeField] private float _minimalCrouchLevel; // max is always 1
-        private CrouchHelper _crouchHelper;
-        
-        public void SetCrouch(bool isSetToCrouch)
-        {
-            //_crouchHelper.SetCrouch(isSetToCrouch);
         }
 
         protected void FixedUpdate()
@@ -140,6 +143,7 @@ namespace Assets.Modules.Movement
                 }
 
                 var speedModifier = 0.75f + 0.25f * Vector3.Dot(MovementDirection, TargetingModule.TargetingDirection);
+                speedModifier *= CrouchLevel;
                 Rigidbody.AddForce(GlobalDirectionInWhichToMove * acceleration * speedModifier, ForceMode.Acceleration);
 
                 var torqueToApply = torque * AngularAcceleration;
@@ -151,6 +155,8 @@ namespace Assets.Modules.Movement
                 var torque = Vector3.Cross(transform.forward, direction) * AngularAcceleration;
                 Rigidbody.AddTorque(torque);
             }
+
+            _crouchHelper.FixedUpdate();
         }
 
         protected void Update()

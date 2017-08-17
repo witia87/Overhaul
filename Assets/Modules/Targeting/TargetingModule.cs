@@ -8,7 +8,11 @@ namespace Assets.Modules.Targeting
 {
     public class TargetingModule : Module, ITargetingControl
     {
+        private CrouchHelper _crouchHelper;
+
+        [SerializeField] private readonly float _crouchTime = 0.2f;
         private bool _isTargetDirectionSet;
+        [SerializeField] private float _minimalCrouchLevel; // max is always 1
         private float _velocity;
 
         [SerializeField] private VisionSensor _visionSensor;
@@ -88,15 +92,16 @@ namespace Assets.Modules.Targeting
             Gun = GetComponentInChildren<GunModule>();
         }
 
-        public void SetCrouch(bool isCrouching)
+        public void SetCrouch(bool isSetToCrouch)
         {
-            throw new System.NotImplementedException();
+            _crouchHelper.SetCrouch(isSetToCrouch);
         }
 
         protected override void Awake()
         {
             base.Awake();
             Gun = GetComponentInChildren<GunModule>();
+            _crouchHelper = new CrouchHelper(GetComponent<MeshCollider>(), _crouchTime, _minimalCrouchLevel);
         }
 
         private void FixedUpdate()
@@ -123,6 +128,7 @@ namespace Assets.Modules.Targeting
                     _velocity = 0;
                 }
             }
+            _crouchHelper.FixedUpdate();
         }
 
         private void OnDrawGizmos()

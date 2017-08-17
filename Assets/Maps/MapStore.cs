@@ -7,16 +7,16 @@ namespace Assets.Maps
 {
     public class MapStore : MonoBehaviour, IMapStore
     {
-        private BaseNode[,] _baseGrid;
         [SerializeField] private readonly float _baseGridUnitSize = 1;
-
-        private DangerStore _dangers;
-        [SerializeField] private LayerMask _floorDetectionLayerMask;
         [SerializeField] private readonly int _gridLength = 40;
         [SerializeField] private readonly int _gridWidth = 40;
 
         private readonly List<INode[,]> _higherScaleGrids = new List<INode[,]>();
         [SerializeField] private readonly int _scalesCount = 6;
+        private BaseNode[,] _baseGrid;
+
+        private DangerStore _dangers;
+        [SerializeField] private LayerMask _floorDetectionLayerMask;
 
         public float BaseGridUnitSize
         {

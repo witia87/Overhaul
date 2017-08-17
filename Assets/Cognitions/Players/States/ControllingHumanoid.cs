@@ -50,6 +50,7 @@ namespace Assets.Cognitions.Players.States
             }
 
             Unit.Movement.SetCrouch(MovementController.IsCrouchPressed);
+            Unit.Targeting.SetCrouch(MovementController.IsCrouchPressed);
 
             return this;
         }

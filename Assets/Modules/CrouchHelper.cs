@@ -39,7 +39,7 @@ namespace Assets.Modules
             _isSetToCrouch = isSetToCrouch;
         }
 
-        protected void Update()
+        public void FixedUpdate()
         {
             if (_isSetToCrouch)
             {

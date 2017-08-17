@@ -6,9 +6,9 @@ namespace Assets.Maps.PathFinders
 {
     public class PathFinder : IPathFinder
     {
+        private readonly Map _map;
         private readonly SafespotFinder _safespotFinder;
         private readonly SimplePathFinder _simplePathFinder;
-        private readonly Map _map;
 
         public PathFinder(Map map)
         {

@@ -10,5 +10,8 @@ namespace Assets.Modules.Movement
         void Jump(Vector3 direction);
 
         void StopMoving();
+
+        void Crouch();
+        void StopCrouching();
     }
 }

@@ -8,5 +8,7 @@ namespace Assets.Cognitions.Players.Controllers
         Vector3 MovementVector { get; }
 
         bool IsJumpPressed { get; }
+
+        bool IsCrouchPressed { get; }
     }
 }

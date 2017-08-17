@@ -15,5 +15,11 @@ namespace Assets.Modules.Movement
         float MovementSpeed { get; }
 
         bool IsGrounded { get; }
+
+        /// <summary>
+        ///     A value from [0.5..1] range,
+        ///     where 0.5 means full crouch, and 1 means that module is straightened.
+        /// </summary>
+        float CrouchLevel { get; }
     }
 }

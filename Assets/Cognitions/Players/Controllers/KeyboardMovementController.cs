@@ -16,6 +16,7 @@ namespace Assets.Cognitions.Players.Controllers
         public bool IsMovementPresent { get; private set; }
         public Vector3 MovementVector { get; private set; }
         public bool IsJumpPressed { get; private set; }
+        public bool IsCrouchPressed { get; private set; }
 
         public void Start()
         {
@@ -43,6 +44,8 @@ namespace Assets.Cognitions.Players.Controllers
             }
 
             IsJumpPressed = Input.GetButtonDown("Jump");
+
+            IsCrouchPressed = Input.GetButton("Crouch");
         }
 
         protected Vector3 Normalize(Vector3 v)

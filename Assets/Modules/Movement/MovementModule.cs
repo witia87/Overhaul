@@ -1,5 +1,7 @@
-﻿using Assets.Modules.Targeting;
+﻿using Assets.Editor.Modules;
+using Assets.Modules.Targeting;
 using Assets.Utilities;
+using UnityEditor.AI;
 using UnityEngine;
 
 namespace Assets.Modules.Movement
@@ -84,12 +86,25 @@ namespace Assets.Modules.Movement
         }
 
         public bool IsGrounded { get; private set; }
+        public float CrouchLevel { get { return Crouchable.CrouchLevel; } }
 
         public override void Mount(GameObject parentGameObject, Vector3 localPosition)
         {
             base.Mount(parentGameObject, localPosition);
             Unit.Rigidbody.drag = Drag;
             Unit.Rigidbody.angularDrag = AngularDrag;
+        }
+
+        public Crouchable Crouchable;
+
+        public void Crouch()
+        {
+            Crouchable.Crouch();
+        }
+
+        public void StopCrouching()
+        {
+            Crouchable.StopCrouching();
         }
 
         protected void FixedUpdate()
@@ -138,6 +153,7 @@ namespace Assets.Modules.Movement
         protected void Update()
         {
             IsGrounded = Physics.Raycast(transform.position + Vector3.up * 0.01f, -Vector3.up, 0.1f);
+            TargetingModule.transform.position = transform.position + Vector3.up * CrouchLevel;
         }
 
         protected void OnDrawGizmos()

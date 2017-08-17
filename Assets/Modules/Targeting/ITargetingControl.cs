@@ -13,5 +13,8 @@ namespace Assets.Modules.Targeting
         void LookAt(Vector3 point);
         void DropGun();
         void PickGun();
+
+        void Crouch();
+        void StopCrouching();
     }
 }

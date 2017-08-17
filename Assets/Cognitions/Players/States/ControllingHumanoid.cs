@@ -56,6 +56,15 @@ namespace Assets.Cognitions.Players.States
                 Unit.Movement.Jump(Vector3.up);
             }
 
+            if (MovementController.IsCrouchPressed)
+            {
+                Unit.Movement.Crouch();
+            }
+            else
+            {
+                Unit.Movement.StopCrouching();
+            }
+
 
             return this;
         }

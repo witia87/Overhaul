@@ -36,6 +36,8 @@ namespace Assets.Modules.Targeting
             get { return transform.forward; }
         }
 
+        public float CrouchLevel { get; private set; }
+
         public bool IsGunMounted
         {
             get { return Gun != null; }
@@ -84,6 +86,16 @@ namespace Assets.Modules.Targeting
                 }
             }
             Gun = GetComponentInChildren<GunModule>();
+        }
+
+        public void Crouch()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void StopCrouching()
+        {
+            throw new System.NotImplementedException();
         }
 
         protected override void Awake()

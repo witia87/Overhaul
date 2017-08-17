@@ -77,6 +77,7 @@ namespace Assets.Editor.Modules
                 }
             };
             mesh.RecalculateBounds();
+            mesh.MarkDynamic();
             return mesh;
         }
     }

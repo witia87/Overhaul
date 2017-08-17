@@ -1,7 +1,5 @@
-﻿using Assets.Editor.Modules;
-using Assets.Modules.Targeting;
+﻿using Assets.Modules.Targeting;
 using Assets.Utilities;
-using UnityEditor.AI;
 using UnityEngine;
 
 namespace Assets.Modules.Movement
@@ -95,7 +93,19 @@ namespace Assets.Modules.Movement
             Unit.Rigidbody.angularDrag = AngularDrag;
         }
 
-        public Crouchable Crouchable;
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _meshCollider = GetComponent<MeshCollider>();
+            _initialMesh = _meshCollider.sharedMesh;
+            _initialVerts = _initialMesh.vertices;
+            _crouchHelper = new CrouchHelper();
+        }
+
+
+        [SerializeField] private float _crouchTime = 0.2f;
+        private CrouchHelper _crouchHelper;
 
         public void Crouch()
         {

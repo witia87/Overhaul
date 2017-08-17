@@ -1,13 +1,12 @@
-﻿using Assets.Editor.Modules;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Modules
 {
-    public class Crouchable: MonoBehaviour
+    public class CrouchHelper
     {
-        [SerializeField] private float CrouchTime = 0.2f;
+        private float _crouchTime = 0.2f;
         private bool _isSetToCrouch = false;
-        [SerializeField] private float _minimalCrouchLevel = 0.5f; // max is always 1
+        private float _minimalCrouchLevel = 0.5f; // max is always 1
         private float _crouchDownVelocity = 0;
         private float _crouchUpVelocity = 0;
 
@@ -16,11 +15,8 @@ namespace Assets.Modules
         private MeshCollider _meshCollider;
         private Mesh _initialMesh;
         private Vector3[] _initialVerts;
-        private void Awake()
+        private void CrouchHelper()
         {
-            _meshCollider = GetComponent<MeshCollider>();
-            _initialMesh = _meshCollider.sharedMesh;
-            _initialVerts = _initialMesh.vertices;
         }
 
         private void ScaleMeshVerticaly(MeshCollider collider, float scale)
@@ -51,7 +47,7 @@ namespace Assets.Modules
                 if (CrouchLevel > _minimalCrouchLevel)
                 {
                     CrouchLevel = Mathf.SmoothDamp(CrouchLevel, _minimalCrouchLevel, ref _crouchDownVelocity,
-                        CrouchTime);
+                        _crouchTime);
                     ScaleMeshVerticaly(_meshCollider, CrouchLevel);
 
                 }
@@ -65,7 +61,7 @@ namespace Assets.Modules
                 if (CrouchLevel < 1)
                 {
                     CrouchLevel = Mathf.SmoothDamp(CrouchLevel, 1, ref _crouchUpVelocity,
-                        CrouchTime);
+                        _crouchTime);
                     ScaleMeshVerticaly(_meshCollider, CrouchLevel);
 
                 }

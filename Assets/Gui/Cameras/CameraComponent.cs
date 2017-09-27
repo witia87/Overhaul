@@ -6,11 +6,13 @@ namespace Assets.Gui.Cameras
     {
         private GameObject _cameraHook;
 
-        [SerializeField] private LayerMask _floorLayerMask;
         private IGuiStore _guiStore;
 
         [SerializeField] private float _pixelsPerOneUnitInHeight;
+
+        [SerializeField] private LayerMask _emptyTargetingLayerMask;
         [SerializeField] private LayerMask _targetLayerMask;
+        [SerializeField] private LayerMask _environmentLayerMask;
 
         public GameObject FocusObject;
 
@@ -60,7 +62,7 @@ namespace Assets.Gui.Cameras
             MainCamera.cameraType = CameraType.Game;
             MainCamera.orthographic = true;
 
-            Raycasts = new RaycastsHelper(MainCamera, _floorLayerMask, _targetLayerMask);
+            Raycasts = new RaycastsHelper(MainCamera, _emptyTargetingLayerMask, _targetLayerMask, _environmentLayerMask);
 
             _cameraHook = new GameObject("Camera Hook");
             _cameraHook.transform.localEulerAngles = transform.localEulerAngles;

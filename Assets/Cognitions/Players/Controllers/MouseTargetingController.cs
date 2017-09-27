@@ -30,21 +30,23 @@ namespace Assets.Cognitions.Players.Controllers
         public void Update()
         {
             RaycastHit mouseHit;
-            if (_cameraStore.Raycasts.ScreenPointToFloorRay(Input.mousePosition, out mouseHit))
-            {
-                TargetedPosition = mouseHit.point;
-            }
-
             if (_cameraStore.Raycasts.ScreenPointToRay(Input.mousePosition, out mouseHit))
             {
                 var module = mouseHit.transform.gameObject.GetComponent<Module>();
                 if (mouseHit.transform.gameObject.GetComponent<Module>() != null)
                 {
+                    TargetedPosition = mouseHit.point;
                     TargetedModule = module;
                 }
             }
-            else
+            else if (_cameraStore.Raycasts.ScreenPointToEnvironmentRay(Input.mousePosition, out mouseHit))
             {
+                TargetedPosition = mouseHit.point;
+                TargetedModule = null;
+            }
+            else if (_cameraStore.Raycasts.ScreenPointToEmptyTargetingRay(Input.mousePosition, out mouseHit))
+            {
+                TargetedPosition = mouseHit.point;
                 TargetedModule = null;
             }
 

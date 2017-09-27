@@ -17,7 +17,7 @@ namespace Assets.Units.Guns.Bullets
 
         public void Create()
         {
-            var bullet = (GameObject)Instantiate(Resources.Load("Bullet"));
+            var bullet = (GameObject)Instantiate(Resources.Load("Prefabs\\Units\\Guns\\Bullets\\Bullet"));
             bullet.transform.localScale = BulletsSize;
             bullet.transform.position = transform.position;
             bullet.transform.eulerAngles = transform.eulerAngles + new Vector3((Random.value - 0.5f) * 2 * AngleOfImprecision,

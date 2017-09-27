@@ -17,6 +17,7 @@ namespace Assets.Cognitions.Players.States
         public override CognitionState<PlayerStateIds> Update()
         {
             Unit.LookAt(TargetingController.TargetedPosition);
+            Unit.Gun.AimAt(TargetingController.TargetedPosition);
             if (TargetingController.IsFirePressed)
             {
                 Unit.Gun.Fire();
@@ -24,12 +25,12 @@ namespace Assets.Cognitions.Players.States
 
             if (MovementController.IsMovementPresent)
             {
-                Unit.Move(MovementController.MovementVector, 1);
+                Unit.Move(MovementController.MovementVector.normalized, MovementController.MovementVector.magnitude);
             }
 
             if (MovementController.IsJumpPressed)
             {
-                Unit.Jump(MovementController.MovementVector, 1);
+                Unit.Jump(MovementController.MovementVector.normalized, MovementController.MovementVector.magnitude);
             }
 
             if (MovementController.IsCrouchPressed)

@@ -125,7 +125,7 @@ namespace Assets.Units.Guns
         }
 
 
-        private readonly int _maxAmmo = 30;
+        [SerializeField] private readonly int _maxAmmo = 30;
         public int MaxAmmo
         {
             get { return _maxAmmo; }

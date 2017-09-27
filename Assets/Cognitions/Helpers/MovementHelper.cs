@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Maps;
-using Assets.Modules;
+using Assets.Units;
 using UnityEngine;
 
 namespace Assets.Cognitions.Helpers
@@ -26,11 +26,7 @@ namespace Assets.Cognitions.Helpers
 
             if (!_map.ArePositionsOnTheSameTile(_unit.Position, path[0]))
             {
-                _unit.Movement.GoTo(path[0]);
-            }
-            else
-            {
-                _unit.Movement.StopMoving();
+                _unit.Move((path[0] - _unit.Position).normalized, 1);
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Players.Controllers;
 using Assets.Maps;
-using Assets.Modules;
+using Assets.Units;
 
 namespace Assets.Cognitions.Players
 {

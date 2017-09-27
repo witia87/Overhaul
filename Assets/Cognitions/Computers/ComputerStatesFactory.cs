@@ -1,8 +1,8 @@
 ﻿using Assets.Cognitions.Computers.States;
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
-using Assets.Modules;
-using Assets.Modules.Targeting.Vision;
+using Assets.Units;
+using Assets.Units.Vision;
 using UnityEngine;
 
 namespace Assets.Cognitions.Computers

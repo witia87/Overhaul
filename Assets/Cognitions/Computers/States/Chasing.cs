@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
-using Assets.Modules;
-using Assets.Modules.Targeting.Vision;
+using Assets.Units;
+using Assets.Units.Vision;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -25,34 +25,22 @@ namespace Assets.Cognitions.Computers.States
         public override CognitionState<ComputerStateIds> Update()
         {
             if (Map.IsPositionDangorous(Unit.Position))
-            {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
-            }
 
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
             {
                 if (_target.IsVisible)
                 {
                     var distanceToTarget = (_target.Position - Unit.Position).magnitude;
-                    if (Unit.Targeting.IsGunMounted
-                        && distanceToTarget > Unit.Targeting.Gun.EfectiveRange.x
-                        && distanceToTarget < Unit.Targeting.Gun.EfectiveRange.y)
+                    if (distanceToTarget > Unit.Gun.EfectiveRange.x
+                        && distanceToTarget < Unit.Gun.EfectiveRange.y)
                     {
-                        Unit.Movement.StopMoving();
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateFiring(_target));
                     }
                     _path = Map.PathFinder.FindPath(Unit.Position,
                         _target.Position);
                     TargetingHelper.ManageAimingAtTheTarget(_target);
                     MovementHelper.ManageMovingAlongThePath(_path);
-                }
-                else
-                {
-                    if (Unit.Targeting.IsGunMounted)
-                    {
-                        Unit.Targeting.Gun.SetFire(false);
-                    }
-                    return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateSearching(_target));
                 }
             }
             return this;
@@ -61,10 +49,8 @@ namespace Assets.Cognitions.Computers.States
         public override void OnDrawGizmos()
         {
             for (var i = 0; i < _path.Count - 1; i++)
-            {
                 DrawArrow.ForDebug(_path[i] + Vector3.up / 100,
                     _path[i + 1] - _path[i], Color.green, 0.1f, 0);
-            }
         }
 
         protected Vector3 ClampVector(Vector3 v)

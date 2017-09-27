@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
-using Assets.Modules;
-using Assets.Modules.Targeting.Vision;
+using Assets.Units;
+using Assets.Units.Vision;
 using Assets.Utilities;
 using UnityEngine;
 

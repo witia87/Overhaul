@@ -1,6 +1,6 @@
 ﻿using Assets.Cognitions.Helpers;
 using Assets.Maps;
-using Assets.Modules;
+using Assets.Units;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -37,13 +37,11 @@ namespace Assets.Cognitions.Computers.States
             {
                 ProbabilisticTriggering.PerformOnAverageOnceEvery(0.1f, ChangeDirection);
             }
-
-            Unit.Movement.StopMoving();
+            
             ProbabilisticTriggering.PerformOnAverageOnceEvery(2, ChangeDirection);
-
-            if (Unit.Targeting.VisionSensor.VisibleTargetsCount > 0)
+            if (Unit.Vision.VisibleTargetsCount > 0)
             {
-                var target = Unit.Targeting.VisionSensor.GetClosestTarget();
+                var target = Unit.Vision.GetClosestTarget();
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateChasing(target));
             }
             return this;
@@ -53,12 +51,12 @@ namespace Assets.Cognitions.Computers.States
         {
             if (_preferedLookDirection.HasValue && ProbabilisticTriggering.TestProbabilisty(0.3f))
             {
-                Unit.Targeting.TurnTowards(_preferedLookDirection.Value);
+                Unit.LookTowards(_preferedLookDirection.Value);
             }
             else
             {
-                var directions = Unit.Targeting.VisionSensor.GetThreeClosestDirections();
-                Unit.Targeting.TurnTowards(directions[Mathf.FloorToInt(Random.value * 3)]);
+                var directions = Unit.Vision.GetThreeClosestDirections();
+                Unit.LookTowards(directions[Mathf.FloorToInt(Random.value * 3)]);
             }
         }
     }

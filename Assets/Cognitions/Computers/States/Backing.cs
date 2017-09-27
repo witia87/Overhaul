@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
-using Assets.Modules;
-using Assets.Modules.Targeting.Vision;
+using Assets.Units;
+using Assets.Units.Vision;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -37,7 +37,6 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            Unit.Targeting.Gun.SetFire(false);
             if (Map.IsPositionDangorous(Unit.Position))
             {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
@@ -48,9 +47,8 @@ namespace Assets.Cognitions.Computers.States
                 if (_target.IsVisible)
                 {
                     var distanceToTarget = (_target.Position - Unit.Position).magnitude;
-                    if (Unit.Targeting.IsGunMounted
-                        && distanceToTarget > Unit.Targeting.Gun.EfectiveRange.x
-                        && distanceToTarget < Unit.Targeting.Gun.EfectiveRange.y)
+                    if (distanceToTarget > Unit.Gun.EfectiveRange.x
+                        && distanceToTarget < Unit.Gun.EfectiveRange.y)
                     {
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateFiring(_target));
                     }

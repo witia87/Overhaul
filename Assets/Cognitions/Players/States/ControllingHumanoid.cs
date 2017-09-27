@@ -1,7 +1,6 @@
 ﻿using Assets.Cognitions.Players.Controllers;
 using Assets.Maps;
-using Assets.Modules;
-using UnityEngine;
+using Assets.Units;
 
 namespace Assets.Cognitions.Players.States
 {
@@ -17,40 +16,26 @@ namespace Assets.Cognitions.Players.States
 
         public override CognitionState<PlayerStateIds> Update()
         {
-            Unit.Targeting.LookAt(TargetingController.TargetedPosition);
-
-            if (ActionsController.IsDropWeaponPressed)
+            Unit.LookAt(TargetingController.TargetedPosition);
+            if (TargetingController.IsFirePressed)
             {
-                Unit.Targeting.DropGun();
-            }
-            else if (ActionsController.IsUsePressed)
-            {
-                Unit.Targeting.PickGun();
-            }
-            else
-            {
-                if (Unit.Targeting.IsGunMounted)
-                {
-                    Unit.Targeting.Gun.SetFire(TargetingController.IsFirePressed);
-                }
+                Unit.Gun.Fire();
             }
 
             if (MovementController.IsMovementPresent)
             {
-                Unit.Movement.Move(MovementController.MovementVector);
-            }
-            else
-            {
-                Unit.Movement.StopMoving();
+                Unit.Move(MovementController.MovementVector, 1);
             }
 
             if (MovementController.IsJumpPressed)
             {
-                Unit.Movement.Jump(Vector3.up);
+                Unit.Jump(MovementController.MovementVector, 1);
             }
 
-            Unit.Movement.SetCrouch(MovementController.IsCrouchPressed);
-            Unit.Targeting.SetCrouch(MovementController.IsCrouchPressed);
+            if (MovementController.IsCrouchPressed)
+            {
+                Unit.Crouch();
+            }
 
             return this;
         }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
-using Assets.Modules;
+using Assets.Units;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -22,8 +22,6 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            Unit.Targeting.Gun.SetFire(false);
-
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
             {
                 if (Map.ArePositionsOnTheSameTile(Unit.Position, _path[0]))
@@ -32,9 +30,9 @@ namespace Assets.Cognitions.Computers.States
                         .AndChangeStateTo(StatesFactory.CreateWatching(null, 3));
                 }
 
-                if (Unit.Targeting.VisionSensor.VisibleTargetsCount > 0)
+                if (Unit.Vision.VisibleTargetsCount > 0)
                 {
-                    var target = Unit.Targeting.VisionSensor.GetClosestTarget();
+                    var target = Unit.Vision.GetClosestTarget();
                     return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateChasing(target));
                 }
             }
@@ -43,7 +41,7 @@ namespace Assets.Cognitions.Computers.States
             MovementHelper.ManageMovingAlongThePath(_path);
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.5f))
             {
-                Unit.Targeting.LookAt(_path[0]);
+                Unit.LookAt(_path[0]);
             }
             return this;
         }

@@ -1,7 +1,7 @@
 ﻿using Assets.Cognitions.Helpers;
 using Assets.Maps;
-using Assets.Modules;
-using Assets.Modules.Targeting.Vision;
+using Assets.Units;
+using Assets.Units.Vision;
 using Assets.Utilities;
 
 namespace Assets.Cognitions.Computers.States
@@ -29,12 +29,12 @@ namespace Assets.Cognitions.Computers.States
                 if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
                 {
                     var distanceToTarget = (_target.Position - Unit.Position).magnitude;
-                    if (distanceToTarget > Unit.Targeting.Gun.EfectiveRange.y)
+                    if (distanceToTarget > Unit.Gun.EfectiveRange.y)
                     {
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateChasing(_target));
                     }
 
-                    if (distanceToTarget < Unit.Targeting.Gun.EfectiveRange.x)
+                    if (distanceToTarget < Unit.Gun.EfectiveRange.x)
                     {
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateBacking(_target));
                     }
@@ -42,11 +42,7 @@ namespace Assets.Cognitions.Computers.States
                 TargetingHelper.ManageAimingAtTheTarget(_target);
                 return this;
             }
-
-            if (Unit.Targeting.IsGunMounted)
-            {
-                Unit.Targeting.Gun.SetFire(false);
-            }
+            
             return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateSearching(_target));
         }
     }

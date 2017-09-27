@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
-using Assets.Modules;
-using Assets.Modules.Targeting.Vision;
+using Assets.Units;
+using Assets.Units.Vision;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -39,7 +39,6 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            Unit.Targeting.Gun.SetFire(false);
             if (Map.ArePositionsOnTheSameTile(Unit.Position, _path[0]))
             {
                 return DisposeCurrent()
@@ -48,9 +47,9 @@ namespace Assets.Cognitions.Computers.States
 
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
             {
-                if (Unit.Targeting.VisionSensor.VisibleTargetsCount > 0)
+                if (Unit.Vision.VisibleTargetsCount > 0)
                 {
-                    var target = Unit.Targeting.VisionSensor.GetClosestTarget();
+                    var target = Unit.Vision.GetClosestTarget();
                     return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateChasing(target));
                 }
             }
@@ -65,7 +64,7 @@ namespace Assets.Cognitions.Computers.States
                 }
                 else
                 {
-                    Unit.Targeting.LookAt(_path[0]);
+                    Unit.LookAt(_path[0]);
                 }
             }
             return this;
@@ -73,8 +72,8 @@ namespace Assets.Cognitions.Computers.States
 
         private void ChangeDirection()
         {
-            var directions = Unit.Targeting.VisionSensor.GetThreeClosestDirections();
-            Unit.Targeting.TurnTowards(directions[Mathf.FloorToInt(Random.value * 3)]);
+            var directions = Unit.Vision.GetThreeClosestDirections();
+            Unit.LookTowards(directions[Mathf.FloorToInt(Random.value * 3)]);
         }
 
         public override void OnDrawGizmos()

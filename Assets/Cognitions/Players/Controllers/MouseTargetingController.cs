@@ -1,5 +1,5 @@
 ﻿using Assets.Gui.Cameras;
-using Assets.Modules;
+using Assets.Units.Modules;
 using UnityEngine;
 
 namespace Assets.Cognitions.Players.Controllers

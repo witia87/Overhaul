@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 namespace Assets.Gui.Cameras
 {
@@ -8,7 +9,9 @@ namespace Assets.Gui.Cameras
 
         private IGuiStore _guiStore;
 
-        [SerializeField] private float _pixelsPerOneUnitInHeight;
+        //[SerializeField] private float _pixelsPerOneUnitInHeight;
+
+        [SerializeField] private float _pixelsPerUnitInCameraSpace;
 
         [SerializeField] private LayerMask _emptyTargetingLayerMask;
         [SerializeField] private LayerMask _targetLayerMask;
@@ -16,23 +19,10 @@ namespace Assets.Gui.Cameras
 
         public GameObject FocusObject;
 
-        public float PixelsPerUnit { get; private set; }
-
-        public float FieldOfViewWidth
+        public float PixelsPerUnitInCameraSpace
         {
-            get { return _guiStore.BoardPixelWidth / PixelsPerUnit; }
+            get { return _pixelsPerUnitInCameraSpace; }
         }
-
-        public float FieldOfViewHeight
-        {
-            get { return _guiStore.BoardPixelHeight / PixelsPerUnit; }
-        }
-
-        /// <summary>
-        ///     This value informs how many pixels will be projected onto the screen in height, when the height of an object is 1
-        ///     unit.
-        /// </summary>
-        public float PixelsPerOneUnitInHeight { get; private set; }
 
         public Vector3 TransformVectorToCameraSpace(Vector3 vector)
         {
@@ -68,25 +58,35 @@ namespace Assets.Gui.Cameras
             _cameraHook.transform.localEulerAngles = transform.localEulerAngles;
             _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, 0));
 
-            PixelsPerUnit = _pixelsPerOneUnitInHeight / Mathf.Cos(CameraEulerAngles.x * Mathf.Deg2Rad);
+            //PixelsPerUnitInCameraSpace = _pixelsPerOneUnitInHeight / Mathf.Cos(CameraEulerAngles.x * Mathf.Deg2Rad);
 
             Pixelation = new PixelatedPositionsCalculator(this, _cameraHook);
         }
 
         private void Start()
         {
-            MainCamera.orthographicSize = FieldOfViewHeight / 2;
+            MainCamera.orthographicSize = _guiStore.BoardPixelHeight / _pixelsPerUnitInCameraSpace / 2;
             MainCamera.targetTexture = _guiStore.BoardTexture;
-            MainCamera.aspect = FieldOfViewWidth / FieldOfViewHeight;
+            MainCamera.aspect = _guiStore.BoardPixelWidth /(float)_guiStore.BoardPixelHeight;
             Update();
             GetComponentInChildren<OutlineCameraComponent>().Initialize();
             //MainCamera.SetReplacementShader(Resources.Load("Materials/Shaders/Outline", typeof(Shader)) as Shader, "Outline");
         }
 
+        public Vector3 WorldCameraFocusPoint;
+        public Vector3 CameraPlaneOffset;
+
+        private Vector3 _velocity;
         private void Update()
         {
-            var position = FocusObject.transform.position - transform.TransformDirection(Vector3.forward * 30);
-            MainCamera.transform.position = Pixelation.GetClosestPixelatedPosition(position);
+            RaycastHit hit;
+            Raycasts.ScreenPointToEmptyTargetingRay(Input.mousePosition, out hit);
+            var targetPoint = FocusObject.transform.position +
+                              (hit.point - FocusObject.transform.position).normalized * Mathf.Min(2, (hit.point - FocusObject.transform.position).magnitude / 2);
+            WorldCameraFocusPoint = Vector3.SmoothDamp(WorldCameraFocusPoint, targetPoint, ref _velocity, 1);
+            MainCamera.transform.position = Pixelation.GetClosestPixelatedPosition(WorldCameraFocusPoint);
+            CameraPlaneOffset = _cameraHook.transform.InverseTransformPoint(WorldCameraFocusPoint) -
+                                _cameraHook.transform.InverseTransformPoint(MainCamera.transform.position);
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Assets.Gui.Cameras
         RaycastsHelper Raycasts { get; }
         PixelatedPositionsCalculator Pixelation { get; }
         Camera MainCamera { get; }
-        float PixelsPerOneUnitInHeight { get; }
         Vector3 TransformVectorToCameraSpace(Vector3 vector);
     }
 }

@@ -16,20 +16,20 @@ namespace Assets.Gui.Cameras
         public Vector3 GetClosestPixelatedPosition(Vector3 position)
         {
             var focusPointInCameraSpace = _cameraHook.transform.InverseTransformPoint(position);
-            focusPointInCameraSpace.x = Mathf.Round(focusPointInCameraSpace.x * _parent.PixelsPerUnit) /
-                                        _parent.PixelsPerUnit;
-            focusPointInCameraSpace.y = Mathf.Round(focusPointInCameraSpace.y * _parent.PixelsPerUnit) /
-                                        _parent.PixelsPerUnit;
+            focusPointInCameraSpace.x = Mathf.Round(focusPointInCameraSpace.x * _parent.PixelsPerUnitInCameraSpace) /
+                                        _parent.PixelsPerUnitInCameraSpace;
+            focusPointInCameraSpace.y = Mathf.Round(focusPointInCameraSpace.y * _parent.PixelsPerUnitInCameraSpace) /
+                                        _parent.PixelsPerUnitInCameraSpace;
             return _cameraHook.transform.TransformPoint(focusPointInCameraSpace);
         }
 
         public Vector3 GetPixelatedOffset(Vector3 from, Vector3 to)
         {
             var focusPointInCameraSpace = _cameraHook.transform.InverseTransformPoint(to - from);
-            focusPointInCameraSpace.x = Mathf.Round(focusPointInCameraSpace.x * _parent.PixelsPerUnit) /
-                                        _parent.PixelsPerUnit;
-            focusPointInCameraSpace.y = Mathf.Round(focusPointInCameraSpace.y * _parent.PixelsPerUnit) /
-                                        _parent.PixelsPerUnit;
+            focusPointInCameraSpace.x = Mathf.Round(focusPointInCameraSpace.x * _parent.PixelsPerUnitInCameraSpace) /
+                                        _parent.PixelsPerUnitInCameraSpace;
+            focusPointInCameraSpace.y = Mathf.Round(focusPointInCameraSpace.y * _parent.PixelsPerUnitInCameraSpace) /
+                                        _parent.PixelsPerUnitInCameraSpace;
             return _cameraHook.transform.TransformPoint(focusPointInCameraSpace);
         }
     }

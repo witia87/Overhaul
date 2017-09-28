@@ -1,4 +1,5 @@
-﻿using Assets.Units.Modules.States.Base;
+﻿using System;
+using Assets.Units.Modules.States.Base;
 using UnityEngine;
 
 namespace Assets.Units.Modules.States
@@ -17,7 +18,15 @@ namespace Assets.Units.Modules.States
 
             if (!Movement.IsStanding)
             {
-                return StatesFactory.CreateGliding(GlobalLookDirection, (GetLogicVector(Movement.Rigidbody.velocity) + MoveLogicDirection));
+                try
+                {
+                    return StatesFactory.CreateGliding(GlobalLookDirection,
+                        (GetLogicVector(Movement.Rigidbody.velocity) + MoveLogicDirection).normalized);
+                }
+                catch (ApplicationException ex)
+                {
+                    return StatesFactory.CreateGliding(GlobalLookDirection, MoveLogicDirection);
+                }
             }
 
             var parametersAngle =

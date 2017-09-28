@@ -32,7 +32,7 @@ namespace Assets.Gui.Cameras
             return Physics.Raycast(ray, out mouseHit, float.PositiveInfinity, _environmentLayerMask);
         }
 
-        public bool ScreenPointToRay(Vector2 screenPosition, out RaycastHit mouseHit)
+        public bool ScreenPointToModuleRay(Vector2 screenPosition, out RaycastHit mouseHit)
         {
             var viewportPosition = new Vector2(screenPosition.x / Screen.width, screenPosition.y / Screen.height);
             var ray = _camera.ViewportPointToRay(viewportPosition);

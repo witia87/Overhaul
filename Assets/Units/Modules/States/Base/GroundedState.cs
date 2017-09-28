@@ -57,7 +57,7 @@ namespace Assets.Units.Modules.States.Base
         protected Vector3 GetLogicVector(Vector3 vector)
         {
             vector.y = 0;
-            if (vector.magnitude <= 0.001)
+            if (vector.magnitude <= 0.000001)
             {
                 throw new ApplicationException("Grounded states require Modules to be in vertical postion.");
             }

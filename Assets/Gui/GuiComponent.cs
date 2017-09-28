@@ -100,6 +100,7 @@ namespace Assets.Gui
 
         private void Update()
         {
+            // Commenting the code below will tur off the camera smoothing and restore the full low pixel display effect.
             var offset = new Vector3(
                 _cameraComponent.CameraPlaneOffset.x * _cameraComponent.PixelsPerUnitInCameraSpace,
                 _cameraComponent.CameraPlaneOffset.y * _cameraComponent.PixelsPerUnitInCameraSpace,

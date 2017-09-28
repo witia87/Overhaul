@@ -83,16 +83,11 @@
 				float4 leftColor = tex2D(_MainTex, input.texcoord + float2(-_OutlineSize / (float)_TexWidth, 0));
 				float4 rightColor = tex2D(_MainTex, input.texcoord + float2(_OutlineSize / (float)_TexWidth, 0));
 				
-				/*if (equalsBackground(centerColor) &&
+				if (equalsBackground(centerColor) &&
 					(!(equalsBackground(upColor) &&
 						equalsBackground(downColor) &&
 						equalsBackground(leftColor) &&
 						equalsBackground(rightColor))))
-				{
-					return float4(1, 0, 0, 0.5);
-				}*/
-
-				if (equals(centerColor, float4(1,0,0,1)))
 				{
 					return float4(1, 0, 0, 0.5);
 				}

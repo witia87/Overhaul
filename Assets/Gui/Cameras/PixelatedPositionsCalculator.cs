@@ -32,5 +32,14 @@ namespace Assets.Gui.Cameras
                                         _parent.PixelsPerUnitInCameraSpace;
             return _cameraHook.transform.TransformPoint(focusPointInCameraSpace);
         }
+
+        public Vector3 GetScreenPosition(Vector3 position)
+        {
+            var focusPointInCameraSpace = _parent.transform.InverseTransformPoint(position);
+            focusPointInCameraSpace.x = focusPointInCameraSpace.x * _parent.PixelsPerUnitInCameraSpace;
+            focusPointInCameraSpace.y = focusPointInCameraSpace.y * _parent.PixelsPerUnitInCameraSpace;
+            focusPointInCameraSpace.z = 0;
+            return focusPointInCameraSpace;
+        }
     }
 }

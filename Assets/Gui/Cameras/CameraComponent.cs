@@ -57,9 +57,6 @@ namespace Assets.Gui.Cameras
             _cameraHook = new GameObject("Camera Hook");
             _cameraHook.transform.localEulerAngles = transform.localEulerAngles;
             _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, 0));
-
-            //PixelsPerUnitInCameraSpace = _pixelsPerOneUnitInHeight / Mathf.Cos(CameraEulerAngles.x * Mathf.Deg2Rad);
-
             Pixelation = new PixelatedPositionsCalculator(this, _cameraHook);
         }
 
@@ -70,7 +67,6 @@ namespace Assets.Gui.Cameras
             MainCamera.aspect = _guiStore.BoardPixelWidth /(float)_guiStore.BoardPixelHeight;
             Update();
             GetComponentInChildren<OutlineCameraComponent>().Initialize();
-            //MainCamera.SetReplacementShader(Resources.Load("Materials/Shaders/Outline", typeof(Shader)) as Shader, "Outline");
         }
 
         public Vector3 WorldCameraFocusPoint;

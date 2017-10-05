@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Gui.Cameras;
 using Assets.Units;
 using UnityEngine;
 
@@ -18,7 +19,8 @@ namespace Assets.Sight
         public Vector2 Center {  get { return _visibilityComputer.Origin; } }
         public List<Vector2> GetSightPolygon()
         {
-            _visibilityComputer.Origin = new Vector2(Unit.Position.x, Unit.Position.z);
+            var unitPosition = FindObjectOfType<CameraComponent>().Pixelation.GetClosestPixelatedPosition(Unit.Position);
+            _visibilityComputer.Origin = new Vector2(unitPosition.x, unitPosition.z);
             return _visibilityComputer.Compute();
         }
 

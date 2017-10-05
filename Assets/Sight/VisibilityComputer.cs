@@ -102,15 +102,15 @@ namespace Assets.Sight
             // intersections in this algorithm                        
 
             var a1 = VectorMath.LeftOf(a.P2.Position, a.P1.Position,
-                VectorMath.Interpolate(b.P1.Position, b.P2.Position, 0.0001f));
+                VectorMath.Interpolate(b.P1.Position, b.P2.Position, 0.01f));
             var a2 = VectorMath.LeftOf(a.P2.Position, a.P1.Position,
-                VectorMath.Interpolate(b.P2.Position, b.P1.Position, 0.0001f));
+                VectorMath.Interpolate(b.P2.Position, b.P1.Position, 0.01f));
             var a3 = VectorMath.LeftOf(a.P2.Position, a.P1.Position, relativeTo);
 
             var b1 = VectorMath.LeftOf(b.P2.Position, b.P1.Position,
-                VectorMath.Interpolate(a.P1.Position, a.P2.Position, 0.0001f));
+                VectorMath.Interpolate(a.P1.Position, a.P2.Position, 0.01f));
             var b2 = VectorMath.LeftOf(b.P2.Position, b.P1.Position,
-                VectorMath.Interpolate(a.P2.Position, a.P1.Position, 0.0001f));
+                VectorMath.Interpolate(a.P2.Position, a.P1.Position, 0.01f));
             var b3 = VectorMath.LeftOf(b.P2.Position, b.P1.Position, relativeTo);
 
             // NOTE: this algorithm is probably worthy of a short article

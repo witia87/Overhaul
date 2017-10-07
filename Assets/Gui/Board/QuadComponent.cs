@@ -1,0 +1,36 @@
+﻿using UnityEngine;
+
+namespace Assets.Gui.Board
+{
+    public class QuadComponent : MonoBehaviour
+    {
+        private static readonly Vector3[] Normals = new Vector3[4]
+            {Vector3.back, Vector3.back, Vector3.back, Vector3.back};
+
+        private static readonly int[] Triangles = new int[6] {0, 3, 1, 0, 2, 3};
+
+        private static readonly Vector2[] Uvs = new Vector2[4]
+            {new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0f, 1f), new Vector2(1f, 1f)};
+
+        public void Start()
+        {
+            var guiStore = FindObjectOfType<GuiStore>();
+            var vertices = new Vector3[4]
+            {
+                new Vector3(-guiStore.BoardPixelWidth / (float) 2, -guiStore.BoardPixelHeight / (float) 2, 0),
+                new Vector3(+guiStore.BoardPixelWidth / (float) 2, -guiStore.BoardPixelHeight / (float) 2, 0),
+                new Vector3(-guiStore.BoardPixelWidth / (float) 2, +guiStore.BoardPixelHeight / (float) 2, 0),
+                new Vector3(+guiStore.BoardPixelWidth / (float) 2, +guiStore.BoardPixelHeight / (float) 2, 0)
+            };
+            var mesh = new Mesh
+            {
+                vertices = vertices,
+                triangles = Triangles,
+                uv = Uvs,
+                normals = Normals
+            };
+
+            GetComponent<MeshFilter>().mesh = mesh;
+        }
+    }
+}

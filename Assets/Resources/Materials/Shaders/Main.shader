@@ -1,8 +1,8 @@
-﻿Shader "Overhaul/BoardShader"
+﻿Shader "Overhaul/MainShader"
 {
 	Properties
 	{
-		_MainTex("Base (RGB)", 2D) = "white" {}
+		_MainTex("CameraInput", 2D) = "white" {}
 		_PatternSampler("Pattern Sampler", 2D) = "white" {}
 		_PatternsCount("Patterns Count", Int) = 4
 		_PatternSize("Pattern Size", Int) = 4

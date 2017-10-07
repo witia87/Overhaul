@@ -1,9 +1,10 @@
-﻿Shader "Overhaul/BoardShader"
+﻿Shader "Overhaul/OutlineShader"
 {
 	Properties
 	{
-		_MainTex("Base (RGB)", 2D) = "white" {}
-		_BackgroundColor("Background Color", Color) = (0,0,1,0)
+		_MainTex("CameraInput", 2D) = "white" {}
+		_BackgroundColor("Background Color", Color) = (0,0,1,1)
+		_OutlineSize("Outline Size", Float) = 1
 	}
 
 	CGINCLUDE
@@ -92,7 +93,7 @@
 					return float4(1, 0, 0, 0.5);
 				}
 
-				return float4(0, 0, 0, 0);
+				return float4(0, 1, 1, 1);
 				
 			}
 			ENDCG

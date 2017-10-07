@@ -6,12 +6,9 @@ namespace Assets.Gui
     public class CamerasSwapper : MonoBehaviour
     {
         private RenderTexture _boardTexture;
-        private ICameraStore _cameraStore;
-        private Camera _guiCamera;
-
-        private IGuiStore _guiStore;
+        [SerializeField] private Camera _guiCamera;
         private bool _isRenderingToTexture = true;
-        private Camera _mainCamera;
+        [SerializeField] private Camera _mainCamera;
 
         private float _swapCamerasCooldown;
 
@@ -35,18 +32,6 @@ namespace Assets.Gui
                     _isRenderingToTexture = true;
                 }
             }
-        }
-
-        private void Awake()
-        {
-            _guiStore = FindObjectOfType<GuiComponent>();
-            _cameraStore = FindObjectOfType<CameraComponent>();
-        }
-
-        private void Start()
-        {
-            _guiCamera = _guiStore.GuiCamera;
-            _mainCamera = _cameraStore.MainCamera;
         }
 
         private void Update()

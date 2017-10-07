@@ -7,11 +7,7 @@ namespace Assets.Gui.Cameras
     {
         private GameObject _cameraHook;
 
-        private IGuiStore _guiStore;
-
-        //[SerializeField] private float _pixelsPerOneUnitInHeight;
-
-        [SerializeField] private float _pixelsPerUnitInCameraSpace;
+        private GuiStore _guiStore;
 
         [SerializeField] private LayerMask _emptyTargetingLayerMask;
         [SerializeField] private LayerMask _targetLayerMask;
@@ -19,10 +15,6 @@ namespace Assets.Gui.Cameras
 
         public GameObject FocusObject;
 
-        public float PixelsPerUnitInCameraSpace
-        {
-            get { return _pixelsPerUnitInCameraSpace; }
-        }
 
         public Vector3 TransformVectorToCameraSpace(Vector3 vector)
         {
@@ -46,7 +38,7 @@ namespace Assets.Gui.Cameras
 
         private void Awake()
         {
-            _guiStore = FindObjectOfType<GuiComponent>();
+            _guiStore = FindObjectOfType<GuiStore>();
 
             MainCamera = GetComponent<Camera>();
             MainCamera.cameraType = CameraType.Game;
@@ -57,16 +49,17 @@ namespace Assets.Gui.Cameras
             _cameraHook = new GameObject("Camera Hook");
             _cameraHook.transform.localEulerAngles = transform.localEulerAngles;
             _cameraHook.transform.position = _cameraHook.transform.TransformPoint(new Vector3(0, 0, 0));
-            Pixelation = new PixelatedPositionsCalculator(this, _cameraHook);
+            Pixelation = new PixelatedPositionsCalculator(_guiStore, _cameraHook, this);
         }
 
         private void Start()
         {
-            MainCamera.orthographicSize = _guiStore.BoardPixelHeight / _pixelsPerUnitInCameraSpace / 2;
-            MainCamera.targetTexture = _guiStore.BoardTexture;
+            MainCamera.orthographicSize = _guiStore.BoardPixelHeight / _guiStore.PixelsPerUnitInCameraSpace / 2;
+            MainCamera.targetTexture.width = _guiStore.BoardPixelWidth;
+            MainCamera.targetTexture.height = _guiStore.BoardPixelHeight;
             MainCamera.aspect = _guiStore.BoardPixelWidth /(float)_guiStore.BoardPixelHeight;
+
             Update();
-            GetComponentInChildren<OutlineCameraComponent>().Initialize();
         }
 
         public Vector3 WorldCameraFocusPoint;

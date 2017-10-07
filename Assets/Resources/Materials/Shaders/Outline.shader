@@ -17,7 +17,7 @@
 		LOD 200
 		Tags
 		{
-			"Queue" = "Geometry"
+			"Queue" = "Transparent"
 			"IgnoreProjector" = "True"
 			"RenderType" = "Geometry"
 			"PreviewType" = "Plane"
@@ -93,7 +93,7 @@
 					return float4(1, 0, 0, 0.5);
 				}
 
-				return float4(0, 1, 1, 1);
+				return float4(0, 0, 0, 0);
 				
 			}
 			ENDCG

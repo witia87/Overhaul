@@ -12,7 +12,14 @@ namespace Assets.Gui.Board
         private static readonly Vector2[] Uvs = new Vector2[4]
             {new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0f, 1f), new Vector2(1f, 1f)};
 
-        public void Start()
+
+        protected GuiStore GuiStore;
+        protected virtual void Awake()
+        {
+            GuiStore = FindObjectOfType<GuiStore>();
+        }
+
+        protected virtual void Start()
         {
             var guiStore = FindObjectOfType<GuiStore>();
             var vertices = new Vector3[4]

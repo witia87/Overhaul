@@ -22,8 +22,6 @@ namespace Assets.Gui.Cameras
         public void Start()
         {
             Camera.orthographicSize = _guiStore.BoardPixelHeight / _guiStore.PixelsPerUnitInCameraSpace / 2;
-            Camera.targetTexture.width = _guiStore.BoardPixelWidth;
-            Camera.targetTexture.height = _guiStore.BoardPixelHeight;
             Camera.aspect = _guiStore.BoardPixelWidth / (float)_guiStore.BoardPixelHeight;
         }
     }

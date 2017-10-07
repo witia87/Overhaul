@@ -25,9 +25,8 @@ namespace Assets.Gui
             var mesh = new Mesh();
 
             _meshFilter.mesh = mesh;
-
         }
-        
+
         private void Update()
         {
             for (var i = 0; i < 20; i++) // TODO: overload on purpouse; remove later
@@ -37,7 +36,7 @@ namespace Assets.Gui
                 _meshFilter.mesh.Clear();
                 _meshFilter.mesh.vertices = vertices;
                 _meshFilter.mesh.uv = GetUvs(vertices);
-                _meshFilter.mesh.triangles = GenerateExtendedTriangulation(polygon.Count);
+                _meshFilter.mesh.triangles = GenerateExtendedTriangulation(polygon.Count, vertices);
                 _meshFilter.mesh.normals = GenerateNormals(vertices);
             }
         }
@@ -92,7 +91,7 @@ namespace Assets.Gui
             return output;
         }
 
-        private int[] GenerateExtendedTriangulation(int n)
+        private int[] GenerateExtendedTriangulation(int n, Vector3[] vertices)
         {
             var output = new int[9 * n];
             for (var i = 0; i < n; i++)
@@ -104,13 +103,26 @@ namespace Assets.Gui
 
             for (var i = 0; i < n; i++)
             {
-                output[3 * n + 6 * i] = 1 + i;
-                output[3 * n + 6 * i + 1] = 1 + n + (i + 1) % n;
-                output[3 * n + 6 * i + 2] = 1 + (i + 1) % n;
+                /*if (vertices[(1 + i + 1) % n].x  - vertices[1 + i].x <= 0)
+                {
+                    output[3 * n + 6 * i] = 1 + i;
+                    output[3 * n + 6 * i + 1] = 1 + n + (i + 1) % n;
+                    output[3 * n + 6 * i + 2] = 1 + (i + 1) % n;
 
-                output[3 * n + 6 * i + 3] = 1 + i;
-                output[3 * n + 6 * i + 4] = 1 + n + i;
-                output[3 * n + 6 * i + 5] = 1 + n + (i + 1) % n;
+                    output[3 * n + 6 * i + 3] = 1 + i;
+                    output[3 * n + 6 * i + 4] = 1 + n + i;
+                    output[3 * n + 6 * i + 5] = 1 + n + (i + 1) % n;
+                }
+                else
+                {*/
+                    output[3 * n + 6 * i] = 1 + i;
+                    output[3 * n + 6 * i + 1] = 1 + (i + 1) % n;
+                    output[3 * n + 6 * i + 2] = 1 + n + (i + 1) % n;
+
+                    output[3 * n + 6 * i + 3] = 1 + i;
+                    output[3 * n + 6 * i + 4] = 1 + n + (i + 1) % n;
+                    output[3 * n + 6 * i + 5] = 1 + n + i;
+                //}
             }
 
             return output;

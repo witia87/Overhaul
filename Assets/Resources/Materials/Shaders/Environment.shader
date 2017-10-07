@@ -1,4 +1,4 @@
-﻿Shader "Overhaul/SightShader"
+﻿Shader "Overhaul/EnvironmentShader"
 {
 	Properties
 	{
@@ -92,7 +92,7 @@
 				float4 normalizedColor = float4(HSLtoRGB(hslColor), 1);
 
 				//return outputColor * normalizedColor;
-				return inputColor;
+				return inputColor/2;
 			}
 			ENDCG	
 		}

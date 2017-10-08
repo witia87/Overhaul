@@ -1,4 +1,5 @@
-﻿using Assets.Gui.Cameras;
+﻿using Assets.Gui;
+using Assets.Gui.Cameras;
 using Assets.Units.Modules;
 using UnityEngine;
 
@@ -6,11 +7,11 @@ namespace Assets.Cognitions.Players.Controllers
 {
     public class MouseTargetingController : ITargetingController
     {
-        private readonly ICameraStore _cameraStore;
+        private readonly GuiStore _guiStore;
 
-        public MouseTargetingController(ICameraStore cameraStore)
+        public MouseTargetingController(GuiStore guiStore)
         {
-            _cameraStore = cameraStore;
+            _guiStore = guiStore;
         }
 
         public Vector3 TargetedPosition { get; private set; }
@@ -30,7 +31,7 @@ namespace Assets.Cognitions.Players.Controllers
         public void Update()
         {
             RaycastHit mouseHit;
-            if (_cameraStore.Raycasts.ScreenPointToModuleRay(Input.mousePosition, out mouseHit))
+            if (_guiStore.Raycasts.ScreenPointToModuleRay(Input.mousePosition, out mouseHit))
             {
                 var module = mouseHit.transform.gameObject.GetComponent<Module>();
                 if (mouseHit.transform.gameObject.GetComponent<Module>() != null)
@@ -39,12 +40,12 @@ namespace Assets.Cognitions.Players.Controllers
                     TargetedModule = module;
                 }
             }
-            else if (_cameraStore.Raycasts.ScreenPointToEnvironmentRay(Input.mousePosition, out mouseHit))
+            else if (_guiStore.Raycasts.ScreenPointToEnvironmentRay(Input.mousePosition, out mouseHit))
             {
                 TargetedPosition = mouseHit.point;
                 TargetedModule = null;
             }
-            else if (_cameraStore.Raycasts.ScreenPointToEmptyTargetingRay(Input.mousePosition, out mouseHit))
+            else if (_guiStore.Raycasts.ScreenPointToEmptyTargetingRay(Input.mousePosition, out mouseHit))
             {
                 TargetedPosition = mouseHit.point;
                 TargetedModule = null;

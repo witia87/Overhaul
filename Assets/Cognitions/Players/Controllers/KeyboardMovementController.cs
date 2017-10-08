@@ -5,10 +5,10 @@ namespace Assets.Cognitions.Players.Controllers
 {
     public class KeyboardMovementController : IMovementController
     {
-        private readonly ICameraStore _cameraStore;
+        private readonly CameraStore _cameraStore;
         private Quaternion _rotationQuaternion;
 
-        public KeyboardMovementController(ICameraStore cameraStore)
+        public KeyboardMovementController(CameraStore cameraStore)
         {
             _cameraStore = cameraStore;
         }

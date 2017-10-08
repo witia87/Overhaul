@@ -6,12 +6,12 @@ namespace Assets.Cognitions.Players.Controllers
 {
     public class PadTargetingController : ITargetingController
     {
-        private readonly ICameraStore _cameraStore;
+        private readonly CameraStore _cameraStore;
 
         private float _horizontalAxis;
         private float _verticalAxis;
 
-        public PadTargetingController(ICameraStore cameraStore)
+        public PadTargetingController(CameraStore cameraStore)
         {
             _cameraStore = cameraStore;
         }

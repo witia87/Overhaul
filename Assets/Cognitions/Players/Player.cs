@@ -1,5 +1,6 @@
 ﻿using Assets.Cognitions.Players.Controllers;
 using Assets.Cognitions.Players.States;
+using Assets.Gui;
 using Assets.Gui.Cameras;
 
 namespace Assets.Cognitions.Players
@@ -13,8 +14,9 @@ namespace Assets.Cognitions.Players
 
         protected override void Start()
         {
-            var cameraStore = FindObjectOfType<CameraComponent>() as ICameraStore;
-            _targetingController = new MouseTargetingController(cameraStore);
+            var cameraStore = FindObjectOfType<CameraStore>() as CameraStore;
+            var guiStore = FindObjectOfType<GuiStore>();
+            _targetingController = new MouseTargetingController(guiStore);
             _movementController = new KeyboardMovementController(cameraStore);
             _actionsController = new KeyboardActionsController();
             _targetingController.Start();

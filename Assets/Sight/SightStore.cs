@@ -17,10 +17,10 @@ namespace Assets.Sight
         }
 
         public Vector2 Center {  get { return _visibilityComputer.Origin; } }
-        public List<Vector2> GetSightPolygon()
+        public List<Vector2> GetSightPolygon(Vector3 center)
         {
-            var unitPosition = FindObjectOfType<CameraComponent>().Pixelation.GetClosestPixelatedPosition(Unit.Position);
-            _visibilityComputer.Origin = new Vector2(unitPosition.x, unitPosition.z);
+            //var unitPosition = FindObjectOfType<CameraStore>().Pixelation.GetClosestPixelatedPosition(Unit.Position);
+            _visibilityComputer.Origin = new Vector2(center.x, center.z);
             return _visibilityComputer.Compute();
         }
 

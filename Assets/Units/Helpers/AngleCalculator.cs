@@ -17,7 +17,7 @@ namespace Assets.Units.Helpers
             var referenceRight = Vector3.Cross(Vector3.up, from);
             return Mathf.Sign(Vector3.Dot(to, referenceRight)) * angle;
         }
-
+        
         /// <summary>
         ///     Method rotates vector around the Vector.up axis
         /// </summary>

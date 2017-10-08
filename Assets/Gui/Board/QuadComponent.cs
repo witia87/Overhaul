@@ -21,13 +21,12 @@ namespace Assets.Gui.Board
 
         protected virtual void Start()
         {
-            var guiStore = FindObjectOfType<GuiStore>();
             var vertices = new Vector3[4]
             {
-                new Vector3(-guiStore.BoardPixelWidth / (float) 2, -guiStore.BoardPixelHeight / (float) 2, 0),
-                new Vector3(+guiStore.BoardPixelWidth / (float) 2, -guiStore.BoardPixelHeight / (float) 2, 0),
-                new Vector3(-guiStore.BoardPixelWidth / (float) 2, +guiStore.BoardPixelHeight / (float) 2, 0),
-                new Vector3(+guiStore.BoardPixelWidth / (float) 2, +guiStore.BoardPixelHeight / (float) 2, 0)
+                new Vector3(-GuiStore.BoardPixelWidth / (float) 2, -GuiStore.BoardPixelHeight / (float) 2, 0),
+                new Vector3(+GuiStore.BoardPixelWidth / (float) 2, -GuiStore.BoardPixelHeight / (float) 2, 0),
+                new Vector3(-GuiStore.BoardPixelWidth / (float) 2, +GuiStore.BoardPixelHeight / (float) 2, 0),
+                new Vector3(+GuiStore.BoardPixelWidth / (float) 2, +GuiStore.BoardPixelHeight / (float) 2, 0)
             };
             var mesh = new Mesh
             {

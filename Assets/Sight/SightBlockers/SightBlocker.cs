@@ -6,11 +6,11 @@ namespace Assets.Sight.SightBlockers
     public class SightBlocker : MonoBehaviour
     {
         protected SightStore SightStore;
-        protected ICameraStore CameraStore;
+        protected CameraStore CameraStore;
         protected virtual void Awake()
         {
             SightStore = FindObjectOfType<SightStore>();
-            CameraStore = FindObjectOfType<CameraComponent>();
+            CameraStore = FindObjectOfType<CameraStore>();
         }
     }
 }

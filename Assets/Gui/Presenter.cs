@@ -5,11 +5,11 @@ namespace Assets.Gui
 {
     public class Presenter : MonoBehaviour
     {
-        protected ICameraStore CameraStore;
+        protected CameraStore CameraStore;
 
         protected virtual void Awake()
         {
-            CameraStore = FindObjectOfType<CameraComponent>();
+            CameraStore = FindObjectOfType<CameraStore>();
         }
     }
 }

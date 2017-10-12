@@ -13,20 +13,20 @@ namespace Assets.Gui.Board
             {new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0f, 1f), new Vector2(1f, 1f)};
 
 
-        protected GuiStore GuiStore;
+        protected BoardStore GuiStore;
         protected virtual void Awake()
         {
-            GuiStore = FindObjectOfType<GuiStore>();
+            GuiStore = FindObjectOfType<BoardStore>();
         }
 
         protected virtual void Start()
         {
             var vertices = new Vector3[4]
             {
-                new Vector3(-GuiStore.BoardPixelWidth / (float) 2, -GuiStore.BoardPixelHeight / (float) 2, 0),
-                new Vector3(+GuiStore.BoardPixelWidth / (float) 2, -GuiStore.BoardPixelHeight / (float) 2, 0),
-                new Vector3(-GuiStore.BoardPixelWidth / (float) 2, +GuiStore.BoardPixelHeight / (float) 2, 0),
-                new Vector3(+GuiStore.BoardPixelWidth / (float) 2, +GuiStore.BoardPixelHeight / (float) 2, 0)
+                new Vector3(-GuiStore.BoardTextureWidth / (float) 2, -GuiStore.BoardTextureHeight / (float) 2, 0),
+                new Vector3(+GuiStore.BoardTextureWidth / (float) 2, -GuiStore.BoardTextureHeight / (float) 2, 0),
+                new Vector3(-GuiStore.BoardTextureWidth / (float) 2, +GuiStore.BoardTextureHeight / (float) 2, 0),
+                new Vector3(+GuiStore.BoardTextureWidth / (float) 2, +GuiStore.BoardTextureHeight / (float) 2, 0)
             };
             var mesh = new Mesh
             {

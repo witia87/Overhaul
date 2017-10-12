@@ -7,9 +7,9 @@ namespace Assets.Cognitions.Players.Controllers
 {
     public class MouseTargetingController : ITargetingController
     {
-        private readonly GuiStore _guiStore;
+        private readonly BoardStore _guiStore;
 
-        public MouseTargetingController(GuiStore guiStore)
+        public MouseTargetingController(BoardStore guiStore)
         {
             _guiStore = guiStore;
         }
@@ -30,7 +30,7 @@ namespace Assets.Cognitions.Players.Controllers
 
         public void Update()
         {
-            RaycastHit mouseHit;
+            /*RaycastHit mouseHit;
             if (_guiStore.Raycasts.ScreenPointToModuleRay(Input.mousePosition, out mouseHit))
             {
                 var module = mouseHit.transform.gameObject.GetComponent<Module>();
@@ -51,7 +51,7 @@ namespace Assets.Cognitions.Players.Controllers
                 TargetedModule = null;
             }
 
-            IsFirePressed = Input.GetButton("Fire Gun");
+            IsFirePressed = Input.GetButton("Fire Gun");*/
         }
 
         public void OnDrawGizmos()

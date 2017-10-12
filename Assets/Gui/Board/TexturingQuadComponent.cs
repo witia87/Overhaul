@@ -8,8 +8,8 @@ namespace Assets.Gui.Board
         {
             base.Start();
             var renderer = GetComponent<Renderer>();
-            renderer.material.SetInt("_TexWidth", GuiStore.BoardPixelWidth); 
-            renderer.material.SetInt("_TexHeight", GuiStore.BoardPixelHeight);
+            renderer.material.SetInt("_TexWidth", GuiStore.BoardTextureWidth); 
+            renderer.material.SetInt("_TexHeight", GuiStore.BoardTextureHeight);
         }
     }
 }

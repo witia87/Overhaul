@@ -28,7 +28,7 @@ namespace Assets.Cognitions.Players.Controllers
 
         public void Update()
         {
-            var cameraFocusPoint = _cameraStore.FocusPoint;
+            //var cameraFocusPoint = _cameraStore.FocusPoint;
 
             if (Mathf.Abs(Input.GetAxis("HorizontalLook")) > 0.25f || Mathf.Abs(Input.GetAxis("VerticalLook")) > 0.25f)
             {
@@ -37,7 +37,7 @@ namespace Assets.Cognitions.Players.Controllers
             }
             var targetingVector = new Vector3(_horizontalAxis, 0, _verticalAxis);
             targetingVector = Quaternion.AngleAxis(45, Vector3.up) * targetingVector;
-            TargetedPosition = cameraFocusPoint + targetingVector;
+            //TargetedPosition = cameraFocusPoint + targetingVector;
 
             IsFirePressed = Input.GetButton("Fire Gun");
             //IsFirePressed = Input.GetAxis("Fire Gun") > 0.5f;

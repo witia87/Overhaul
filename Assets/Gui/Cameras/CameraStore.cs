@@ -4,13 +4,9 @@ namespace Assets.Gui.Cameras
 {
     public class CameraStore : MonoBehaviour
     {
-        private GuiStore _guiStore;
-        public Vector3 TransformVectorToCameraSpace(Vector3 vector)
-        {
-            return transform.TransformVector(vector);
-        }
-
         public PixelatedPositionsCalculator Pixelation { get; private set; }
+
+        public float Rescale = 8;
 
         public Vector3 CameraEulerAngles
         {
@@ -20,36 +16,25 @@ namespace Assets.Gui.Cameras
         private CameraOperatorComponent _cameraOperatorComponent;
         private void Awake()
         {
-            _guiStore = FindObjectOfType<GuiStore>();
-            Pixelation = new PixelatedPositionsCalculator(_guiStore, this);
+            Pixelation = new PixelatedPositionsCalculator(this);
             _cameraOperatorComponent = GetComponentInChildren<CameraOperatorComponent>();
-        }
-        
-        private void Start()
-        {
+            transform.localScale = new Vector3(1/Rescale, 1/Rescale, 1);
         }
 
-        public Vector3 PixelatedFocusPoint
+        public Vector3 CameraPositionInBoardSpace
         {
-            get { return Pixelation.GetClosestPixelatedPosition(_cameraOperatorComponent.FocusPoint); }
+            get { return _cameraOperatorComponent.FocusPointInBoardSpace; }
         }
 
-        public Vector3 FocusPoint
-        {
-            get { return _cameraOperatorComponent.FocusPoint; }
-        }
-
-        public Vector3 CameraPlaneOffset
+        public Vector3 PixelatedCameraPositionInBoardSpace
         {
             get
             {
-                return transform.InverseTransformPoint(_cameraOperatorComponent.FocusPoint) -
-                       transform.InverseTransformPoint(PixelatedFocusPoint);
+                return new Vector3(
+                    Mathf.Round(_cameraOperatorComponent.FocusPointInBoardSpace.x),
+                    Mathf.Round(_cameraOperatorComponent.FocusPointInBoardSpace.y),
+                    0);
             }
-        }
-        
-        private void Update()
-        {
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Assets.Cognitions.Players
         protected override void Start()
         {
             var cameraStore = FindObjectOfType<CameraStore>() as CameraStore;
-            var guiStore = FindObjectOfType<GuiStore>();
+            var guiStore = FindObjectOfType<BoardStore>();
             _targetingController = new MouseTargetingController(guiStore);
             _movementController = new KeyboardMovementController(cameraStore);
             _actionsController = new KeyboardActionsController();

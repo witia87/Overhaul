@@ -11,13 +11,9 @@ namespace Assets.Gui.Cameras
             _cameraStore = FindObjectOfType<CameraStore>();
         }
 
-        private void Start()
-        {
-        }
-
         private void Update()
         {
-            this.transform.position = _cameraStore.PixelatedFocusPoint;
+            this.transform.localPosition = _cameraStore.PixelatedCameraPositionInBoardSpace;
         }
     }
 }

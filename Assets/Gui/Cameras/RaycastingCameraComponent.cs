@@ -8,17 +8,17 @@ namespace Assets.Gui.Cameras
         [SerializeField] private LayerMask _targetLayerMask;
         [SerializeField] private LayerMask _environmentLayerMask;
 
-        GuiStore _guiStore;
+        BoardStore _guiStore;
         CameraStore _cameraStore;
         private Camera _camera;
         private void Awake()
         {
             _camera = GetComponent<Camera>();
-            _guiStore = FindObjectOfType<GuiStore>();
+            _guiStore = FindObjectOfType<BoardStore>();
             _cameraStore = FindObjectOfType<CameraStore>();
         }
 
-        private void Start()
+        /*private void Start()
         {
             _camera.orthographicSize = _guiStore.ViewOrtographicSize;
             _camera.aspect = _guiStore.ViewOrtographicAspect;
@@ -48,6 +48,6 @@ namespace Assets.Gui.Cameras
         private void Update()
         {
             this.transform.position = _cameraStore.FocusPoint;
-        }
+        }*/
     }
 }

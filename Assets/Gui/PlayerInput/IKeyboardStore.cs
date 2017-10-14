@@ -1,14 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Assets.Cognitions.Players.Controllers
+namespace Assets.Gui.PlayerInput
 {
-    public interface IMovementController
+    public interface IKeyboardStore
     {
         bool IsMovementPresent { get; }
         Vector3 MovementVector { get; }
-
         bool IsJumpPressed { get; }
-
         bool IsCrouchPressed { get; }
     }
 }

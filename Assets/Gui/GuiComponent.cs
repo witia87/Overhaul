@@ -12,6 +12,7 @@ namespace Assets.Gui
         protected ICameraStore CameraStore;
         protected IBoardStore BoardStore;
         protected IMouseStore MouseStore;
+        protected IKeyboardStore KeyboardStore;
 
         protected virtual void Awake()
         {
@@ -19,6 +20,7 @@ namespace Assets.Gui
             CameraStore = FindObjectOfType<CameraStore>();
             BoardStore = FindObjectOfType<BoardStore>();
             MouseStore = FindObjectOfType<MouseStore>();
-    }
+            KeyboardStore = FindObjectOfType<KeyboardStore>();
+        }
     }
 }

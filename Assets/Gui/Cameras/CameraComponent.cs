@@ -3,27 +3,23 @@ using UnityEngine;
 
 namespace Assets.Gui.Cameras
 {
-    public class CameraComponent : MonoBehaviour
+    public class CameraComponent : GuiComponent
     {
-        private BoardStore _guiStore;
-        private CameraStore _cameraStore;
-
         public Camera Camera { get; private set; }
 
-        private void Awake()
+        protected override void Awake()
         {
-            _guiStore = FindObjectOfType<BoardStore>();
-            _cameraStore = FindObjectOfType<CameraStore>();
+            base.Awake();
             Camera = GetComponent<Camera>();
         }
 
         public void Start()
         {
-            Camera.orthographicSize = _guiStore.BoardTextureHeight / (float)_cameraStore.Rescale/ 2;
-            Camera.aspect = _guiStore.BoardTextureWidth / (float)_guiStore.BoardTextureHeight;
+            Camera.orthographicSize = BoardStore.BoardTextureHeight / (float)CameraStore.Rescale/ 2;
+            Camera.aspect = BoardStore.BoardTextureWidth / (float)BoardStore.BoardTextureHeight;
 
-            Camera.targetTexture.width = _guiStore.BoardTextureWidth;
-            Camera.targetTexture.height = _guiStore.BoardTextureHeight;
+            Camera.targetTexture.width = BoardStore.BoardTextureWidth;
+            Camera.targetTexture.height = BoardStore.BoardTextureHeight;
         }
     }
 }

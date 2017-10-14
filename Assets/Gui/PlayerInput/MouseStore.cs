@@ -35,8 +35,8 @@ namespace Assets.Gui.PlayerInput
             var y = Input.mousePosition.y / _viewStore.PixelizationSize;
 
             _mousePositionInBoardSpace = _cameraStore.CameraPositionInCameraPlaneSpace
-                                         - new Vector2(_viewStore.ScreenWidthInPixels / 2 + x,
-                                             _viewStore.ScreenHeightInPixels / 2 + y);
+                                         - new Vector2(_viewStore.ScreenWidthInPixels / 2 - x,
+                                             _viewStore.ScreenHeightInPixels / 2 - y);
 
             IsMousePressed = Input.GetButton("Main Trigger");
         }

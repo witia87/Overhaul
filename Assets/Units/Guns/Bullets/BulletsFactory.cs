@@ -30,7 +30,7 @@ namespace Assets.Units.Guns.Bullets
             bulletRigidbody.mass = BulletsMass;
             bulletRigidbody.drag = BulletsDrag;
             bulletRigidbody.angularDrag = BulletsAngularDrag;
-            bulletRigidbody.AddRelativeForce(Vector3.forward * InitialVelocity, ForceMode.VelocityChange);
+            bulletRigidbody.AddForce(transform.forward * InitialVelocity, ForceMode.VelocityChange);
         }
     }
 }

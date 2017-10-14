@@ -2,9 +2,9 @@
 using Assets.Units.Modules;
 using UnityEngine;
 
-namespace Assets.Cognitions.Players.Controllers
+namespace Assets.Gui.PlayerInput
 {
-    public class PadTargetingController : ITargetingController
+    public class PadTargetingController
     {
         private readonly CameraStore _cameraStore;
 

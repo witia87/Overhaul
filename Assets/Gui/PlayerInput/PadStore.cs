@@ -1,9 +1,9 @@
 ﻿using Assets.Gui.Cameras;
 using UnityEngine;
 
-namespace Assets.Cognitions.Players.Controllers
+namespace Assets.Gui.PlayerInput
 {
-    public class PadMovementController : IMovementController
+    public class PadMovementController
     {
         private readonly CameraStore _cameraStore;
         private Quaternion _rotationQuaternion;

@@ -2,11 +2,13 @@
 
 namespace Assets.Gui
 {
-    public abstract class GuiStore: MonoBehaviour
+    public class GuiCommander : GuiComponent
     {
         protected GuiDispatcher Dispatcher;
+
         protected virtual void Awake()
         {
+            base.Awake();
             Dispatcher = FindObjectOfType<GuiDispatcher>();
         }
     }

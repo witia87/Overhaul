@@ -1,40 +1,45 @@
-﻿using UnityEngine;
+﻿using Assets.Gui.Payloads;
+using UnityEngine;
 
 namespace Assets.Gui.Cameras
 {
-    public class CameraStore : MonoBehaviour
+    public class CameraStore : GuiStore, ICameraStore
     {
-        public PixelatedPositionsCalculator Pixelation { get; private set; }
-
         public float Rescale = 8;
+        public PixelatedPositionsCalculator Pixelation { get; private set; }
 
         public Vector3 CameraEulerAngles
         {
             get { return transform.localEulerAngles; }
         }
 
-        private CameraOperatorComponent _cameraOperatorComponent;
-        private void Awake()
+        public Vector2 CameraPositionInCameraPlaneSpace { get; private set; }
+        public Vector2 PixelatedCameraPositionInBoardSpace { get; private set; }
+
+        public Vector2 TransformWorldPositionToCameraPlane(Vector3 worldPosition)
         {
+            return transform.InverseTransformPoint(worldPosition);
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
             Pixelation = new PixelatedPositionsCalculator(this);
-            _cameraOperatorComponent = GetComponentInChildren<CameraOperatorComponent>();
-            transform.localScale = new Vector3(1/Rescale, 1/Rescale, 1);
+            transform.localScale = new Vector3(1 / Rescale, 1 / Rescale, 1);
         }
 
-        public Vector3 CameraPositionInBoardSpace
+        protected void Start()
         {
-            get { return _cameraOperatorComponent.FocusPointInBoardSpace; }
+            Dispatcher.Register(GuiCommandIds.ChangeFocusPointInBoardSpace,
+                payload => OnMousePositionChanged((payload as ChangeFocusPointInBoardSpacePayload).Position));
         }
 
-        public Vector3 PixelatedCameraPositionInBoardSpace
+        private void OnMousePositionChanged(Vector2 focusPointOnCameraPlanePosition)
         {
-            get
-            {
-                return new Vector3(
-                    Mathf.Round(_cameraOperatorComponent.FocusPointInBoardSpace.x),
-                    Mathf.Round(_cameraOperatorComponent.FocusPointInBoardSpace.y),
-                    0);
-            }
+            CameraPositionInCameraPlaneSpace = focusPointOnCameraPlanePosition;
+            PixelatedCameraPositionInBoardSpace = new Vector2(
+                Mathf.Round(focusPointOnCameraPlanePosition.x),
+                Mathf.Round(focusPointOnCameraPlanePosition.y));
         }
     }
 }

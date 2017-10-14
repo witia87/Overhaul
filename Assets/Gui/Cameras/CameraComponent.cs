@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Gui.Board;
+using UnityEngine;
 
 namespace Assets.Gui.Cameras
 {

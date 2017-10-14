@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
 
-namespace Assets.Gui.Cameras
+namespace Assets.Gui.View
 {
-    public class GuiCameraComponent : MonoBehaviour
+    public class ViewCameraComponent : GuiComponent
     {
-        private GuiStore _guiStore;
-
         public Camera Camera { get; private set; }
 
         private void Start()
         {
-            _guiStore = FindObjectOfType<GuiStore>();
             Camera = GetComponent<Camera>();
             UpdateCameraParameters();
             Camera.SetupCurrent(Camera);
@@ -18,9 +15,8 @@ namespace Assets.Gui.Cameras
 
         private void UpdateCameraParameters()
         {
-            Camera.orthographicSize = _guiStore.ScreenHeightInPixels/2;
-            Camera.aspect = Screen.width / (float)Screen.height;
-
+            Camera.orthographicSize = ViewStore.ScreenHeightInPixels / 2;
+            Camera.aspect = Screen.width / (float) Screen.height;
         }
     }
 }

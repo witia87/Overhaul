@@ -2,18 +2,11 @@
 
 namespace Assets.Gui.Cameras
 {
-    public class CamerasHandlerComponent : MonoBehaviour
+    public class CamerasHandlerComponent : GuiComponent
     {
-        private CameraStore _cameraStore;
-        
-        private void Awake()
-        {
-            _cameraStore = FindObjectOfType<CameraStore>();
-        }
-
         private void Update()
         {
-            this.transform.localPosition = _cameraStore.PixelatedCameraPositionInBoardSpace;
+            this.transform.localPosition = CameraStore.PixelatedCameraPositionInBoardSpace;
         }
     }
 }

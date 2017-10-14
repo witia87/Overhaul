@@ -1,32 +1,26 @@
 ﻿using Assets.Gui.Cameras;
+using Assets.Gui.View;
 using UnityEngine;
 
-namespace Assets.Gui
+namespace Assets.Gui.Board
 {
-    public class BoardStore : MonoBehaviour
+    public class BoardStore : MonoBehaviour, IBoardStore
     {
-        private CameraStore _cameraStore;
-        private GuiStore _guiStore;
-
-        /// <summary>
-        /// Board texture width is also the size of Board quad in the GuiSpace.
-        /// </summary>
+        private ViewStore _viewStore;
+        
         public int BoardTextureWidth
         {
-            get { return Mathf.RoundToInt(_guiStore.ScreenWidthInPixels) * 2; }
+            get { return Mathf.RoundToInt(_viewStore.ScreenWidthInPixels) * 2; }
         }
 
         public int BoardTextureHeight
         {
-            get { return Mathf.RoundToInt(_guiStore.ScreenHeightInPixels) * 2; }
+            get { return Mathf.RoundToInt(_viewStore.ScreenHeightInPixels) * 2; }
         }
         
-        public RaycastingCameraComponent Raycasts { get; private set; }
         private void Awake()
         {
-            _guiStore = FindObjectOfType<GuiStore>();
-            _cameraStore = FindObjectOfType<CameraStore>();
-            Raycasts = FindObjectOfType<RaycastingCameraComponent>();
+            _viewStore = FindObjectOfType<ViewStore>();
         }
     }
 }

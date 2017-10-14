@@ -5,9 +5,6 @@ namespace Assets.Units.Modules.States
 {
     public class Gliding : AirbornState
     {
-        private float _alignForce;
-        private float _flipModifier;
-
         private bool _wasFlipSet;
 
         public Gliding(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory,
@@ -20,7 +17,6 @@ namespace Assets.Units.Modules.States
         {
             if (Vector3.Angle(moveLogicDirection, FlightLogicDirection) < 45)
             {
-                _flipModifier = -speedModifier;
                 _wasFlipSet = true;
             }
             else

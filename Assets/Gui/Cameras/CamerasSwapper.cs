@@ -4,7 +4,6 @@ namespace Assets.Gui.Cameras
 {
     public class CamerasSwapper : MonoBehaviour
     {
-        private RenderTexture _boardTexture;
         [SerializeField] private Camera _guiCamera;
         private bool _isRenderingToTexture = true;
         [SerializeField] private Camera _raycastCamera;

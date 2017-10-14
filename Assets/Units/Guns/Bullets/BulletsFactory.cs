@@ -4,6 +4,7 @@ namespace Assets.Units.Guns.Bullets
 {
     public class BulletsFactory : MonoBehaviour
     {
+        [SerializeField] public LayerMask _moduleLayerMask;
         public float AngleOfImprecision = 0.1f;
         public float BulletMaximalLifetime = 2f;
         public float BulletsAngularDrag = 0.1f;
@@ -13,16 +14,16 @@ namespace Assets.Units.Guns.Bullets
         public float InitialVelocity = 10f;
 
         public float StunTime = 0.2f;
-        [SerializeField] public LayerMask _moduleLayerMask;
 
         public void Create()
         {
-            var bullet = (GameObject)Instantiate(Resources.Load("Prefabs\\Units\\Guns\\Bullets\\Bullet"));
+            var bullet = (GameObject) Instantiate(Resources.Load("Prefabs\\Units\\Guns\\Bullets\\Bullet"));
             bullet.transform.localScale = BulletsSize;
             bullet.transform.position = transform.position;
-            bullet.transform.eulerAngles = transform.eulerAngles + new Vector3((Random.value - 0.5f) * 2 * AngleOfImprecision,
-                (Random.value - 0.5f) * 2 * AngleOfImprecision,
-                0);
+            bullet.transform.eulerAngles = transform.eulerAngles + new Vector3(
+                                               (Random.value - 0.5f) * 2 * AngleOfImprecision,
+                                               (Random.value - 0.5f) * 2 * AngleOfImprecision,
+                                               0);
             bullet.GetComponent<Bullet>().ModuleLayerMask = _moduleLayerMask;
             bullet.GetComponent<Bullet>().StunTime = StunTime;
 

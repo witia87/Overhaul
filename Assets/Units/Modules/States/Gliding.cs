@@ -60,8 +60,9 @@ namespace Assets.Units.Modules.States
                     Movement.AlignTowards(Movement.transform.InverseTransformDirection(FlightLogicDirection));
                     Targeting.AddFlippingForce(FlightLogicDirection);
                 }
-                Targeting.AddJumpStandingForce();            
-            } else
+                Targeting.AddJumpStandingForce();
+            }
+            else
             {
                 Movement.PerformStandingStraight();
             }

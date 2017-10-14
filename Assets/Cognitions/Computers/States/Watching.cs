@@ -37,7 +37,7 @@ namespace Assets.Cognitions.Computers.States
             {
                 ProbabilisticTriggering.PerformOnAverageOnceEvery(0.1f, ChangeDirection);
             }
-            
+
             ProbabilisticTriggering.PerformOnAverageOnceEvery(2, ChangeDirection);
             if (Unit.Vision.VisibleTargetsCount > 0)
             {

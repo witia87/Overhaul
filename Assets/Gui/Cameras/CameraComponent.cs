@@ -1,5 +1,4 @@
-﻿using Assets.Gui.Board;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Gui.Cameras
 {
@@ -15,8 +14,8 @@ namespace Assets.Gui.Cameras
 
         public void Start()
         {
-            Camera.orthographicSize = BoardStore.BoardTextureHeight / (float)CameraStore.Rescale/ 2;
-            Camera.aspect = BoardStore.BoardTextureWidth / (float)BoardStore.BoardTextureHeight;
+            Camera.orthographicSize = BoardStore.BoardTextureHeight / CameraStore.Rescale / 2;
+            Camera.aspect = BoardStore.BoardTextureWidth / (float) BoardStore.BoardTextureHeight;
 
             Camera.targetTexture.width = BoardStore.BoardTextureWidth;
             Camera.targetTexture.height = BoardStore.BoardTextureHeight;

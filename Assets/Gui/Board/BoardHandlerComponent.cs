@@ -1,9 +1,6 @@
-﻿using Assets.Gui.Cameras;
-using UnityEngine;
-
-namespace Assets.Gui.Board
+﻿namespace Assets.Gui.Board
 {
-    public class BoardHandlerComponent: GuiComponent
+    public class BoardHandlerComponent : GuiComponent
     {
         private void Update()
         {
@@ -11,6 +8,5 @@ namespace Assets.Gui.Board
             var offset = CameraStore.CameraPositionInCameraPlaneSpace - CameraStore.PixelatedCameraPositionInBoardSpace;
             transform.localPosition = -offset;
         }
-
     }
 }

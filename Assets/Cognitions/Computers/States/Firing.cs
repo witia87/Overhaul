@@ -42,7 +42,7 @@ namespace Assets.Cognitions.Computers.States
                 TargetingHelper.ManageAimingAtTheTarget(_target);
                 return this;
             }
-            
+
             return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateSearching(_target));
         }
     }

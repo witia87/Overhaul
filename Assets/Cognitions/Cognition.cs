@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Assets.Maps;
 using Assets.Maps.PathFinders;
-using UnityEngine;
 using Assets.Units;
+using UnityEngine;
 
 namespace Assets.Cognitions
 {

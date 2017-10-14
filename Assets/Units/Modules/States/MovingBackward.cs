@@ -15,7 +15,6 @@ namespace Assets.Units.Modules.States
 
         public override UnitState VerifyPhysicConditions()
         {
-
             if (!Movement.IsStanding)
             {
                 try

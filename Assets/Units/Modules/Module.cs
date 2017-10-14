@@ -6,18 +6,33 @@ namespace Assets.Units.Modules
 {
     public class Module : MonoBehaviour
     {
-        [HideInInspector] public Unit Unit;
-        [HideInInspector] public Rigidbody Rigidbody { get; private set; }
-        protected CapsuleCollider CapsuleCollider;
-        protected AngleCalculator AngleCalculator = new AngleCalculator();
+        private float _crouchLevel;
+
+        [SerializeField] private LayerMask _floorLayerMask;
         public float Acceleration = 100;
+        protected AngleCalculator AngleCalculator = new AngleCalculator();
+        public float AngularAccelerationAlignZ = 20;
+
+        public float AngularAccelerationLookAtX = 10;
+        public float AngularAccelerationLookAtY = 20;
+        public float AngularDragAlignZ = 20;
+        public float AngularDragLookAtX = 20;
+        public float AngularDragLookAtY = 30;
+        protected CapsuleCollider CapsuleCollider;
 
         public float CrouchTime = 0.4f;
-        public float MinimalCrouchLevel = 0.6f;
 
         public float JumpVelocity = 2;
+        public float MinimalCrouchLevel = 0.6f;
+
+        public float StandingForce = 20;
 
         public float StunResistanceTime = 10;
+        [HideInInspector] public Unit Unit;
+
+        [HideInInspector]
+        public Rigidbody Rigidbody { get; private set; }
+
         protected float StunTimeLeft
         {
             get
@@ -32,19 +47,12 @@ namespace Assets.Units.Modules
 
         protected float StunModifier
         {
-            get
-            {
-                return Mathf.Max(0, 1 - StunTimeLeft / StunResistanceTime);
-            }
+            get { return Mathf.Max(0, 1 - StunTimeLeft / StunResistanceTime); }
         }
-        public bool IsStuned { get { return StunModifier <= 0; } }
 
-        protected virtual void Awake()
+        public bool IsStuned
         {
-            Unit = transform.root.GetComponent<Unit>();
-            Rigidbody = GetComponent<Rigidbody>();
-            CapsuleCollider = GetComponent<CapsuleCollider>();
-            IsGrounded = true;
+            get { return StunModifier <= 0; }
         }
 
         public Vector3 ModuleLogicDirection
@@ -53,7 +61,8 @@ namespace Assets.Units.Modules
             {
                 if (Mathf.Abs(transform.forward.y) > 0.999f) // TODO: Verify whether this condition might be removed.
                 {
-                    throw new ApplicationException("Cannot calculate ModuleLogicDirection when module lays horizontaly.");
+                    throw new ApplicationException(
+                        "Cannot calculate ModuleLogicDirection when module lays horizontaly.");
                 }
                 return NormalizeVector(transform.forward);
             }
@@ -69,13 +78,9 @@ namespace Assets.Units.Modules
             }
         }
 
-        private float _crouchLevel;
         protected float CrouchModifier
         {
-            get
-            {
-                return MinimalCrouchLevel + _crouchLevel * (1 - MinimalCrouchLevel);
-            }
+            get { return MinimalCrouchLevel + _crouchLevel * (1 - MinimalCrouchLevel); }
         }
 
         public Vector3 Bottom
@@ -95,12 +100,14 @@ namespace Assets.Units.Modules
 
         public bool IsGrounded { get; protected set; }
 
-        public float AngularAccelerationLookAtX = 10;
-        public float AngularAccelerationLookAtY = 20;
-        public float AngularAccelerationAlignZ = 20;
-        public float AngularDragLookAtX = 20;
-        public float AngularDragLookAtY = 30;
-        public float AngularDragAlignZ = 20;
+        protected virtual void Awake()
+        {
+            Unit = transform.root.GetComponent<Unit>();
+            Rigidbody = GetComponent<Rigidbody>();
+            CapsuleCollider = GetComponent<CapsuleCollider>();
+            IsGrounded = true;
+        }
+
         protected virtual void FixedUpdate()
         {
             var localVelocity = transform.InverseTransformDirection(Rigidbody.angularVelocity);
@@ -130,7 +137,6 @@ namespace Assets.Units.Modules
             }
         }
 
-        [SerializeField] private LayerMask _floorLayerMask;
         protected virtual void OnCollisionEnter(Collision collision)
         {
             OnCollisionStay(collision);
@@ -161,15 +167,14 @@ namespace Assets.Units.Modules
             }
         }
 
-        public float StandingForce = 20;
         public void PerformStandingStraight()
         {
             var cross = Vector3.Cross(transform.up, Vector3.up);
-            if(Vector3.Angle(transform.up, Vector3.up) > 90)
+            if (Vector3.Angle(transform.up, Vector3.up) > 90)
             {
                 cross.Normalize();
             }
-            Rigidbody.AddTorque(cross * StandingForce * StunModifier,  ForceMode.Force);
+            Rigidbody.AddTorque(cross * StandingForce * StunModifier, ForceMode.Force);
         }
 
         public void LookTowards(Vector3 localDirection)
@@ -191,7 +196,8 @@ namespace Assets.Units.Modules
 
         public void AddJumpVelocity(Vector3 globalDirection, float jumpVelocityModifier)
         {
-            Rigidbody.AddForce(globalDirection * JumpVelocity * jumpVelocityModifier * StunModifier, ForceMode.VelocityChange);
+            Rigidbody.AddForce(globalDirection * JumpVelocity * jumpVelocityModifier * StunModifier,
+                ForceMode.VelocityChange);
         }
 
         /// <summary>
@@ -205,9 +211,10 @@ namespace Assets.Units.Modules
                 throw new ApplicationException(
                     "Value of the torque must be from [-1..1] range."); // TODO: Remove to otpimize
             }
-            Rigidbody.AddRelativeTorque(Vector3.up * value * AngularAccelerationLookAtY * StunModifier, ForceMode.Force);
+            Rigidbody.AddRelativeTorque(Vector3.up * value * AngularAccelerationLookAtY * StunModifier,
+                ForceMode.Force);
         }
-        
+
         public void AddAlignRotation(float value)
         {
             if (Mathf.Abs(value) > 1.0001)
@@ -215,7 +222,8 @@ namespace Assets.Units.Modules
                 throw new ApplicationException(
                     "Value of the torque must be from [-1..1] range."); // TODO: Remove to otpimize
             }
-            Rigidbody.AddRelativeTorque(Vector3.forward * value * AngularAccelerationAlignZ * StunModifier, ForceMode.Force);
+            Rigidbody.AddRelativeTorque(Vector3.forward * value * AngularAccelerationAlignZ * StunModifier,
+                ForceMode.Force);
         }
 
         public void AddFlipRotation(float value)
@@ -225,7 +233,8 @@ namespace Assets.Units.Modules
                 throw new ApplicationException(
                     "Value of the torque must be from [-1..1] range."); // TODO: Remove to otpimize
             }
-            Rigidbody.AddRelativeTorque(Vector3.right * value * AngularAccelerationLookAtX * StunModifier, ForceMode.Force);
+            Rigidbody.AddRelativeTorque(Vector3.right * value * AngularAccelerationLookAtX * StunModifier,
+                ForceMode.Force);
         }
 
         public virtual void SetCrouch(float crouchLevel)

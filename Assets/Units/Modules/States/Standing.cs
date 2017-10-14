@@ -5,7 +5,10 @@ namespace Assets.Units.Modules.States
 {
     public class Standing : GroundedState
     {
-        public Standing(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory, Vector3 initialGlobalLookDirection)
+        protected float JumpCooldownLeft;
+
+        public Standing(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory,
+            Vector3 initialGlobalLookDirection)
             : base(movement, targeting, statesFactory, initialGlobalLookDirection)
         {
             JumpCooldownLeft = Movement.JumpCooldown;
@@ -25,7 +28,7 @@ namespace Assets.Units.Modules.States
             GlobalLookDirection = globalDirection;
             return this;
         }
-        
+
         public override UnitState Move(Vector3 moveLogicDirection, float speedModifier)
         {
             return StatesFactory.CreateMovingForward(GlobalLookDirection, moveLogicDirection, speedModifier);
@@ -36,7 +39,6 @@ namespace Assets.Units.Modules.States
             return StatesFactory.CreateJumping(GlobalLookDirection, GlobalLookDirection, jumpForceModifier);
         }
 
-        protected float JumpCooldownLeft;
         public override UnitState FixedUpdate()
         {
             JumpCooldownLeft = Mathf.Max(0, JumpCooldownLeft - Time.fixedDeltaTime);

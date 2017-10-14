@@ -8,11 +8,11 @@ namespace Assets.Gui
 {
     public class GuiComponent : MonoBehaviour
     {
-        protected IViewStore ViewStore;
-        protected ICameraStore CameraStore;
         protected IBoardStore BoardStore;
-        protected IMouseStore MouseStore;
+        protected ICameraStore CameraStore;
         protected IKeyboardStore KeyboardStore;
+        protected IMouseStore MouseStore;
+        protected IViewStore ViewStore;
 
         protected virtual void Awake()
         {

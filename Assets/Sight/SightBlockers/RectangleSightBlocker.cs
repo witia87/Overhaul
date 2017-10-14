@@ -2,7 +2,7 @@
 
 namespace Assets.Sight.SightBlockers
 {
-    public class RectangleSightBlocker: SightBlocker
+    public class RectangleSightBlocker : SightBlocker
     {
         protected override void Awake()
         {
@@ -13,10 +13,11 @@ namespace Assets.Sight.SightBlockers
         {
             var polygon = new Vector2[4]
             {
-                GetVector(transform.position + new Vector3(-transform.localScale.x/2, 0, -transform.localScale.z/2)),
-                GetVector(transform.position + new Vector3(-transform.localScale.x/2, 0, transform.localScale.z/2)),
-                GetVector(transform.position + new Vector3(transform.localScale.x/2, 0, transform.localScale.z/2)),
-                GetVector(transform.position + new Vector3(transform.localScale.x/2, 0, -transform.localScale.z/2)),
+                GetVector(transform.position +
+                          new Vector3(-transform.localScale.x / 2, 0, -transform.localScale.z / 2)),
+                GetVector(transform.position + new Vector3(-transform.localScale.x / 2, 0, transform.localScale.z / 2)),
+                GetVector(transform.position + new Vector3(transform.localScale.x / 2, 0, transform.localScale.z / 2)),
+                GetVector(transform.position + new Vector3(transform.localScale.x / 2, 0, -transform.localScale.z / 2))
             };
             SightStore.RegisterPolygon(polygon);
         }

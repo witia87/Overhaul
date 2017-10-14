@@ -8,9 +8,10 @@ namespace Assets.Gui
 {
     public delegate void ActionCallback(IGuiPayload payload);
 
-    public class GuiDispatcher: MonoBehaviour
+    public class GuiDispatcher : MonoBehaviour
     {
         private readonly Dictionary<GuiCommandIds, List<ActionCallback>> _callbacks;
+        private readonly List<AggregatedCommand> _aggregatedCommands = new List<AggregatedCommand>();
 
         private bool _isDispatching;
 
@@ -28,14 +29,9 @@ namespace Assets.Gui
             _callbacks[commandId].Add(callback);
         }
 
-        private struct AggregatedCommand {
-            public GuiCommandIds commandId;
-            public IGuiPayload payload;
-        }
-        private List<AggregatedCommand> _aggregatedCommands = new List<AggregatedCommand>();
         public void Dispatch(GuiCommandIds commandId, IGuiPayload payload)
         {
-            _aggregatedCommands.Add(new AggregatedCommand() { commandId = commandId, payload = payload });
+            _aggregatedCommands.Add(new AggregatedCommand {commandId = commandId, payload = payload});
         }
 
         public void Update()
@@ -56,6 +52,12 @@ namespace Assets.Gui
             }
             _aggregatedCommands.Clear();
             _isDispatching = false;
+        }
+
+        private struct AggregatedCommand
+        {
+            public GuiCommandIds commandId;
+            public IGuiPayload payload;
         }
     }
 }

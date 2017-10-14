@@ -7,7 +7,9 @@ namespace Assets.Units.Helpers
         private readonly float _crouchTime;
         private float _crouchDownVelocity;
         private float _crouchUpVelocity;
-        
+
+        private float _stunTimeLeft;
+
         public CrouchHelper(float crouchTime)
         {
             _crouchTime = crouchTime;
@@ -16,7 +18,6 @@ namespace Assets.Units.Helpers
 
         public float CrouchLevel { get; private set; }
 
-        float _stunTimeLeft;
         public void Stun(float stunTime)
         {
             _stunTimeLeft += stunTime;
@@ -26,7 +27,7 @@ namespace Assets.Units.Helpers
         {
             _stunTimeLeft = Mathf.Max(0, _stunTimeLeft - Time.deltaTime);
             float minTarget = 0;
-            if(_stunTimeLeft > 0)
+            if (_stunTimeLeft > 0)
             {
                 minTarget = 0.4f;
             }

@@ -8,6 +8,7 @@ namespace Assets.Gui.UnitControl
         [SerializeField] private PlayerCognition _playerCognition;
 
         private Quaternion _rotationQuaternion;
+
         public void Start()
         {
             _rotationQuaternion = Quaternion.AngleAxis(

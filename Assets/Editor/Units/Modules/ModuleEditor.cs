@@ -1,6 +1,5 @@
 ﻿using Assets.Units.Modules;
 using UnityEditor;
-using UnityEngine;
 
 namespace Assets.Editor.Units.Modules
 {

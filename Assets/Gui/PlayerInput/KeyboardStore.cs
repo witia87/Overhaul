@@ -1,7 +1,4 @@
-﻿using Assets.Gui.Board;
-using Assets.Gui.Cameras;
-using Assets.Gui.View;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Gui.PlayerInput
 {
@@ -12,6 +9,7 @@ namespace Assets.Gui.PlayerInput
 
         public bool IsJumpPressed { get; private set; }
         public bool IsCrouchPressed { get; private set; }
+
         private void Update()
         {
             var horizontalAxis = Input.GetAxis("Horizontal");

@@ -13,12 +13,22 @@ namespace Assets.Units.Modules
         private readonly AngleCalculator _angleCalculator = new AngleCalculator();
         private ConfigurableJoint _configurableJoint;
 
+        [SerializeField] private LayerMask _standingLayerMask;
+        public float AlignWithTargetingForce = 10;
+
         public float DragAirborn = 1;
         public float DragGrounded = 20;
-        public float DragStandingForward = 5;
         public float DragPenaltyStandingBackward = 5;
         public float DragPenaltyStandingSideway = 10;
+        public float DragStandingForward = 5;
         public float JumpCooldown = 0.5f;
+
+        public TargetingModule TargetingModule;
+
+        public bool IsStanding
+        {
+            get { return GetIsStanding(); }
+        }
 
         protected override void Awake()
         {
@@ -27,16 +37,10 @@ namespace Assets.Units.Modules
             _configurableJoint = GetComponent<ConfigurableJoint>();
         }
 
-        [SerializeField] private LayerMask _standingLayerMask;
-
-        public bool IsStanding
-        {
-            get { return GetIsStanding(); }
-        }
-
         private bool GetIsStanding()
         {
-            return IsGrounded && Physics.Raycast(transform.position - transform.up / 2.1f * CrouchModifier, -Vector3.up, 0.1f);
+            return IsGrounded && Physics.Raycast(transform.position - transform.up / 2.1f * CrouchModifier, -Vector3.up,
+                       0.1f, _standingLayerMask);
         }
 
         protected override void FixedUpdate()
@@ -59,14 +63,15 @@ namespace Assets.Units.Modules
                 var angle = _angleCalculator.CalculateLogicAngle(ModuleLogicDirection, logicVelocity);
                 if (angle < 90)
                 {
-                    drag = DragStandingForward + DragPenaltyStandingSideway * (1 - Vector3.Dot(logicVelocity, ModuleLogicDirection));
+                    drag = DragStandingForward + DragPenaltyStandingSideway *
+                           (1 - Vector3.Dot(logicVelocity, ModuleLogicDirection));
                 }
                 else
                 {
-                    drag = DragStandingForward + DragPenaltyStandingBackward + (DragPenaltyStandingSideway - DragPenaltyStandingBackward) *
+                    drag = DragStandingForward + DragPenaltyStandingBackward +
+                           (DragPenaltyStandingSideway - DragPenaltyStandingBackward) *
                            (1 + Vector3.Dot(logicVelocity, ModuleLogicDirection));
                 }
-
             }
             else if (IsGrounded)
             {
@@ -80,8 +85,6 @@ namespace Assets.Units.Modules
             Rigidbody.velocity = Rigidbody.velocity * (1 - Time.fixedDeltaTime * drag);
         }
 
-        public TargetingModule TargetingModule;
-        public float AlignWithTargetingForce = 10;
         public void MangeAligningWithTargetingModule()
         {
             Rigidbody.AddRelativeTorque(

@@ -6,11 +6,10 @@ namespace Assets.Units.Vision
 {
     public class SightPresenter : MonoBehaviour
     {
+        [SerializeField] private readonly float _visionHeight = 3;
         private MeshFilter _meshFilter;
 
         private SightStore _sightStore;
-
-        [SerializeField] private readonly float _visionHeight = 3;
 
         public Unit Unit;
 

@@ -25,7 +25,9 @@ namespace Assets.Cognitions.Computers.States
         public override CognitionState<ComputerStateIds> Update()
         {
             if (Map.IsPositionDangorous(Unit.Position))
+            {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
+            }
 
             if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
             {
@@ -49,8 +51,10 @@ namespace Assets.Cognitions.Computers.States
         public override void OnDrawGizmos()
         {
             for (var i = 0; i < _path.Count - 1; i++)
+            {
                 DrawArrow.ForDebug(_path[i] + Vector3.up / 100,
                     _path[i + 1] - _path[i], Color.green, 0.1f, 0);
+            }
         }
 
         protected Vector3 ClampVector(Vector3 v)

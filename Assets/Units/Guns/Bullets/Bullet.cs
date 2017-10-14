@@ -1,7 +1,5 @@
-﻿using Assets.Units;
-using Assets.Units.Modules;
+﻿using Assets.Units.Modules;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Units.Guns.Bullets
 {

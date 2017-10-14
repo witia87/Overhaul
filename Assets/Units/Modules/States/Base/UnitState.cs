@@ -22,18 +22,22 @@ namespace Assets.Units.Modules.States.Base
         {
             return this;
         }
+
         public virtual UnitState Move(Vector3 moveLogicDirection, float speedModifier)
         {
             return this;
         }
+
         public virtual UnitState StopMoving()
         {
             return this;
         }
+
         public virtual UnitState Jump(Vector3 globalDirection, float forceModifier)
         {
             return this;
         }
+
         public virtual UnitState LookTowards(Vector3 globalDirection)
         {
             return this;

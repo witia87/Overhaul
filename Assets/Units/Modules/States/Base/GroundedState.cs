@@ -5,16 +5,18 @@ namespace Assets.Units.Modules.States.Base
 {
     public abstract class GroundedState : UnitState
     {
+        protected Vector3 GlobalLookDirection;
         protected Vector3 Limiter;
-        protected GroundedState(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory, Vector3 initialGlobalLookDirection) : 
+
+        protected GroundedState(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory,
+            Vector3 initialGlobalLookDirection) :
             base(movement, targeting, statesFactory)
         {
             GlobalLookDirection = initialGlobalLookDirection;
         }
 
-        protected Vector3 GlobalLookDirection;
-
-        protected void ManageReachingMovementTurnDirection(Vector3 logicLookDirection, Vector3 movementTurnLogicDirection)
+        protected void ManageReachingMovementTurnDirection(Vector3 logicLookDirection,
+            Vector3 movementTurnLogicDirection)
         {
             var angle = AngleCalculator.CalculateLogicAngle(Movement.ModuleLogicDirection,
                 movementTurnLogicDirection);

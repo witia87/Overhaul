@@ -1,5 +1,4 @@
-﻿using Assets.Gui.Board;
-using Assets.Gui.Cameras;
+﻿using Assets.Gui.Cameras;
 using Assets.Gui.View;
 using UnityEngine;
 
@@ -8,9 +7,10 @@ namespace Assets.Gui.PlayerInput
     public class MouseStore : GuiStore, IMouseStore
     {
         private CameraStore _cameraStore;
-        private ViewStore _viewStore;
 
         private Vector3 _mousePositionInBoardSpace;
+        private ViewStore _viewStore;
+
         public Vector2 MousePositionInBoardSpace
         {
             get { return _mousePositionInBoardSpace; }

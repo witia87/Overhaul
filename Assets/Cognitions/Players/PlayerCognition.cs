@@ -3,9 +3,22 @@ using UnityEngine;
 
 namespace Assets.Cognitions.Players
 {
-    public class PlayerCognition: MonoBehaviour
+    public class PlayerCognition : MonoBehaviour
     {
+        private Vector3 _lookAtPosition;
+        private Vector3 _movementGlobalDirection;
         [SerializeField] private Unit _unit;
+
+        private bool _wasCrouchSet;
+
+        private bool _wasFireSet;
+
+        private bool _wasJumpSet;
+
+        private bool _wasLookAtPositionSet;
+
+        private bool _wasMovementSet;
+
         public void Update()
         {
             if (_wasLookAtPositionSet)
@@ -41,35 +54,28 @@ namespace Assets.Cognitions.Players
             _wasCrouchSet = false;
         }
 
-        private bool _wasLookAtPositionSet;
-        private Vector3 _lookAtPosition;
         public void LookAt(Vector3 position)
         {
             _wasLookAtPositionSet = true;
             _lookAtPosition = position;
         }
 
-        private bool _wasFireSet;
         public void Fire()
         {
             _wasFireSet = true;
         }
 
-        private bool _wasMovementSet;
-        private Vector3 _movementGlobalDirection;
         public void SetMovement(Vector3 globalDirection)
         {
             _wasMovementSet = true;
             _movementGlobalDirection = globalDirection;
         }
 
-        private bool _wasJumpSet;
         public void Jump()
         {
             _wasJumpSet = true;
         }
 
-        private bool _wasCrouchSet;
         public void Crouch()
         {
             _wasCrouchSet = true;

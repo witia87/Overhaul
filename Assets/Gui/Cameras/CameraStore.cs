@@ -5,8 +5,12 @@ namespace Assets.Gui.Cameras
 {
     public class CameraStore : GuiStore, ICameraStore
     {
-        [SerializeField] private float _rescale = 8;
-        public float Rescale { get { return _rescale; } }
+        [SerializeField] private readonly float _rescale = 8;
+
+        public float Rescale
+        {
+            get { return _rescale; }
+        }
 
         public PixelatedPositionsCalculator Pixelation { get; private set; }
 

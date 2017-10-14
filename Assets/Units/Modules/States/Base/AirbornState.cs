@@ -6,8 +6,9 @@ namespace Assets.Units.Modules.States.Base
     {
         protected Vector3 FlightLogicDirection;
         protected Vector3 GlobalLookDirection;
-        protected AirbornState(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory, 
-            Vector3 globalLookDirection, Vector3 flightLogicDirection) : 
+
+        protected AirbornState(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory,
+            Vector3 globalLookDirection, Vector3 flightLogicDirection) :
             base(movement, targeting, statesFactory)
         {
             FlightLogicDirection = flightLogicDirection;

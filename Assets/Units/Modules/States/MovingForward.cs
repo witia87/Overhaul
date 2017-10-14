@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace Assets.Units.Modules.States
 {
-   public class MovingForward : Standing
+    public class MovingForward : Standing
     {
-        public MovingForward(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory, 
+        protected Vector3 MoveLogicDirection;
+        protected float SpeedModifier;
+
+        public MovingForward(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory,
             Vector3 initialGlobalLookDirection, Vector3 initialMoveLogicDirection, float speedModifier) :
             base(movement, targeting, statesFactory, initialGlobalLookDirection)
         {
@@ -14,8 +17,6 @@ namespace Assets.Units.Modules.States
             SpeedModifier = speedModifier;
         }
 
-        protected Vector3 MoveLogicDirection;
-        protected float SpeedModifier;
         public override UnitState VerifyPhysicConditions()
         {
             if (!Movement.IsStanding)

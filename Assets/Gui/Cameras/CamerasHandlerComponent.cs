@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-
-namespace Assets.Gui.Cameras
+﻿namespace Assets.Gui.Cameras
 {
     public class CamerasHandlerComponent : GuiComponent
     {
         private void Update()
         {
-            this.transform.localPosition = CameraStore.PixelatedCameraPositionInBoardSpace;
+            transform.localPosition = CameraStore.PixelatedCameraPositionInBoardSpace;
         }
     }
 }

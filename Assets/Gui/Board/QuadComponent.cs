@@ -11,7 +11,7 @@ namespace Assets.Gui.Board
 
         private static readonly Vector2[] Uvs = new Vector2[4]
             {new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0f, 1f), new Vector2(1f, 1f)};
-        
+
 
         protected virtual void Start()
         {

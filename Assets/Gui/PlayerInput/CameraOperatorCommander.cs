@@ -5,6 +5,9 @@ namespace Assets.Gui.PlayerInput
 {
     public class CameraOperatorCommander : GuiCommander
     {
+        private Vector2 _focusPointInBoardSpace;
+
+        private Vector2 _velocity;
         public float FocusingTime = 1;
         public GameObject FocusObject;
 
@@ -14,27 +17,22 @@ namespace Assets.Gui.PlayerInput
         {
             get { return _focusPointInBoardSpace; }
         }
-
-        protected void Awake()
-        {
-            base.Awake();
-        }
-
-        private Vector2 _velocity;
-        private Vector2 _focusPointInBoardSpace;
+        
         private void Update()
         {
-            var focusObjetcPositionInBoardSpace = CameraStore.TransformWorldPositionToCameraPlane(FocusObject.transform.position);
+            var focusObjetcPositionInBoardSpace =
+                CameraStore.TransformWorldPositionToCameraPlane(FocusObject.transform.position);
             var targetPoint = focusObjetcPositionInBoardSpace +
                               (MouseStore.MousePositionInBoardSpace - focusObjetcPositionInBoardSpace).normalized
                               * Mathf.Min(MaximalLookDistance,
                                   (MouseStore.MousePositionInBoardSpace - focusObjetcPositionInBoardSpace).magnitude /
                                   2);
 
-            _focusPointInBoardSpace = Vector2.SmoothDamp(_focusPointInBoardSpace, targetPoint, ref _velocity, FocusingTime, 100, Time.deltaTime);
+            _focusPointInBoardSpace = Vector2.SmoothDamp(_focusPointInBoardSpace, targetPoint, ref _velocity,
+                FocusingTime, 100, Time.deltaTime);
 
-            Dispatcher.Dispatch(GuiCommandIds.ChangeFocusPointInBoardSpace, 
-                new ChangeFocusPointInBoardSpacePayload() { Position = focusObjetcPositionInBoardSpace } );
+            Dispatcher.Dispatch(GuiCommandIds.ChangeFocusPointInBoardSpace,
+                new ChangeFocusPointInBoardSpacePayload {Position = focusObjetcPositionInBoardSpace});
         }
     }
 }

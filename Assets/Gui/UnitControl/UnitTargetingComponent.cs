@@ -7,8 +7,8 @@ namespace Assets.Gui.UnitControl
     {
         [SerializeField] private LayerMask _emptyTargetingLayerMask;
         [SerializeField] private LayerMask _environmentLayerMask;
-        [SerializeField] private LayerMask _targetLayerMask;
         [SerializeField] private PlayerCognition _playerCognition;
+        [SerializeField] private LayerMask _targetLayerMask;
 
         private void Update()
         {

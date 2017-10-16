@@ -17,7 +17,7 @@ namespace Assets.Gui.PlayerInput
         {
             get { return _focusPointInBoardSpace; }
         }
-        
+
         private void Update()
         {
             var focusObjetcPositionInBoardSpace =

@@ -16,6 +16,8 @@ namespace Assets.Units
     public class Unit : MonoBehaviour, IUnitControl
     {
         private readonly AngleCalculator _angleCalculator = new AngleCalculator();
+
+        private readonly float CrouchTime = 0.4f;
         private CrouchHelper _crouchHelper;
         private UnitState _currentState;
         private bool _isSetToCrouch;
@@ -27,8 +29,6 @@ namespace Assets.Units
 
         private bool _wasMoveRequestedThisTurn;
         private bool _wasSetToCrouchThisTurn;
-
-        private readonly float CrouchTime = 0.4f;
 
         public float StunTimeLeft { get; private set; }
         public IGunControl Gun { get; private set; }

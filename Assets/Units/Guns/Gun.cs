@@ -9,7 +9,8 @@ namespace Assets.Units.Guns
         private readonly Vector2 _efectiveRange = new Vector2(10, 15);
 
 
-        [SerializeField] private readonly int _maxAmmo = 30;
+        [SerializeField] private int _maxAmmo = 30;
+        [SerializeField] private float _refreshTime = 0.2f;
         [SerializeField] private float _angleTolerance;
         private BulletsFactory _bulletsFactory;
 
@@ -17,7 +18,6 @@ namespace Assets.Units.Guns
         private Vector3 _globalPositionToAimAt;
 
         private bool _isSetToFire;
-        [SerializeField] private readonly float _refreshTime = 0.2f;
 
         private float _timeLeft;
 

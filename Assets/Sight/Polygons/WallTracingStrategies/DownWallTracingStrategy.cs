@@ -1,0 +1,40 @@
+﻿using System;
+
+namespace Assets.Sight.Polygons.WallTracingStrategies
+{
+    public class DownWallTracingStrategy : IWallTracingStrategy
+    {
+        private readonly FieldType[,] _fields;
+        private MapVector _fieldPosition;
+
+        public DownWallTracingStrategy(MapVector fieldPosition, FieldType[,] fields)
+        {
+            _fieldPosition = fieldPosition;
+            _fields = fields;
+        }
+
+        public IWallTracingStrategy GoToNextVertex(out MapVector foundVertex)
+        {
+            do
+            {
+                _fieldPosition.z -= 1;
+                if (_fields[_fieldPosition.z, _fieldPosition.x - 1] == FieldType.Inaccessible
+                ) // we've lost touch of the wall (inaccessible is the interior)
+                {
+                    foundVertex = new MapVector(_fieldPosition.x, _fieldPosition.z + 1);
+                    return new LeftWallTracingStrategy(new MapVector(_fieldPosition.x - 1, _fieldPosition.z),
+                        _fields);
+                }
+                if (_fields[_fieldPosition.z, _fieldPosition.x] != FieldType.Inaccessible
+                ) // we've hit a wall with a face
+                {
+                    foundVertex = new MapVector(_fieldPosition.x, _fieldPosition.z + 1);
+                    return new RightWallTracingStrategy(new MapVector(_fieldPosition.x, _fieldPosition.z + 1),
+                        _fields);
+                }
+            } while (_fieldPosition.z >= 0);
+
+            throw new ApplicationException("Area is not inside a provided space.");
+        }
+    }
+}

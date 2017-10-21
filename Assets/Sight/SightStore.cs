@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Sight.Polygons;
+using Assets.Sight.Visibility;
 using Assets.Units;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace Assets.Sight
             var polygons = _polygonsOptimizer.GetOptimizedPolygons();
             foreach (var polygon in polygons)
             {
-                UploadRectangle(polygon);
+                UploadWallRectangle(polygon);
             }
             _visibilityComputer.AddSegment(new Vector2(1, 1), new Vector2(39, 1));
             _visibilityComputer.AddSegment(new Vector2(39, 1), new Vector2(39, 39));
@@ -41,12 +42,12 @@ namespace Assets.Sight
             return _visibilityComputer.Compute();
         }
 
-        public void RegisterRectangle(Vector2[] rectangle)
+        public void RegisterWallRectangle(Vector2[] rectangle)
         {
             _polygonsOptimizer.RegisterRectangle(rectangle);
         }
 
-        public void UploadRectangle(Vector2[] polygon)
+        private void UploadWallRectangle(Vector2[] polygon)
         {
             for (var i = 0; i < polygon.Length; i++)
             {

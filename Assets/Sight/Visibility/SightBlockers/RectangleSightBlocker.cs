@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Sight.SightBlockers
+namespace Assets.Sight.Visibility.SightBlockers
 {
     public class RectangleSightBlocker : SightBlocker
     {
@@ -15,7 +15,7 @@ namespace Assets.Sight.SightBlockers
                 GetVector(transform.position + new Vector3(transform.localScale.x / 2, 0, transform.localScale.z / 2)),
                 GetVector(transform.position + new Vector3(transform.localScale.x / 2, 0, -transform.localScale.z / 2))
             };
-            SightStore.RegisterRectangle(polygon);
+            SightStore.RegisterWallRectangle(polygon);
         }
 
         private Vector2 GetVector(Vector3 position)

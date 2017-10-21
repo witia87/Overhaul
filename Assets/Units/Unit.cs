@@ -22,8 +22,8 @@ namespace Assets.Units
         private UnitState _currentState;
         private bool _isSetToCrouch;
 
-        private MovementModule _movementModule;
-        private TargetingModule _targetingModule;
+        public MovementModule MovementModule { get; private set; }
+        public TargetingModule TargetingModule { get; private set; }
 
         private UnitStatesFactory _unitStatesFactory;
 
@@ -45,7 +45,7 @@ namespace Assets.Units
 
         public void LookAt(Vector3 globalPoint)
         {
-            var newLogicLookDirection = globalPoint - _targetingModule.Center;
+            var newLogicLookDirection = globalPoint - TargetingModule.Center;
             newLogicLookDirection.y = 0;
             _currentState = _currentState.LookTowards(newLogicLookDirection.normalized);
         }
@@ -69,32 +69,32 @@ namespace Assets.Units
 
         public Vector3 Position
         {
-            get { return _targetingModule.ModuleLogicPosition; }
+            get { return TargetingModule.ModuleLogicPosition; }
         }
 
         public Vector3 Center
         {
-            get { return _targetingModule.Center; }
+            get { return TargetingModule.Center; }
         }
 
         public Vector3 Velocity
         {
-            get { return _targetingModule.Rigidbody.velocity; }
+            get { return TargetingModule.Rigidbody.velocity; }
         }
 
         public IVisionSensor Vision { get; private set; }
 
         private void Awake()
         {
-            _targetingModule = GetComponent<TargetingModule>();
-            _movementModule = GetComponentInChildren<MovementModule>();
+            TargetingModule = GetComponent<TargetingModule>();
+            MovementModule = GetComponentInChildren<MovementModule>();
             Gun = GetComponentInChildren<Gun>();
 
-            _unitStatesFactory = new UnitStatesFactory(_movementModule, _targetingModule);
+            _unitStatesFactory = new UnitStatesFactory(MovementModule, TargetingModule);
             _currentState = _unitStatesFactory.CreateStanding(Vector3.forward);
 
             _crouchHelper = new CrouchHelper(CrouchTime);
-            Vision = _targetingModule.GetComponentInChildren<VisionSensor>();
+            Vision = TargetingModule.GetComponentInChildren<VisionSensor>();
         }
 
         private void FixedUpdate()
@@ -114,8 +114,8 @@ namespace Assets.Units
         {
             StunTimeLeft = Mathf.Max(0, StunTimeLeft - Time.deltaTime);
             _crouchHelper.Update(_isSetToCrouch);
-            _targetingModule.SetCrouch(_crouchHelper.CrouchLevel);
-            _movementModule.SetCrouch(_crouchHelper.CrouchLevel);
+            TargetingModule.SetCrouch(_crouchHelper.CrouchLevel);
+            MovementModule.SetCrouch(_crouchHelper.CrouchLevel);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Assets.Units
             guiStyle.fontSize = h * 2 / 100;
             guiStyle.normal.textColor = new Color(1.0f, 0.0f, 0.5f, 1.0f);
             var rect = new Rect(w - 200, h * 2 / 100, w, 2 * h * 2 / 100);
-            GUI.Label(rect, _movementModule.IsGrounded ? "IsGrounded" : "IsAirborn", guiStyle);
+            GUI.Label(rect, MovementModule.IsGrounded ? "IsGrounded" : "IsAirborn", guiStyle);
         }
 
         private void OnDrawGizmos()

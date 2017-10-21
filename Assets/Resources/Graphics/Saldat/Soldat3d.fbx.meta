@@ -1,0 +1,144 @@
+fileFormatVersion: 2
+guid: a0733bb797e4bd44a9b7f93014101d28
+timeCreated: 1508596704
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ArmatureLegs
+    100002: ArmatureTorso
+    100004: BackBone
+    100006: BackBone_end
+    100008: Camera
+    100010: FunnyBone
+    100012: FunnyBone_end
+    100014: IK_LArm
+    100016: IK_LArm_end
+    100018: IK_LLeg
+    100020: IK_LLeg_end
+    100022: IK_RArm
+    100024: IK_RArm_end
+    100026: IK_RLeg
+    100028: IK_RLeg_end
+    100030: Lamp
+    100032: LArmBone
+    100034: LArmBone_end
+    100036: Legs
+    100038: LShinBone
+    100040: LShinBone_end
+    100042: LShoulerBone
+    100044: LTieBone
+    100046: RArmBone
+    100048: RArmBone_end
+    100050: RShinBone
+    100052: RShinBone_end
+    100054: RShoulderBone
+    100056: RTieBone
+    100058: //RootNode
+    100060: Torso
+    400000: ArmatureLegs
+    400002: ArmatureTorso
+    400004: BackBone
+    400006: BackBone_end
+    400008: Camera
+    400010: FunnyBone
+    400012: FunnyBone_end
+    400014: IK_LArm
+    400016: IK_LArm_end
+    400018: IK_LLeg
+    400020: IK_LLeg_end
+    400022: IK_RArm
+    400024: IK_RArm_end
+    400026: IK_RLeg
+    400028: IK_RLeg_end
+    400030: Lamp
+    400032: LArmBone
+    400034: LArmBone_end
+    400036: Legs
+    400038: LShinBone
+    400040: LShinBone_end
+    400042: LShoulerBone
+    400044: LTieBone
+    400046: RArmBone
+    400048: RArmBone_end
+    400050: RShinBone
+    400052: RShinBone_end
+    400054: RShoulderBone
+    400056: RTieBone
+    400058: //RootNode
+    400060: Torso
+    4300000: Legs
+    4300002: Torso
+    9500000: //RootNode
+    13700000: Legs
+    13700002: Torso
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

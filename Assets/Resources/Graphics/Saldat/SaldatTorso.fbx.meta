@@ -1,32 +1,57 @@
 fileFormatVersion: 2
-guid: e68f1a8cee10aaa41a37abe0ebd59dc7
-timeCreated: 1508683901
+guid: e50364d23c984894fb8ad6255cc829ae
+timeCreated: 1508687594
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: ArmatureTorso
-    100002: ArmBone_L
-    100004: ArmBone_R
-    100006: BackBone
-    100008: FunnyBone
-    100010: //RootNode
-    100012: ShoulderBone_R
-    100014: ShoulerBone_L
-    100016: Torso
+    100002: ArmBone.L
+    100004: ArmBone.L_end
+    100006: ArmBone.R
+    100008: ArmBone.R_end
+    100010: BackBone
+    100012: BackBone_end
+    100014: Camera
+    100016: FunnyBone
+    100018: FunnyBone_end
+    100020: IK_Arm.L
+    100022: IK_Arm.L_end
+    100024: IK_Arm.R
+    100026: IK_Arm.R_end
+    100028: IK_RArm
+    100030: IK_RArm_end
+    100032: Lamp
+    100034: //RootNode
+    100036: ShoulderBone.R
+    100038: ShoulerBone.L
+    100040: Torso
     400000: ArmatureTorso
-    400002: ArmBone_L
-    400004: ArmBone_R
-    400006: BackBone
-    400008: FunnyBone
-    400010: //RootNode
-    400012: ShoulderBone_R
-    400014: ShoulerBone_L
-    400016: Torso
+    400002: ArmBone.L
+    400004: ArmBone.L_end
+    400006: ArmBone.R
+    400008: ArmBone.R_end
+    400010: BackBone
+    400012: BackBone_end
+    400014: Camera
+    400016: FunnyBone
+    400018: FunnyBone_end
+    400020: IK_Arm.L
+    400022: IK_Arm.L_end
+    400024: IK_Arm.R
+    400026: IK_Arm.R_end
+    400028: IK_RArm
+    400030: IK_RArm_end
+    400032: Lamp
+    400034: //RootNode
+    400036: ShoulderBone.R
+    400038: ShoulerBone.L
+    400040: Torso
+    2000000: Camera
     4300000: Torso
-    7400000: Default Take
-    7400002: ArmatureTorsoAction
+    7400000: Idle
     9500000: //RootNode
+    10800000: Lamp
     13700000: Torso
   externalObjects:
   - first:
@@ -59,7 +84,35 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: ArmatureTorso|ArmatureTorsoAction
+      firstFrame: 1
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

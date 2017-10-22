@@ -1,28 +1,46 @@
 fileFormatVersion: 2
-guid: 1f4fcec2a04f4dd45be093c19bb0cf5a
-timeCreated: 1508683345
+guid: 45b8c545f73806a43b40b5d68de6d5e6
+timeCreated: 1508687594
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: ArmatureLegs
-    100002: Legs
-    100004: LShinBone
-    100006: LTieBone
-    100008: RShinBone
-    100010: RTieBone
-    100012: //RootNode
+    100002: Camera
+    100004: IK_LLeg
+    100006: IK_LLeg_end
+    100008: IK_RLeg
+    100010: IK_RLeg_end
+    100012: Lamp
+    100014: Legs
+    100016: LShinBone
+    100018: LShinBone_end
+    100020: LTieBone
+    100022: RShinBone
+    100024: RShinBone_end
+    100026: RTieBone
+    100028: //RootNode
     400000: ArmatureLegs
-    400002: Legs
-    400004: LShinBone
-    400006: LTieBone
-    400008: RShinBone
-    400010: RTieBone
-    400012: //RootNode
+    400002: Camera
+    400004: IK_LLeg
+    400006: IK_LLeg_end
+    400008: IK_RLeg
+    400010: IK_RLeg_end
+    400012: Lamp
+    400014: Legs
+    400016: LShinBone
+    400018: LShinBone_end
+    400020: LTieBone
+    400022: RShinBone
+    400024: RShinBone_end
+    400026: RTieBone
+    400028: //RootNode
+    2000000: Camera
     4300000: Legs
     7400000: Idle
     7400002: Walk
     9500000: //RootNode
+    10800000: Lamp
     13700000: Legs
   externalObjects:
   - first:
@@ -58,9 +76,9 @@ ModelImporter:
     clipAnimations:
     - serializedVersion: 16
       name: Idle
-      takeName: Default Take
+      takeName: ArmatureLegs|ArmatureLegsAction
       firstFrame: 1
-      lastFrame: 11
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -86,7 +104,7 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Walk
-      takeName: Default Take
+      takeName: ArmatureLegs|ArmatureLegsAction
       firstFrame: 21
       lastFrame: 60
       wrapMode: 0

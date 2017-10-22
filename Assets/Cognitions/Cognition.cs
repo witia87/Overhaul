@@ -10,7 +10,7 @@ namespace Assets.Cognitions
     {
         private readonly List<CognitionState<TStateUids>> _registeredStates = new List<CognitionState<TStateUids>>();
 
-        [SerializeField] private readonly int _rememberedStatesCount = 10;
+        [SerializeField] private int _rememberedStatesCount = 10;
         protected CognitionState<TStateUids> DefaultState;
         public FractionId Fraction = FractionId.Enemy;
 

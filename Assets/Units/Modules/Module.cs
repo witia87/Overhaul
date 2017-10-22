@@ -85,7 +85,7 @@ namespace Assets.Units.Modules
 
         public Vector3 Bottom
         {
-            get { return transform.TransformPoint(new Vector3(0, 0.5f, 0) * CrouchModifier); }
+            get { return transform.TransformPoint(new Vector3(0, -0.5f, 0) * CrouchModifier); }
         }
 
         public Vector3 Top

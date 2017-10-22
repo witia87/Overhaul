@@ -29,10 +29,10 @@ namespace Assets.Gui.PlayerInput
                                   2);
 
             _focusPointInBoardSpace = Vector2.SmoothDamp(_focusPointInBoardSpace, targetPoint, ref _velocity,
-                FocusingTime, 100, Time.deltaTime);
+                FocusingTime, 10000, Time.deltaTime);
 
             Dispatcher.Dispatch(GuiCommandIds.ChangeFocusPointInBoardSpace,
-                new ChangeFocusPointInBoardSpacePayload {Position = focusObjetcPositionInBoardSpace});
+                new ChangeFocusPointInBoardSpacePayload {Position = _focusPointInBoardSpace });
         }
     }
 }

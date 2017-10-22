@@ -21,21 +21,7 @@ namespace Assets.Gui.Cameras
 
         public Vector2 CameraPositionInCameraPlaneSpace { get; private set; }
         public Vector2 PixelatedCameraPositionInBoardSpace { get; private set; }
-
-        public Vector2 TransformWorldPositionToCameraPlane(Vector3 worldPosition)
-        {
-            return transform.InverseTransformPoint(worldPosition);
-        }
-
-        public Ray TransformCameraPlanePositionToWorldRay(Vector2 cameraPlanePosition)
-        {
-            var pointToCast = transform.TransformPoint(cameraPlanePosition);
-            var currentHeight = pointToCast.y;
-            var unitHeight = -transform.forward.y;
-            var castedPoint = pointToCast + transform.forward * (currentHeight - 10 /*fixed height*/) / unitHeight;
-            return new Ray(castedPoint, transform.forward);
-        }
-
+        
         protected override void Awake()
         {
             base.Awake();

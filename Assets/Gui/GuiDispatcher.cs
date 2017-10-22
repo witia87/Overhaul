@@ -10,8 +10,8 @@ namespace Assets.Gui
 
     public class GuiDispatcher : MonoBehaviour
     {
-        private readonly Dictionary<GuiCommandIds, List<ActionCallback>> _callbacks;
         private readonly List<AggregatedCommand> _aggregatedCommands = new List<AggregatedCommand>();
+        private readonly Dictionary<GuiCommandIds, List<ActionCallback>> _callbacks;
 
         private bool _isDispatching;
 

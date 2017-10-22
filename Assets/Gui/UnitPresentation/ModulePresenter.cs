@@ -10,10 +10,14 @@ namespace Assets.Gui.UnitPresentation
         protected CameraStore CameraStore;
         [SerializeField] protected Module Module;
 
+        [SerializeField] protected int _angleDivisionCount = 8;
+        private float _angleStep;
         protected virtual void Awake()
         {
             CameraStore = FindObjectOfType<CameraStore>();
+            _angleStep = 360.0f / _angleDivisionCount;
         }
+
 
         private int _lastAngleX;
         private int _lastAngleY;
@@ -21,9 +25,9 @@ namespace Assets.Gui.UnitPresentation
         public void RecalculateAngles()
         {
             var newEulerAngles = Module.transform.eulerAngles;
-            var newAnglesX = Mathf.RoundToInt(newEulerAngles.x / 45);
-            var newAnglesY = Mathf.RoundToInt(newEulerAngles.y / 45);
-            var newAnglesZ = Mathf.RoundToInt(newEulerAngles.z / 45);
+            var newAnglesX = Mathf.RoundToInt(newEulerAngles.x / _angleStep);
+            var newAnglesY = Mathf.RoundToInt(newEulerAngles.y / _angleStep);
+            var newAnglesZ = Mathf.RoundToInt(newEulerAngles.z / _angleStep);
 
             HaveAnglesChanged = newAnglesX != _lastAngleX ||
                                 newAnglesY != _lastAngleY ||
@@ -38,7 +42,7 @@ namespace Assets.Gui.UnitPresentation
 
         protected void RefreshAngles()
         {
-            transform.eulerAngles = new Vector3(_lastAngleX * 45, _lastAngleY * 45, _lastAngleZ * 45);
+            transform.eulerAngles = new Vector3(_lastAngleX * _angleStep, _lastAngleY * _angleStep, _lastAngleZ * _angleStep);
         }
     }
 }

@@ -24,8 +24,8 @@ namespace Assets.Gui.UnitPresentation
             _legsPresenter.RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
 
             if (_timeSinceLastUpdate > _minimalRefreshTime &&
-                (HasPositionChanged || HaveAnglesChanged) ||
-                (_legsPresenter.HasPositionChanged || _legsPresenter.HaveAnglesChanged))
+                (HasPositionChanged || HaveAnglesChanged || _legsPresenter.HasPositionChanged ||
+                 _legsPresenter.HaveAnglesChanged))
             {
                 _timeSinceLastUpdate = 0;
                 Refresh();

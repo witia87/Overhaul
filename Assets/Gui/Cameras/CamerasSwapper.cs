@@ -10,6 +10,14 @@ namespace Assets.Gui.Cameras
         private float _swapCamerasCooldown;
         [SerializeField] private Camera _viewCamera;
 
+        private void Awake()
+        {
+            Camera.SetupCurrent(_viewCamera);
+            _viewCamera.enabled = true;
+            _isRenderingToTexture = true;
+
+        }
+
         public void SwapCameras()
         {
             if (_swapCamerasCooldown <= 0)

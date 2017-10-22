@@ -1,21 +1,36 @@
-﻿using Assets.Gui.Cameras;
-using Assets.Units;
-using Assets.Units.Modules;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Gui.UnitPresentation
 {
-    public class TorsoPresenter : ModulePresenter
+    public class TorsoPresenter : LegsPresenter
     {
-        protected override void Update()
-        {
-            base.Update();
-            //transform.position = CameraStore.Pixelation.GetClosestPixelatedPosition(Module.Bottom);
-        }
+        [SerializeField] private LegsPresenter _legsPresenter;
+        [SerializeField] private float _minimalRefreshTime = 0.05f;
+        private float _timeSinceLastUpdate;
 
-        public void SetPosition(Vector3 position)
+        protected void Update()
         {
-            transform.position = position;
+            _timeSinceLastUpdate += Time.deltaTime;
+
+            RecalculateAngles();
+            _legsPresenter.RecalculateAngles();
+
+            var currentLattitude = Module.Bottom.y;
+            var positionInCameraPlane = CameraStore.Pixelation.TransformWorldPositionToCameraPlane(Module.Bottom);
+            var newCameraPlaneX = Mathf.RoundToInt(positionInCameraPlane.x);
+            var newCameraPlaneY = Mathf.RoundToInt(positionInCameraPlane.y);
+
+            RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
+            _legsPresenter.RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
+
+            if (_timeSinceLastUpdate > _minimalRefreshTime &&
+                (HasPositionChanged || HaveAnglesChanged) ||
+                (_legsPresenter.HasPositionChanged || _legsPresenter.HaveAnglesChanged))
+            {
+                _timeSinceLastUpdate = 0;
+                Refresh();
+                _legsPresenter.Refresh();
+            }
         }
     }
 }

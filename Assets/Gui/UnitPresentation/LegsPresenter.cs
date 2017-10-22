@@ -1,19 +1,36 @@
-﻿using Assets.Gui.Cameras;
-using Assets.Units;
-using Assets.Units.Modules;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Gui.UnitPresentation
 {
     public class LegsPresenter : ModulePresenter
     {
-        [SerializeField] protected TorsoPresenter TorsoPresenter;
-        protected override void Update()
+        private int _lastCameraPlaneX;
+        private int _lastCameraPlaneY;
+        private float _lastLattitude;
+
+        public bool HasPositionChanged { get; private set; }
+
+        public void RecalculatePosition(int x, int y, float lattitude)
         {
-            base.Update();
-            var position = CameraStore.Pixelation.GetClosestPixelatedPosition(Module.Top);
-            TorsoPresenter.SetPosition(position);
-            transform.position = CameraStore.Pixelation.GetClosestPixelatedPosition(Module.Top);
+            HasPositionChanged = x != _lastCameraPlaneX ||
+                                 y != _lastCameraPlaneY ||
+                                 Mathf.Abs(lattitude - _lastLattitude) > 0.1f;
+
+            _lastCameraPlaneX = x;
+            _lastCameraPlaneY = y;
+            _lastLattitude = lattitude;
+        }
+
+        protected void RefreshPosition()
+        {
+            transform.position = CameraStore.Pixelation.TransformCameraPlanePositionToWorldPosition(
+                new Vector2(_lastCameraPlaneX, _lastCameraPlaneY), _lastLattitude);
+        }
+
+        public void Refresh()
+        {
+            RefreshAngles();
+            RefreshPosition();
         }
     }
 }

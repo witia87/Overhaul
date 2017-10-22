@@ -21,7 +21,7 @@ namespace Assets.Gui.PlayerInput
         private void Update()
         {
             var focusObjetcPositionInBoardSpace =
-                CameraStore.TransformWorldPositionToCameraPlane(FocusObject.transform.position);
+                CameraStore.Pixelation.TransformWorldPositionToCameraPlane(FocusObject.transform.position);
             var targetPoint = focusObjetcPositionInBoardSpace +
                               (MouseStore.MousePositionInBoardSpace - focusObjetcPositionInBoardSpace).normalized
                               * Mathf.Min(MaximalLookDistance,

@@ -1,29 +1,33 @@
 fileFormatVersion: 2
-guid: 1f4fcec2a04f4dd45be093c19bb0cf5a
-timeCreated: 1508683345
+guid: e68f1a8cee10aaa41a37abe0ebd59dc7
+timeCreated: 1508683901
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: ArmatureLegs
-    100002: Legs
-    100004: LShinBone
-    100006: LTieBone
-    100008: RShinBone
-    100010: RTieBone
-    100012: //RootNode
-    400000: ArmatureLegs
-    400002: Legs
-    400004: LShinBone
-    400006: LTieBone
-    400008: RShinBone
-    400010: RTieBone
-    400012: //RootNode
-    4300000: Legs
-    7400000: Idle
-    7400002: Walk
+    100000: ArmatureTorso
+    100002: ArmBone_L
+    100004: ArmBone_R
+    100006: BackBone
+    100008: FunnyBone
+    100010: //RootNode
+    100012: ShoulderBone_R
+    100014: ShoulerBone_L
+    100016: Torso
+    400000: ArmatureTorso
+    400002: ArmBone_L
+    400004: ArmBone_R
+    400006: BackBone
+    400008: FunnyBone
+    400010: //RootNode
+    400012: ShoulderBone_R
+    400014: ShoulerBone_L
+    400016: Torso
+    4300000: Torso
+    7400000: Default Take
+    7400002: ArmatureTorsoAction
     9500000: //RootNode
-    13700000: Legs
+    13700000: Torso
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -55,63 +59,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Idle
-      takeName: Default Take
-      firstFrame: 1
-      lastFrame: 11
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Walk
-      takeName: Default Take
-      firstFrame: 21
-      lastFrame: 60
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []

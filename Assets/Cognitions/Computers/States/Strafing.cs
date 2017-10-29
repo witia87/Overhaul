@@ -2,8 +2,9 @@
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
 using Assets.Units;
-using Assets.Units.Vision;
+using Assets.Units.Heads.Vision;
 using Assets.Utilities;
+using Assets.Vision;
 using UnityEngine;
 
 namespace Assets.Cognitions.Computers.States
@@ -18,17 +19,17 @@ namespace Assets.Cognitions.Computers.States
             : base(ComputerStateIds.Strafing, movementHelper, targetingHelper, unit, map)
         {
             _target = target;
-            _path = Map.PathFinder.FindSafespot(Unit.Position);
+            _path = Map.PathFinder.FindSafespot(Unit.LogicPosition);
         }
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            if (!Map.IsPositionDangorous(Unit.Position))
+            if (!Map.IsPositionDangorous(Unit.LogicPosition))
             {
                 return DisposeCurrent().AndReturnToThePreviousState();
             }
             ProbabilisticTriggering.PerformOnAverageOnceEvery(0.3f,
-                () => _path = Map.PathFinder.FindSafespot(Unit.Position));
+                () => _path = Map.PathFinder.FindSafespot(Unit.LogicPosition));
             MovementHelper.ManageMovingAlongThePath(_path);
             if (_target.IsVisible)
             {

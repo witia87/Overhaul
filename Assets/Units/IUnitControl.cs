@@ -1,12 +1,12 @@
 ﻿using Assets.Units.Guns;
-using Assets.Units.Vision;
+using Assets.Units.Heads.Vision;
 using UnityEngine;
 
 namespace Assets.Units
 {
     public interface IUnitControl
     {
-        Vector3 Position { get; }
+        Vector3 LogicPosition { get; }
         Vector3 Center { get; }
         Vector3 Velocity { get; }
 

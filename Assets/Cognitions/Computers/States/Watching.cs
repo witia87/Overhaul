@@ -33,7 +33,7 @@ namespace Assets.Cognitions.Computers.States
                 return DisposeCurrent().AndReturnToThePreviousState();
             }
 
-            if (Map.IsPositionDangorous(Unit.Position))
+            if (Map.IsPositionDangorous(Unit.LogicPosition))
             {
                 ProbabilisticTriggering.PerformOnAverageOnceEvery(0.1f, ChangeDirection);
             }

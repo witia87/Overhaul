@@ -1,8 +1,9 @@
 ﻿using Assets.Cognitions.Helpers;
 using Assets.Maps;
 using Assets.Units;
-using Assets.Units.Vision;
+using Assets.Units.Heads.Vision;
 using Assets.Utilities;
+using Assets.Vision;
 
 namespace Assets.Cognitions.Computers.States
 {
@@ -19,7 +20,7 @@ namespace Assets.Cognitions.Computers.States
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            if (Map.IsPositionDangorous(Unit.Position))
+            if (Map.IsPositionDangorous(Unit.LogicPosition))
             {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
             }
@@ -28,7 +29,7 @@ namespace Assets.Cognitions.Computers.States
             {
                 if (ProbabilisticTriggering.TestOnAverageOnceEvery(0.1f))
                 {
-                    var distanceToTarget = (_target.Position - Unit.Position).magnitude;
+                    var distanceToTarget = (_target.Position - Unit.LogicPosition).magnitude;
                     if (distanceToTarget > Unit.Gun.EfectiveRange.y)
                     {
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateChasing(_target));

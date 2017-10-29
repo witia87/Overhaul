@@ -16,7 +16,7 @@ namespace Assets.Sight.Visibility
         }
 
         /// <summary>
-        ///     Position of the segment
+        ///     Center of the segment
         /// </summary>
         internal Vector2 Position { get; set; }
 

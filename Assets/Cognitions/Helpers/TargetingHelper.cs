@@ -1,6 +1,7 @@
 ﻿using Assets.Maps;
 using Assets.Units;
-using Assets.Units.Vision;
+using Assets.Units.Heads.Vision;
+using Assets.Vision;
 using UnityEngine;
 
 namespace Assets.Cognitions.Helpers

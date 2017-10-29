@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Units.Vision
+namespace Assets.Units.Heads.Vision
 {
     public class DiamondDetector : MonoBehaviour
     {

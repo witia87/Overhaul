@@ -62,11 +62,12 @@
 				output.texcoord = TRANSFORM_TEX(input.texcoord, _MainTex);
 				return output;
 			}
-
+			
 			bool equalsBackground(float4 color) {
 				return color.r == _BackgroundColor.r &&
 					color.g == _BackgroundColor.g &&
 					color.b == _BackgroundColor.b;
+				
 			}
 
 			bool equals(float4 a, float4 b) {
@@ -74,7 +75,6 @@
 					a.g == b.g &&
 					a.b == b.b;
 			}
-
 
 			float4 frag(vertexOutput input) : COLOR
 			{
@@ -84,13 +84,15 @@
 				float4 leftColor = tex2D(_MainTex, input.texcoord + float2(-_OutlineSize / (float)_TexWidth, 0));
 				float4 rightColor = tex2D(_MainTex, input.texcoord + float2(_OutlineSize / (float)_TexWidth, 0));
 				
+				float transparencyLevel = min(upColor.b, min(downColor.b, min(leftColor.b, rightColor.b)));
+
 				if (equalsBackground(centerColor) &&
 					(!(equalsBackground(upColor) &&
 						equalsBackground(downColor) &&
 						equalsBackground(leftColor) &&
 						equalsBackground(rightColor))))
-				{
-					return float4(1, 0, 0, 0.5);
+				{				
+					return float4(1, 0, 0, 0.6 * (1 - transparencyLevel));
 				}
 
 				return float4(0, 0, 0, 0);

@@ -23,13 +23,14 @@ namespace Assets.Gui.UnitPresentation
             RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
             _legsPresenter.RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
 
+            RefreshPosition();
+            _legsPresenter.RefreshPosition();
             if (_timeSinceLastUpdate > _minimalRefreshTime &&
-                (HasPositionChanged || HaveAnglesChanged || _legsPresenter.HasPositionChanged ||
-                 _legsPresenter.HaveAnglesChanged))
+                (HaveAnglesChanged || _legsPresenter.HaveAnglesChanged))
             {
                 _timeSinceLastUpdate = 0;
-                Refresh();
-                _legsPresenter.Refresh();
+                RefreshAngles();
+                _legsPresenter.RefreshAngles();
             }
         }
     }

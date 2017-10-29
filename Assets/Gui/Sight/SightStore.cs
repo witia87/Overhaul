@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using Assets.Gui;
+using Assets.Gui.Player;
 using Assets.Sight.Polygons;
 using Assets.Sight.Visibility;
-using Assets.Units;
 using UnityEngine;
 
 namespace Assets.Sight
 {
-    public class SightStore : MonoBehaviour
+    public class SightStore : GuiStore, ISightStore
     {
         private readonly PolygonsOptimizer _polygonsOptimizer = new PolygonsOptimizer();
+        private PlayerStore _playerStore;
         private VisibilityComputer _visibilityComputer;
-        public Unit Unit;
 
         public Vector2 Center
         {
@@ -19,6 +20,7 @@ namespace Assets.Sight
 
         private void Awake()
         {
+            _playerStore = FindObjectOfType<PlayerStore>();
             _visibilityComputer = new VisibilityComputer();
             _visibilityComputer.Radius = 30;
         }

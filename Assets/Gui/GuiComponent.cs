@@ -1,18 +1,22 @@
 ﻿using Assets.Gui.Board;
 using Assets.Gui.Cameras;
+using Assets.Gui.Player;
 using Assets.Gui.PlayerInput;
 using Assets.Gui.View;
+using Assets.Sight;
 using UnityEngine;
 
 namespace Assets.Gui
 {
     public class GuiComponent : MonoBehaviour
     {
+        protected IPlayerStore PlayerStore;
         protected IBoardStore BoardStore;
         protected ICameraStore CameraStore;
         protected IKeyboardStore KeyboardStore;
         protected IMouseStore MouseStore;
         protected IViewStore ViewStore;
+        protected ISightStore SightStore;
 
         protected virtual void Awake()
         {

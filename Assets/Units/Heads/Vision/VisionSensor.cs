@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Assets.Utilities;
+using Assets.Vision;
 using UnityEngine;
 
-namespace Assets.Units.Vision
+namespace Assets.Units.Heads.Vision
 {
     public class VisionSensor : DiamondDetector, IVisionSensor
     {

@@ -1,4 +1,5 @@
 ﻿using Assets.Gui.Cameras;
+using Assets.Sight;
 using Assets.Units;
 using Assets.Units.Modules;
 using UnityEngine;
@@ -40,7 +41,7 @@ namespace Assets.Gui.UnitPresentation
 
         public bool HaveAnglesChanged{get;private set;}
 
-        protected void RefreshAngles()
+        public void RefreshAngles()
         {
             transform.eulerAngles = new Vector3(_lastAngleX * _angleStep, _lastAngleY * _angleStep, _lastAngleZ * _angleStep);
         }

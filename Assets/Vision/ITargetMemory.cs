@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Units.Vision
+namespace Assets.Vision
 {
     public interface ITargetMemory
     {

@@ -2,8 +2,9 @@
 using Assets.Cognitions.Helpers;
 using Assets.Maps;
 using Assets.Units;
-using Assets.Units.Vision;
+using Assets.Units.Heads.Vision;
 using Assets.Utilities;
+using Assets.Vision;
 using UnityEngine;
 
 namespace Assets.Cognitions.Computers.States
@@ -18,13 +19,13 @@ namespace Assets.Cognitions.Computers.States
             : base(ComputerStateIds.Chasing, movementHelper, targetingHelper, unit, map)
         {
             _target = target;
-            _path = Map.PathFinder.FindPath(Unit.Position,
+            _path = Map.PathFinder.FindPath(Unit.LogicPosition,
                 _target.Position);
         }
 
         public override CognitionState<ComputerStateIds> Update()
         {
-            if (Map.IsPositionDangorous(Unit.Position))
+            if (Map.IsPositionDangorous(Unit.LogicPosition))
             {
                 return RememberCurrent().AndChangeStateTo(StatesFactory.CreateStrafing(_target));
             }
@@ -33,13 +34,13 @@ namespace Assets.Cognitions.Computers.States
             {
                 if (_target.IsVisible)
                 {
-                    var distanceToTarget = (_target.Position - Unit.Position).magnitude;
+                    var distanceToTarget = (_target.Position - Unit.LogicPosition).magnitude;
                     if (distanceToTarget > Unit.Gun.EfectiveRange.x
                         && distanceToTarget < Unit.Gun.EfectiveRange.y)
                     {
                         return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateFiring(_target));
                     }
-                    _path = Map.PathFinder.FindPath(Unit.Position,
+                    _path = Map.PathFinder.FindPath(Unit.LogicPosition,
                         _target.Position);
                     TargetingHelper.ManageAimingAtTheTarget(_target);
                     MovementHelper.ManageMovingAlongThePath(_path);

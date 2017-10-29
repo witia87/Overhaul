@@ -1,7 +1,8 @@
 ﻿using System;
+using Assets.Units;
 using UnityEngine;
 
-namespace Assets.Units.Vision
+namespace Assets.Vision
 {
     public class Target : ITarget
     {
@@ -26,7 +27,7 @@ namespace Assets.Units.Vision
                 {
                     throw new ApplicationException("Target is no longer visible, and must be treated as a memory.");
                 }
-                return Unit.Position;
+                return Unit.LogicPosition;
             }
         }
 
@@ -75,7 +76,7 @@ namespace Assets.Units.Vision
                 {
                     return _memorizedLastSeenPosition;
                 }
-                return Unit.Position;
+                return Unit.LogicPosition;
             }
         }
 
@@ -98,7 +99,7 @@ namespace Assets.Units.Vision
                 throw new ApplicationException("Target already memorized."); // TODO: Remove later
             }
             _isMemorized = true;
-            _memorizedLastSeenPosition = Unit.Position;
+            _memorizedLastSeenPosition = Unit.LogicPosition;
             _memorizedLastSeenVelocity = Unit.Velocity;
             _memorizedLastSeenTime = Time.time;
         }

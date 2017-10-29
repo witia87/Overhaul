@@ -2,7 +2,7 @@
 using Assets.Sight;
 using UnityEngine;
 
-namespace Assets.Units.Vision
+namespace Assets.Units.Heads.Vision
 {
     public class SightPresenter : MonoBehaviour
     {
@@ -26,7 +26,7 @@ namespace Assets.Units.Vision
 
         private void Update()
         {
-            var polygon = _sightStore.GetSightPolygon(Unit.Position);
+            var polygon = _sightStore.GetSightPolygon(Unit.LogicPosition);
             var vertices = GetExtendedVertices(_sightStore.Center, polygon);
             _meshFilter.mesh.Clear();
             _meshFilter.mesh.vertices = vertices;

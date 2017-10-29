@@ -1,10 +1,13 @@
 ﻿using System;
+using Assets.Maps;
 using Assets.Units.Guns;
+using Assets.Units.Heads;
+using Assets.Units.Heads.Vision;
 using Assets.Units.Helpers;
 using Assets.Units.Modules;
 using Assets.Units.Modules.States;
 using Assets.Units.Modules.States.Base;
-using Assets.Units.Vision;
+using Assets.Vision;
 using UnityEngine;
 
 namespace Assets.Units
@@ -15,6 +18,7 @@ namespace Assets.Units
     /// </summary>
     public class Unit : MonoBehaviour, IUnitControl
     {
+        public FractionId FractionId;
         private readonly AngleCalculator _angleCalculator = new AngleCalculator();
 
         private readonly float CrouchTime = 0.4f;
@@ -24,6 +28,7 @@ namespace Assets.Units
 
         public MovementModule MovementModule { get; private set; }
         public TargetingModule TargetingModule { get; private set; }
+        public Head Head { get; private set; }
 
         private UnitStatesFactory _unitStatesFactory;
 
@@ -67,7 +72,7 @@ namespace Assets.Units
             _currentState = _currentState.Jump(globalDirection, jumpForceModifier);
         }
 
-        public Vector3 Position
+        public Vector3 LogicPosition
         {
             get { return TargetingModule.ModuleLogicPosition; }
         }
@@ -88,6 +93,7 @@ namespace Assets.Units
         {
             TargetingModule = GetComponent<TargetingModule>();
             MovementModule = GetComponentInChildren<MovementModule>();
+            Head = GetComponentInChildren<Head>();
             Gun = GetComponentInChildren<Gun>();
 
             _unitStatesFactory = new UnitStatesFactory(MovementModule, TargetingModule);

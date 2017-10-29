@@ -24,9 +24,9 @@ namespace Assets.Cognitions.Helpers
                 path.RemoveRange(0, nodesToBeBypassedCount);
             }
 
-            if (!_map.ArePositionsOnTheSameTile(_unit.Position, path[0]))
+            if (!_map.ArePositionsOnTheSameTile(_unit.LogicPosition, path[0]))
             {
-                _unit.Move((path[0] - _unit.Position).normalized, 1);
+                _unit.Move((path[0] - _unit.LogicPosition).normalized, 1);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Assets.Cognitions.Helpers
         {
             var nodesToBeBypassedCount = 1;
             while (nodesToBeBypassedCount < path.Count &&
-                   _map.IsRectangleClear(_unit.Position, path[nodesToBeBypassedCount - 1]))
+                   _map.IsRectangleClear(_unit.LogicPosition, path[nodesToBeBypassedCount - 1]))
             {
                 nodesToBeBypassedCount++;
             }

@@ -47,7 +47,7 @@ namespace Assets.Maps.Dangers
                         if (_baseGrid[z, x].IsDangerous)
                         {
                             Gizmos.color = Color.red;
-                            //Gizmos.DrawCube(_baseGrid[z, x].Position, new Vector3(1,0.1f,1));
+                            //Gizmos.DrawCube(_baseGrid[z, x].Center, new Vector3(1,0.1f,1));
                             DrawArrow.ForDebug(_baseGrid[z, x].Position - offset,
                                 2 * offset, Color.red, 0.1f, 0);
                             DrawArrow.ForDebug(_baseGrid[z, x].Position - offset2,

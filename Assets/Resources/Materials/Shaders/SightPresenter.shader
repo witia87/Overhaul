@@ -1,4 +1,4 @@
-﻿Shader "Overhaul/Module"
+﻿Shader "Overhaul/SightPresenter"
 {
 	Properties
 	{
@@ -12,11 +12,11 @@
 	{
 		Tags
 		{
-			"Queue" = "Transparent"
-			"RenderType" = "Transparent"
+			"Queue" = "Geometry"
+			"RenderType" = "Geometry"
 			"IgnoreProjector" = "True"
 		}
-		Cull Off 
+		Cull Back
 		ZTest On
 		Lighting Off
 		Fog{ Mode Off }
@@ -27,7 +27,6 @@
 			CGPROGRAM
 			
 			float4 _Color;
-			float _VisibilityLevel;
 
 			#pragma vertex vert
 			#pragma fragment frag
@@ -53,7 +52,7 @@
 
 			float4 frag(vertexOutput input) : COLOR
 			{
-				return float4(0, 0, 0, max(0.01, _VisibilityLevel));
+				return float4(0, 0, 0, 1);
 			}
 			ENDCG
 		}

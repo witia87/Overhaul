@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Sight;
+using UnityEngine;
 
 namespace Assets.Gui.UnitPresentation
 {
@@ -21,18 +22,12 @@ namespace Assets.Gui.UnitPresentation
             _lastLattitude = lattitude;
         }
 
-        protected void RefreshPosition()
+        public void RefreshPosition()
         {
             transform.position = CameraStore.Pixelation.TransformCameraPlanePositionToWorldPosition(
                 new Vector2(_lastCameraPlaneX, _lastCameraPlaneY), _lastLattitude);
         }
-
-        public void Refresh()
-        {
-            RefreshAngles();
-            RefreshPosition();
-        }
-
+        
         protected Animator Animator;
         protected override void Awake()
         {

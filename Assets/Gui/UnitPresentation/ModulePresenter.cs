@@ -1,5 +1,4 @@
 ﻿using Assets.Gui.Cameras;
-using Assets.Sight;
 using Assets.Units;
 using Assets.Units.Modules;
 using UnityEngine;

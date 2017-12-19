@@ -1,4 +1,4 @@
-﻿namespace Assets.Sight.Visibility
+﻿namespace Assets.Gui.Sight.Visibility
 {
     /// <summary>
     ///     Represents an occluding line segment in the visibility mesh

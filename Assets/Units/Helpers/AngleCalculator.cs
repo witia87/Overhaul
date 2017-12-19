@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Units.Helpers
 {
-    public class AngleCalculator
+    public static class AngleCalculator
     {
         private const float Epsilon = 0.000001f;
 
@@ -11,7 +11,7 @@ namespace Assets.Units.Helpers
         ///     Requires input vectors to be normalized and with y=0
         /// </summary>
         /// <returns>Signed angle [-180, 180]</returns>
-        public float CalculateLogicAngle(Vector3 from, Vector3 to)
+        public static float CalculateLogicAngle(Vector3 from, Vector3 to)
         {
             var angle = Vector3.Angle(from, to);
             var referenceRight = Vector3.Cross(Vector3.up, from);
@@ -24,12 +24,12 @@ namespace Assets.Units.Helpers
         /// <param name="vectorToRotateAroundVerticalAxis"></param>
         /// <param name="angleToRotate"></param>
         /// <returns></returns>
-        public Vector3 RotateLogicVector(Vector3 vectorToRotateAroundVerticalAxis, float angleToRotate)
+        public static Vector3 RotateLogicVector(Vector3 vectorToRotateAroundVerticalAxis, float angleToRotate)
         {
             return Quaternion.AngleAxis(angleToRotate, Vector3.up) * vectorToRotateAroundVerticalAxis;
         }
 
-        public bool CheckIfVectorIsLogic(Vector3 v)
+        public static bool CheckIfVectorIsLogic(Vector3 v)
         {
             if (1 - v.magnitude > Epsilon || v.y > Epsilon)
             {

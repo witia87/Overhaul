@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Sight.Polygons.WallTracingStrategies;
+using Assets.Gui.Sight.Polygons.WallTracingStrategies;
 using UnityEngine;
 
-namespace Assets.Sight.Polygons
+namespace Assets.Gui.Sight.Polygons
 {
     public class PolygonsOptimizer
     {

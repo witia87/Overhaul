@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Assets.Gui;
 using Assets.Gui.Player;
-using Assets.Sight.Polygons;
-using Assets.Sight.Visibility;
+using Assets.Gui.Sight.Polygons;
+using Assets.Gui.Sight.Visibility;
 using UnityEngine;
 
-namespace Assets.Sight
+namespace Assets.Gui.Sight
 {
     public class SightStore : GuiStore, ISightStore
     {

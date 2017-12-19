@@ -29,7 +29,7 @@ namespace Assets.Gui.PlayerInput
                 IsMovementPresent = false;
             }
 
-            IsJumpPressed = Input.GetButtonDown("Jump");
+            IsJumpPressed = Input.GetButton("Jump");
 
             IsCrouchPressed = Input.GetButton("Crouch");
         }

@@ -31,16 +31,16 @@ namespace Assets.Units.Guns
 
         public float StunResistanceTime = 15;
 
-        protected TargetingModule TargetingModule;
-        protected Unit Unit;
+        protected TorsoModule TorsoModule;
+        [SerializeField] protected HeadModule HeadModule;
 
         protected float StunTimeLeft
         {
             get
             {
-                if (Unit != null)
+                if (HeadModule != null)
                 {
-                    return Unit.StunTimeLeft;
+                    return HeadModule.StunTimeLeft;
                 }
                 return StunResistanceTime;
             }
@@ -90,8 +90,7 @@ namespace Assets.Units.Guns
 
         private void Awake()
         {
-            Unit = transform.root.GetComponent<Unit>();
-            TargetingModule = transform.parent.GetComponent<TargetingModule>();
+            TorsoModule = transform.parent.GetComponent<TorsoModule>();
             Ririgidbody = GetComponent<Rigidbody>();
             _bulletsFactory = GetComponentInChildren<BulletsFactory>();
             ConfigurableJoint = GetComponent<ConfigurableJoint>();
@@ -111,14 +110,14 @@ namespace Assets.Units.Guns
 
         private Vector3 GetTrimmedDirection(Vector3 globalDirection)
         {
-            var localTargetingDirection = TargetingModule.transform.InverseTransformDirection(globalDirection);
+            var localTargetingDirection = TorsoModule.transform.InverseTransformDirection(globalDirection);
             if (Vector3.Angle(Vector3.forward, localTargetingDirection) < _angleTolerance)
             {
                 return globalDirection;
             }
             var trimmedLocalTargetingDirection =
                 Vector3.RotateTowards(Vector3.forward, localTargetingDirection, _angleTolerance, 0);
-            return TargetingModule.transform.TransformDirection(trimmedLocalTargetingDirection);
+            return TorsoModule.transform.TransformDirection(trimmedLocalTargetingDirection);
         }
 
         private void Update()

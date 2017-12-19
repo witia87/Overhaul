@@ -10,13 +10,25 @@ namespace Assets.Units.Helpers
 
         private float _stunTimeLeft;
 
-        public CrouchHelper(float crouchTime)
+        private float _initialColliderHeight;
+        private float _minimalCrouchLevel;
+
+        public CrouchHelper(float crouchTime, float minimalCrouchLevel, float initialColliderHeight)
         {
             _crouchTime = crouchTime;
-            CrouchLevel = 1;
+            _minimalCrouchLevel = minimalCrouchLevel;
+            _initialColliderHeight = initialColliderHeight;
+            _currentCrouchLevel = 1;
         }
 
-        public float CrouchLevel { get; private set; }
+        private float _currentCrouchLevel;
+
+
+        public float CurrentHeight { get { return _initialColliderHeight * CrouchModifier; } }
+        protected float CrouchModifier
+        {
+            get { return _minimalCrouchLevel + _currentCrouchLevel * (1 - _minimalCrouchLevel); }
+        }
 
         public void Stun(float stunTime)
         {
@@ -33,27 +45,13 @@ namespace Assets.Units.Helpers
             }
             if (isSetToCrouch)
             {
-                if (CrouchLevel > 0)
-                {
-                    CrouchLevel = Mathf.SmoothDamp(CrouchLevel, minTarget, ref _crouchDownVelocity,
-                        _crouchTime);
-                }
-                else
-                {
-                    _crouchDownVelocity = 0;
-                }
+                _currentCrouchLevel = Mathf.SmoothDamp(_currentCrouchLevel, minTarget, ref _crouchDownVelocity,
+                    _crouchTime);
             }
             else
             {
-                if (CrouchLevel < 1)
-                {
-                    CrouchLevel = Mathf.SmoothDamp(CrouchLevel, 1, ref _crouchUpVelocity,
-                        _crouchTime);
-                }
-                else
-                {
-                    _crouchUpVelocity = 0;
-                }
+                _currentCrouchLevel = Mathf.SmoothDamp(_currentCrouchLevel, 1, ref _crouchUpVelocity,
+                    _crouchTime);
             }
         }
     }

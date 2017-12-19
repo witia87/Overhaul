@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using Assets.Maps;
 using Assets.Maps.Dangers;
 using Assets.Maps.Nodes;
+using Assets.Units;
 using UnityEngine;
 
-namespace Assets.Maps
+namespace Assets.Resources
 {
     public class MapStore : MonoBehaviour, IMapStore
     {

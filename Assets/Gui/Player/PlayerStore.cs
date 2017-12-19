@@ -1,14 +1,15 @@
 ﻿using Assets.Units;
+using Assets.Units.Modules;
 using UnityEngine;
 
 namespace Assets.Gui.Player
 {
     public class PlayerStore: GuiStore, IPlayerStore
     {
-        [SerializeField] private Unit _playerUnit;
-        public Unit PlayerUnit
+        [SerializeField] private HeadModule _playerHeadModule;
+        public HeadModule PlayerHeadModule
         {
-            get { return _playerUnit; }
+            get { return _playerHeadModule; }
         }
     }
 }

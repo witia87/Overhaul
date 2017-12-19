@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Sight.Polygons.WallTracingStrategies
+namespace Assets.Gui.Sight.Polygons.WallTracingStrategies
 {
     public class LeftWallTracingStrategy : IWallTracingStrategy
     {

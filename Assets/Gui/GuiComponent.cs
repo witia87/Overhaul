@@ -2,8 +2,8 @@
 using Assets.Gui.Cameras;
 using Assets.Gui.Player;
 using Assets.Gui.PlayerInput;
+using Assets.Gui.Sight;
 using Assets.Gui.View;
-using Assets.Sight;
 using UnityEngine;
 
 namespace Assets.Gui

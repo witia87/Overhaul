@@ -1,5 +1,4 @@
 ﻿using Assets.Units;
-using Assets.Units.Heads.Vision;
 using UnityEngine;
 
 namespace Assets.Vision

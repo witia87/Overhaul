@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Gui.Player;
 using Assets.Units;
+using Assets.Units.Modules;
 using Assets.Vision;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Assets.Gui.UnitsVisibility
 {
     public class UnitsVisibilityStore : GuiStore
     {
-        private HashSet<Unit> _unitsVisibility = new HashSet<Unit>();
+        private HashSet<HeadModule> _unitsVisibility = new HashSet<HeadModule>();
         private VisionStore _visionStore;
         private IPlayerStore _playerStore;
         public float DisapearingTime = 0.5f;
@@ -21,7 +22,7 @@ namespace Assets.Gui.UnitsVisibility
 
         private void Update()
         {
-            var newVisibleUnits = _visionStore.GetVisibleOpposingUnits(_playerStore.PlayerUnit);
+            var newVisibleUnits = _visionStore.GetVisibleOpposingUnits(_playerStore.PlayerHeadModule);
             _unitsVisibility.Clear();
             foreach (var unit in newVisibleUnits)
             {
@@ -29,9 +30,9 @@ namespace Assets.Gui.UnitsVisibility
             }
         }
 
-        public bool IsUnitVisible(Unit unit)
+        public bool IsUnitVisible(HeadModule headModule)
         {
-            return _unitsVisibility.Contains(unit);
+            return _unitsVisibility.Contains(headModule);
         }
     }
 }

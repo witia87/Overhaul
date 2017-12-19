@@ -1,4 +1,4 @@
-﻿namespace Assets.Sight.Polygons
+﻿namespace Assets.Gui.Sight.Polygons
 {
     public enum FieldType
     {

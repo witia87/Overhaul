@@ -1,9 +1,10 @@
 ﻿using Assets.Units;
+using Assets.Units.Modules;
 
 namespace Assets.Gui.Player
 {
     public interface IPlayerStore
     {
-        Unit PlayerUnit { get; }
+        HeadModule PlayerHeadModule { get; }
     }
 }

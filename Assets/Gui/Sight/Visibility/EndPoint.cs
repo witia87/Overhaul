@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Sight.Visibility
+namespace Assets.Gui.Sight.Visibility
 {
     /// <summary>
     ///     The end-point of a segment

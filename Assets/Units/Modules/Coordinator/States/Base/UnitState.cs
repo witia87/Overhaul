@@ -1,21 +1,22 @@
-﻿using Assets.Units.Helpers;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Units.Modules.States.Base
+namespace Assets.Units.Modules.Coordinator.States.Base
 {
     public abstract class UnitState
     {
-        protected AngleCalculator AngleCalculator = new AngleCalculator();
-
-        protected MovementModule Movement;
+        protected LegsModule Legs;
         protected UnitStatesFactory StatesFactory;
-        protected TargetingModule Targeting;
+        protected TorsoModule Torso;
 
-        protected UnitState(MovementModule movement, TargetingModule targeting, UnitStatesFactory statesFactory)
+        protected Vector3 GlobalLookDirection;
+
+        protected UnitState(LegsModule legs, TorsoModule torso, UnitStatesFactory statesFactory,
+            Vector3 initialGlobalLookDirection)
         {
-            Movement = movement;
-            Targeting = targeting;
+            Legs = legs;
+            Torso = torso;
             StatesFactory = statesFactory;
+            GlobalLookDirection = initialGlobalLookDirection;
         }
 
         public virtual UnitState VerifyPhysicConditions()
@@ -33,13 +34,9 @@ namespace Assets.Units.Modules.States.Base
             return this;
         }
 
-        public virtual UnitState Jump(Vector3 globalDirection, float forceModifier)
-        {
-            return this;
-        }
-
         public virtual UnitState LookTowards(Vector3 globalDirection)
         {
+            GlobalLookDirection = globalDirection;
             return this;
         }
 
@@ -47,6 +44,12 @@ namespace Assets.Units.Modules.States.Base
 
         public virtual void OnDrawGizmos()
         {
+        }
+
+        protected Vector3 GetLogicVector(Vector3 vector)
+        {
+            vector.y = 0;
+            return vector.normalized;
         }
 
         public virtual void OnGUI()

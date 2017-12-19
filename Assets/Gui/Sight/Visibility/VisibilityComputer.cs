@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Sight.Visibility
+namespace Assets.Gui.Sight.Visibility
 {
     /// <summary>
     ///     Class which computes a mesh that represents which regions are

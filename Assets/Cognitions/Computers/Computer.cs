@@ -8,7 +8,7 @@ namespace Assets.Cognitions.Computers
         protected override void Start()
         {
             base.Start();
-            DefaultState = new Watching(new MovementHelper(Unit, Map), new TargetingHelper(Unit, Map), Unit, Map, null);
+            DefaultState = new Watching(new MovementHelper(HeadModule, Map), new TargetingHelper(HeadModule, Map), HeadModule, Map, null);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Assets.Maps
+﻿namespace Assets.Units
 {
     public enum FractionId
     {

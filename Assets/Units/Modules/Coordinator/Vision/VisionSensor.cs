@@ -3,7 +3,7 @@ using Assets.Utilities;
 using Assets.Vision;
 using UnityEngine;
 
-namespace Assets.Units.Heads.Vision
+namespace Assets.Units.Modules.Coordinator.Vision
 {
     public class VisionSensor : DiamondDetector, IVisionSensor
     {
@@ -107,7 +107,7 @@ namespace Assets.Units.Heads.Vision
                 if (Physics.Raycast(transform.position, ray, out hit, VisionLenght, _layerMask)
                     && collidingObject.transform.root == hit.transform.root)
                 {
-                    var unit = collidingObject.transform.root.GetComponent<Unit>();
+                    var unit = collidingObject.transform.root.GetComponent<HeadModule>();
                     if (unit != null)
                     {
                         UpdateOrAddTarget(unit);
@@ -126,18 +126,18 @@ namespace Assets.Units.Heads.Vision
             RemoveNotVisibleTargets();
         }
 
-        private void UpdateOrAddTarget(Unit unit)
+        private void UpdateOrAddTarget(HeadModule headModule)
         {
             for (var i = 0; i < _visibleTargets.Count; i++)
             {
-                if (_visibleTargets[i].Unit == unit)
+                if (_visibleTargets[i].HeadModule == headModule)
                 {
                     _visibleTargets[i].IsVisible = true;
                     return;
                 }
             }
 
-            _visibleTargets.Add(new Target(unit));
+            _visibleTargets.Add(new Target(headModule));
         }
 
         private void RemoveNotVisibleTargets()

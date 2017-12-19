@@ -1,7 +1,7 @@
 ﻿using Assets.Gui.Cameras;
 using UnityEngine;
 
-namespace Assets.Sight.Visibility.SightBlockers
+namespace Assets.Gui.Sight.Visibility.SightBlockers
 {
     public class SightBlocker : MonoBehaviour
     {

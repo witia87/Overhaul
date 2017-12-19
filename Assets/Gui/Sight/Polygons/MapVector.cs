@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Sight.Polygons
+namespace Assets.Gui.Sight.Polygons
 {
     public struct MapVector : IEquatable<MapVector>
     {

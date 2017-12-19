@@ -1,6 +1,5 @@
 ﻿using Assets.Maps;
 using Assets.Units;
-using Assets.Units.Heads.Vision;
 using Assets.Vision;
 using UnityEngine;
 

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Assets.Maps;
 using Assets.Maps.PathFinders;
+using Assets.Resources;
 using Assets.Units;
+using Assets.Units.Modules;
 using UnityEngine;
 
 namespace Assets.Cognitions
@@ -19,7 +21,7 @@ namespace Assets.Cognitions
         public IMapStore MapStore;
         [Range(0, 5)] public int Scale = 1;
 
-        public Unit Unit;
+        public HeadModule HeadModule;
 
         public IPathFinder PathFinder { get; private set; }
 

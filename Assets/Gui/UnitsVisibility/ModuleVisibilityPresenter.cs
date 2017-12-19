@@ -1,5 +1,6 @@
 ﻿using Assets.Maps;
 using Assets.Units;
+using Assets.Units.Modules;
 using UnityEngine;
 
 namespace Assets.Gui.UnitsVisibility
@@ -7,7 +8,7 @@ namespace Assets.Gui.UnitsVisibility
     public class ModuleVisibilityPresenter : MonoBehaviour
     {
         private Renderer _renderer;
-        [SerializeField] private Unit _unit;
+        [SerializeField] private HeadModule _headModule;
         private UnitsVisibilityStore _unitsVisibilityStore;
 
         private void Awake()
@@ -21,13 +22,13 @@ namespace Assets.Gui.UnitsVisibility
         private float _visibilityLevel;
         protected void Update()
         {
-            if (_unit.FractionId == FractionId.Player)
+            if (_headModule.FractionId == FractionId.Player)
             {
                 _renderer.material.SetFloat("_VisibilityLevel", 1);
             }
             else
             {
-                if (_unitsVisibilityStore.IsUnitVisible(_unit))
+                if (_unitsVisibilityStore.IsUnitVisible(_headModule))
                 {
                     _visibilityLevel = Mathf.Min(_unitsVisibilityStore.DisapearingTime, _visibilityLevel + Time.deltaTime);
                 }

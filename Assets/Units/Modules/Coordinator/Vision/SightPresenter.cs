@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Assets.Sight;
+using Assets.Gui.Sight;
 using UnityEngine;
 
-namespace Assets.Units.Heads.Vision
+namespace Assets.Units.Modules.Coordinator.Vision
 {
     public class SightPresenter : MonoBehaviour
     {
@@ -11,7 +11,7 @@ namespace Assets.Units.Heads.Vision
 
         private SightStore _sightStore;
 
-        public Unit Unit;
+        public HeadModule HeadModule;
 
         public void Awake()
         {
@@ -26,7 +26,7 @@ namespace Assets.Units.Heads.Vision
 
         private void Update()
         {
-            var polygon = _sightStore.GetSightPolygon(Unit.LogicPosition);
+            var polygon = _sightStore.GetSightPolygon(HeadModule.LogicPosition);
             var vertices = GetExtendedVertices(_sightStore.Center, polygon);
             _meshFilter.mesh.Clear();
             _meshFilter.mesh.vertices = vertices;

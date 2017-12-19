@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assets.Sight.Polygons
+namespace Assets.Gui.Sight.Polygons
 {
     public class PolygonVertex
     {

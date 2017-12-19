@@ -1,5 +1,4 @@
-﻿using Assets.Sight;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Gui.UnitPresentation
 {

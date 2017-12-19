@@ -1,4 +1,5 @@
 ﻿using Assets.Units;
+using Assets.Units.Modules;
 using UnityEngine;
 
 namespace Assets.Cognitions.Players
@@ -7,7 +8,7 @@ namespace Assets.Cognitions.Players
     {
         private Vector3 _lookAtPosition;
         private Vector3 _movementGlobalDirection;
-        [SerializeField] private Unit _unit;
+        [SerializeField] private HeadModule _headModule;
 
         private bool _wasCrouchSet;
 
@@ -23,28 +24,28 @@ namespace Assets.Cognitions.Players
         {
             if (_wasLookAtPositionSet)
             {
-                _unit.LookAt(_lookAtPosition);
-                _unit.Gun.AimAt(_lookAtPosition);
+                _headModule.LookAt(_lookAtPosition);
+                _headModule.Gun.AimAt(_lookAtPosition);
             }
 
             if (_wasFireSet)
             {
-                _unit.Gun.Fire();
+                _headModule.Gun.Fire();
             }
 
             if (_wasMovementSet)
             {
-                _unit.Move(_movementGlobalDirection.normalized, _movementGlobalDirection.magnitude);
+                _headModule.Move(_movementGlobalDirection.normalized, _movementGlobalDirection.magnitude);
             }
 
             if (_wasJumpSet)
             {
-                _unit.Jump(_movementGlobalDirection.normalized, _movementGlobalDirection.magnitude);
+                _headModule.Jump(_movementGlobalDirection.normalized, _movementGlobalDirection.magnitude);
             }
 
             if (_wasCrouchSet)
             {
-                _unit.Crouch();
+                _headModule.Crouch();
             }
 
             _wasLookAtPositionSet = false;

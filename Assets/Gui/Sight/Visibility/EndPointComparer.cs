@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.Sight.Visibility
+namespace Assets.Gui.Sight.Visibility
 {
     internal class EndPointComparer : IComparer<EndPoint>
     {

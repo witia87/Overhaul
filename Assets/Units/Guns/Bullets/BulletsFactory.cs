@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 
 namespace Assets.Units.Guns.Bullets
 {
@@ -17,7 +18,7 @@ namespace Assets.Units.Guns.Bullets
 
         public void Create()
         {
-            var bullet = (GameObject) Instantiate(Resources.Load("Prefabs\\Units\\Guns\\Bullets\\Bullet"));
+            var bullet = (GameObject) Instantiate(UnityEngine.Resources.Load("Prefabs\\Units\\Guns\\Bullets\\Bullet"));
             bullet.transform.localScale = BulletsSize;
             bullet.transform.position = transform.position;
             bullet.transform.eulerAngles = transform.eulerAngles + new Vector3(

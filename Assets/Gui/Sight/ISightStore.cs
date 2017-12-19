@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Sight
+namespace Assets.Gui.Sight
 {
     public interface ISightStore
     {

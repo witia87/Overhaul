@@ -7,7 +7,7 @@ namespace Assets.Gui.Player
     {
         [SerializeField] private UnitControl _playerUnitControl;
 
-        public IUnitControl PlayerUnitControl
+        public UnitControl PlayerUnitControl
         {
             get { return _playerUnitControl; }
         }

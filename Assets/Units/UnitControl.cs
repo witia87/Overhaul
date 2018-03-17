@@ -11,9 +11,9 @@ namespace Assets.Units
 {
     public class UnitControl: MonoBehaviour, IUnitControl
     {
-        [SerializeField] private Gun _gun;
-        [SerializeField] private TorsoModule _torsoModule;
-        [SerializeField] private LegsModule _legsModule;
+        private Gun _gun;
+        private TorsoModule _torsoModule;
+        private LegsModule _legsModule;
 
         private UnitState _currentState;
         private UnitStatesFactory _unitStatesFactory;
@@ -49,6 +49,9 @@ namespace Assets.Units
 
         private void Awake()
         {
+            _torsoModule = GetComponent<TorsoModule>();
+            _legsModule = GetComponentInChildren<LegsModule>();
+
             _unitStatesFactory = new UnitStatesFactory(_legsModule, _torsoModule);
             _currentState = _unitStatesFactory.CreateStanding(Vector3.forward);
         }
@@ -68,7 +71,7 @@ namespace Assets.Units
 
 
         /// <summary>
-        ///     Makes headModule perform actions in order to look in the desired direction.
+        ///     Makes UnitControl perform actions in order to look in the desired direction.
         /// </summary>
         /// <param name="globalDirection">Vector3 needs to be normalized and has y=0</param>
         public void LookTowards(Vector3 globalDirection)

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Gui.UnitsVisibility;
-using Assets.Maps;
 using Assets.Units;
-using Assets.Units.Modules;
 using UnityEngine;
 
 namespace Assets.Vision
@@ -11,10 +8,13 @@ namespace Assets.Vision
     public class VisionStore : MonoBehaviour
     {
         private int _currentlyProcessedUnitIndex;
-        private List<HeadModule> _enemyUnits = new List<HeadModule>();
-        private List<HeadModule> _neutralUnits = new List<HeadModule>();
-        private List<HeadModule> _playerUnits = new List<HeadModule>();
-        private Dictionary<HeadModule, VisionObserver> _registeredObservers = new Dictionary<HeadModule, VisionObserver>();
+        private readonly List<UnitControl> _enemyUnits = new List<UnitControl>();
+        private readonly List<UnitControl> _neutralUnits = new List<UnitControl>();
+        private readonly List<UnitControl> _playerUnits = new List<UnitControl>();
+
+        private readonly Dictionary<UnitControl, VisionObserver> _registeredObservers =
+            new Dictionary<UnitControl, VisionObserver>();
+
         [SerializeField] private LayerMask _visionBlockingLayerMask;
 
         private void Start()
@@ -31,60 +31,51 @@ namespace Assets.Vision
                                            (_playerUnits.Count + _enemyUnits.Count);
 
             if (_currentlyProcessedUnitIndex < _playerUnits.Count)
-            {
                 ProcessUnit(_playerUnits[_currentlyProcessedUnitIndex], _enemyUnits);
-            }
             else
-            {
                 ProcessUnit(_enemyUnits[_currentlyProcessedUnitIndex - _playerUnits.Count], _playerUnits);
-            }
         }
 
-        private void ProcessUnit(HeadModule headModule, List<HeadModule> opposingUnits)
+        private void ProcessUnit(UnitControl unitControl, List<UnitControl> opposingUnits)
         {
-            var visibleUnits = new List<HeadModule>();
+            var visibleUnits = new List<UnitControl>();
             for (var i = 0; i < opposingUnits.Count; i++)
-            {
-                if (!Physics.Linecast(opposingUnits[i].Center, headModule.VisionPosition,
+                if (!Physics.Linecast(opposingUnits[i].Center, unitControl.Vision.SightPosition,
                     _visionBlockingLayerMask))
-                {
                     visibleUnits.Add(opposingUnits[i]);
-                }
-            }
-            _registeredObservers[headModule].UpdateVisibleUnits(visibleUnits);
+            _registeredObservers[unitControl].UpdateVisibleUnits(visibleUnits);
         }
 
-        public IVisionObserver RegisterUnit(HeadModule headModule)
+        public IVisionObserver RegisterUnit(UnitControl unitControl)
         {
-            switch (headModule.FractionId)
+            switch (unitControl.FractionId)
             {
                 case FractionId.Player:
-                    _playerUnits.Add(headModule);
+                    _playerUnits.Add(unitControl);
                     break;
                 case FractionId.Enemy:
-                    _enemyUnits.Add(headModule);
+                    _enemyUnits.Add(unitControl);
                     break;
                 case FractionId.Neutral:
-                    _neutralUnits.Add(headModule);
+                    _neutralUnits.Add(unitControl);
                     break;
                 default:
                     throw new ApplicationException("Not all units have proper fractions set.");
             }
-            _registeredObservers.Add(headModule, new VisionObserver(headModule));
-            return _registeredObservers[headModule];
+
+            _registeredObservers.Add(unitControl, new VisionObserver(unitControl));
+            return _registeredObservers[unitControl];
         }
 
-        public List<HeadModule> GetVisibleOpposingUnits(HeadModule headModule)
+        public List<UnitControl> GetVisibleOpposingUnits(UnitControl unitControl)
         {
-            var output = new List<HeadModule>();
-            foreach (var opposingUnit in _registeredObservers[headModule].VisibleOpposingUnits)
-            {
+            var output = new List<UnitControl>();
+            foreach (var opposingUnit in _registeredObservers[unitControl].VisibleOpposingUnits)
                 output.Add(opposingUnit);
-            }
             return output;
         }
 
-        public void UnregisterUnit(HeadModule headModule)
+        public void UnregisterUnit(UnitControl unitControl)
         {
             throw new NotImplementedException();
         }

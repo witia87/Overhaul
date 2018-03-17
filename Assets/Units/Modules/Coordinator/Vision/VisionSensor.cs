@@ -107,7 +107,7 @@ namespace Assets.Units.Modules.Coordinator.Vision
                 if (Physics.Raycast(transform.position, ray, out hit, VisionLenght, _layerMask)
                     && collidingObject.transform.root == hit.transform.root)
                 {
-                    var unit = collidingObject.transform.root.GetComponent<HeadModule>();
+                    var unit = collidingObject.transform.root.GetComponent<UnitControl>();
                     if (unit != null)
                     {
                         UpdateOrAddTarget(unit);
@@ -126,18 +126,18 @@ namespace Assets.Units.Modules.Coordinator.Vision
             RemoveNotVisibleTargets();
         }
 
-        private void UpdateOrAddTarget(HeadModule headModule)
+        private void UpdateOrAddTarget(UnitControl UnitControl)
         {
             for (var i = 0; i < _visibleTargets.Count; i++)
             {
-                if (_visibleTargets[i].HeadModule == headModule)
+                if (_visibleTargets[i].UnitControl == UnitControl)
                 {
                     _visibleTargets[i].IsVisible = true;
                     return;
                 }
             }
 
-            _visibleTargets.Add(new Target(headModule));
+            _visibleTargets.Add(new Target(UnitControl));
         }
 
         private void RemoveNotVisibleTargets()

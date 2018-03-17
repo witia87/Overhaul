@@ -4,20 +4,18 @@ using UnityEngine;
 
 namespace Assets.Units.Guns
 {
-    public class Gun : MonoBehaviour, IGunControl
+    public class Gun : Module, IGunControl
     {
         private readonly Vector2 _efectiveRange = new Vector2(10, 15);
-
-
-        [SerializeField] private int _maxAmmo = 30;
-        [SerializeField] private float _refreshTime = 0.2f;
         [SerializeField] private float _angleTolerance;
         private BulletsFactory _bulletsFactory;
-
 
         private Vector3 _globalPositionToAimAt;
 
         private bool _isSetToFire;
+
+        [SerializeField] private readonly int _maxAmmo = 30;
+        [SerializeField] private readonly float _refreshTime = 0.2f;
 
         private float _timeLeft;
 
@@ -29,32 +27,7 @@ namespace Assets.Units.Guns
         protected ConfigurableJoint ConfigurableJoint;
         protected Rigidbody Ririgidbody;
 
-        public float StunResistanceTime = 15;
-
         protected TorsoModule TorsoModule;
-        [SerializeField] protected HeadModule HeadModule;
-
-        protected float StunTimeLeft
-        {
-            get
-            {
-                if (HeadModule != null)
-                {
-                    return HeadModule.StunTimeLeft;
-                }
-                return StunResistanceTime;
-            }
-        }
-
-        protected float StunModifier
-        {
-            get { return Mathf.Max(0, 1 - StunTimeLeft / StunResistanceTime); }
-        }
-
-        public bool IsStuned
-        {
-            get { return StunModifier <= 0; }
-        }
 
         public void Fire()
         {
@@ -111,10 +84,7 @@ namespace Assets.Units.Guns
         private Vector3 GetTrimmedDirection(Vector3 globalDirection)
         {
             var localTargetingDirection = TorsoModule.transform.InverseTransformDirection(globalDirection);
-            if (Vector3.Angle(Vector3.forward, localTargetingDirection) < _angleTolerance)
-            {
-                return globalDirection;
-            }
+            if (Vector3.Angle(Vector3.forward, localTargetingDirection) < _angleTolerance) return globalDirection;
             var trimmedLocalTargetingDirection =
                 Vector3.RotateTowards(Vector3.forward, localTargetingDirection, _angleTolerance, 0);
             return TorsoModule.transform.TransformDirection(trimmedLocalTargetingDirection);

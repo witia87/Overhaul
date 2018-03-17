@@ -11,7 +11,7 @@ namespace Assets.Units.Modules.Coordinator.Vision
 
         private SightStore _sightStore;
 
-        public HeadModule HeadModule;
+        public UnitControl UnitControl;
 
         public void Awake()
         {
@@ -26,7 +26,7 @@ namespace Assets.Units.Modules.Coordinator.Vision
 
         private void Update()
         {
-            var polygon = _sightStore.GetSightPolygon(HeadModule.LogicPosition);
+            var polygon = _sightStore.GetSightPolygon(UnitControl.LogicPosition);
             var vertices = GetExtendedVertices(_sightStore.Center, polygon);
             _meshFilter.mesh.Clear();
             _meshFilter.mesh.vertices = vertices;

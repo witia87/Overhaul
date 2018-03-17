@@ -14,7 +14,7 @@ namespace Assets.Units
         IGunControl Gun { get; }
 
         /// <summary>
-        ///     Makes headModule perform actions in order to look in the desired direction.
+        ///     Makes UnitControl perform actions in order to look in the desired direction.
         /// </summary>
         /// <param name="globalDirection">Vector3 needs to be normalized and has y=0</param>
         void LookTowards(Vector3 globalDirection);

@@ -21,7 +21,7 @@ namespace Assets.Cognitions
         public IMapStore MapStore;
         [Range(0, 5)] public int Scale = 1;
 
-        public UnitControl HeadModule;
+        public UnitControl UnitControl;
 
         public IPathFinder PathFinder { get; private set; }
 

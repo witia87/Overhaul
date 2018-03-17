@@ -9,7 +9,7 @@ namespace Assets.Gui.UnitsVisibility
 {
     public class UnitsVisibilityStore : GuiStore
     {
-        private HashSet<HeadModule> _unitsVisibility = new HashSet<HeadModule>();
+        private HashSet<UnitControl> _unitsVisibility = new HashSet<UnitControl>();
         private VisionStore _visionStore;
         private IPlayerStore _playerStore;
         public float DisapearingTime = 0.5f;
@@ -30,9 +30,9 @@ namespace Assets.Gui.UnitsVisibility
             }
         }
 
-        public bool IsUnitVisible(HeadModule headModule)
+        public bool IsUnitVisible(UnitControl UnitControl)
         {
-            return _unitsVisibility.Contains(headModule);
+            return _unitsVisibility.Contains(UnitControl);
         }
     }
 }

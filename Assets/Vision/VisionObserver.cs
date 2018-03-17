@@ -6,44 +6,44 @@ namespace Assets.Vision
 {
     public class VisionObserver: IVisionObserver
     {
-        private HeadModule _headModule;
+        private UnitControl _UnitControl;
 
-        public VisionObserver(HeadModule headModule)
+        public VisionObserver(UnitControl UnitControl)
         {
-            _headModule = headModule;
+            _UnitControl = UnitControl;
         }
 
         public bool GetClosestTarget(out ITarget target)
         {
-            if (_closesVisibleOpposingHeadModule != null)
+            if (_closesVisibleOpposingUnitControl != null)
             {
-                target = new Target(_closesVisibleOpposingHeadModule);
+                target = new Target(_closesVisibleOpposingUnitControl);
                 return true;
             }
             target = null;
             return false;
         }
 
-        public List<HeadModule> VisibleOpposingUnits;
-        private HeadModule _closesVisibleOpposingHeadModule;
-        public void UpdateVisibleUnits(List<HeadModule> units)
+        public List<UnitControl> VisibleOpposingUnits;
+        private UnitControl _closesVisibleOpposingUnitControl;
+        public void UpdateVisibleUnits(List<UnitControl> units)
         {
             VisibleOpposingUnits = units;
             if (VisibleOpposingUnits.Count > 0)
             {
-                _closesVisibleOpposingHeadModule = VisibleOpposingUnits[0];
+                _closesVisibleOpposingUnitControl = VisibleOpposingUnits[0];
                 for (int i = 1; i < VisibleOpposingUnits.Count; i++)
                 {
-                    if ((_headModule.Center - VisibleOpposingUnits[i].Center).magnitude <
-                        (_headModule.Center - _closesVisibleOpposingHeadModule.Center).magnitude)
+                    if ((_UnitControl.Center - VisibleOpposingUnits[i].Center).magnitude <
+                        (_UnitControl.Center - _closesVisibleOpposingUnitControl.Center).magnitude)
                     {
-                        _closesVisibleOpposingHeadModule = VisibleOpposingUnits[i];
+                        _closesVisibleOpposingUnitControl = VisibleOpposingUnits[i];
                     }
                 }
             }
             else
             {
-                _closesVisibleOpposingHeadModule = null;
+                _closesVisibleOpposingUnitControl = null;
             }
         }
 

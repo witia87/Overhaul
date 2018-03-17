@@ -11,13 +11,10 @@ namespace Assets.Units
 {
     public class UnitControl: MonoBehaviour, IUnitControl
     {
-
-
         private UnitState _currentState;
         [SerializeField] private Gun _gun;
         private float _jumpRefreshTime = 1;
         private float _jumpTimeLeft;
-        [SerializeField] private HeadModule _headModule;
         [SerializeField] private TorsoModule _torsoModule;
         [SerializeField] private LegsModule _legsModule;
         private UnitStatesFactory _unitStatesFactory;
@@ -36,7 +33,6 @@ namespace Assets.Units
             get { return _gun; }
         }
 
-
         public Vector3 LogicPosition
         {
             get { return new Vector3(transform.position.x, 0, transform.position.z); }
@@ -51,7 +47,6 @@ namespace Assets.Units
         {
             get { return _torsoModule.Rigidbody.velocity; }
         }
-
 
         private void Awake()
         {

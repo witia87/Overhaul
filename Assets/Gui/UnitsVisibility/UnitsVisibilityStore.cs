@@ -22,7 +22,7 @@ namespace Assets.Gui.UnitsVisibility
 
         private void Update()
         {
-            var newVisibleUnits = _visionStore.GetVisibleOpposingUnits(_playerStore.PlayerHeadModule);
+            var newVisibleUnits = _visionStore.GetVisibleOpposingUnits(_playerStore.PlayerUnitControl);
             _unitsVisibility.Clear();
             foreach (var unit in newVisibleUnits)
             {

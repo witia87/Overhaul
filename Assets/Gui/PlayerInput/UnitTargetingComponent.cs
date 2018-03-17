@@ -1,7 +1,7 @@
 ﻿using Assets.Cognitions.Players;
 using UnityEngine;
 
-namespace Assets.Gui.UnitControl
+namespace Assets.Gui.PlayerInput
 {
     public class UnitTargetingComponent : GuiComponent
     {

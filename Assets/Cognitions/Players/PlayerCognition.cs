@@ -41,7 +41,7 @@ namespace Assets.Cognitions.Players
 
             if (_wasJumpSet)
             {
-                _unitControl.Jump(_movementGlobalDirection.normalized, _movementGlobalDirection.magnitude);
+                _unitControl.Jump();
             }
 
             if (_wasCrouchSet)

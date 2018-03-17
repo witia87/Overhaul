@@ -1,30 +1,18 @@
-﻿using Assets.Units.Helpers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Units.Modules
 {
     public class Module : MonoBehaviour
     {
-        [SerializeField] protected LayerMask FloorLayerMask;
+        private float _dragGrounded;
         protected CapsuleCollider CapsuleCollider;
-        public HeadModule HeadModule;
+        [SerializeField] protected LayerMask FloorLayerMask;
 
         public float StunResistanceTime = 10;
 
-        [HideInInspector]
-        public Rigidbody Rigidbody { get; private set; }
+        [HideInInspector] public Rigidbody Rigidbody { get; private set; }
 
-        protected float StunTimeLeft
-        {
-            get
-            {
-                if (HeadModule != null)
-                {
-                    return HeadModule.StunTimeLeft;
-                }
-                return StunResistanceTime;
-            }
-        }
+        protected float StunTimeLeft { get; private set; }
 
         protected float StunModifier
         {
@@ -53,7 +41,6 @@ namespace Assets.Units.Modules
 
         public bool IsGrounded { get; protected set; }
 
-        private float _dragGrounded;
         protected virtual void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
@@ -64,10 +51,7 @@ namespace Assets.Units.Modules
 
         public virtual void Stun(float time)
         {
-            if (HeadModule != null)
-            {
-                HeadModule.Stun(time);
-            }
+            StunTimeLeft += time;
         }
 
         protected virtual void OnCollisionEnter(Collision collision)
@@ -77,18 +61,12 @@ namespace Assets.Units.Modules
 
         protected virtual void OnCollisionStay(Collision collision)
         {
-            if (FloorLayerMask.value == (FloorLayerMask.value | (1 << collision.gameObject.layer)))
-            {
-                IsGrounded = true;
-            }
+            if (FloorLayerMask.value == (FloorLayerMask.value | (1 << collision.gameObject.layer))) IsGrounded = true;
         }
 
         protected virtual void OnCollisionExit(Collision collision)
         {
-            if (FloorLayerMask.value == (FloorLayerMask.value | (1 << collision.gameObject.layer)))
-            {
-                IsGrounded = false;
-            }
+            if (FloorLayerMask.value == (FloorLayerMask.value | (1 << collision.gameObject.layer))) IsGrounded = false;
         }
 
         protected virtual void OnDrawGizmos()
@@ -102,6 +80,7 @@ namespace Assets.Units.Modules
 
         protected virtual void FixedUpdate()
         {
+            StunTimeLeft = Mathf.Max(0, StunTimeLeft - Time.fixedDeltaTime);
             Rigidbody.drag = IsGrounded ? _dragGrounded : 0;
         }
     }

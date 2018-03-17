@@ -11,19 +11,18 @@ namespace Assets.Units
 {
     public class UnitControl: MonoBehaviour, IUnitControl
     {
-        private UnitState _currentState;
         [SerializeField] private Gun _gun;
-        private float _jumpRefreshTime = 1;
-        private float _jumpTimeLeft;
         [SerializeField] private TorsoModule _torsoModule;
         [SerializeField] private LegsModule _legsModule;
-        private UnitStatesFactory _unitStatesFactory;
 
-        private bool _wasMoveRequestedThisTurn;
-        private bool _wasSetToCrouchThisTurn;
+        private UnitState _currentState;
+        private UnitStatesFactory _unitStatesFactory;
+        
         public FractionId FractionId;
         public float JumpVelocity = 1;
         public float TestFlippingForce = 5;
+        private float _jumpRefreshTime = 1;
+        private float _jumpTimeLeft;
 
 
         public IVisionSensor Vision { get; private set; }
@@ -74,7 +73,8 @@ namespace Assets.Units
         /// <param name="globalDirection">Vector3 needs to be normalized and has y=0</param>
         public void LookTowards(Vector3 globalDirection)
         {
-            throw new NotImplementedException("TurnTowards is not implemeted in HeadModule.");
+            globalDirection.y = 0;
+            _currentState = _currentState.LookTowards(globalDirection.normalized);
         }
 
 
@@ -87,7 +87,6 @@ namespace Assets.Units
 
         public void Move(Vector3 logicDirection, float speedModifier)
         {
-            _wasMoveRequestedThisTurn = true;
             AngleCalculator.CheckIfVectorIsLogic(logicDirection);
             _currentState = _currentState.Move(logicDirection, speedModifier);
         }
@@ -98,25 +97,9 @@ namespace Assets.Units
             _legsModule.Crouch();
         }
 
-        public void Jump(Vector3 globalDirection, float jumpForceModifier) // TODO: Delete
+        public void Jump()
         {
-            if (_jumpTimeLeft <= 0 && _legsModule.IsStanding)
-            {
-                _jumpTimeLeft = _jumpRefreshTime;
-
-                var movementForceModifier = Vector3.Dot(_torsoModule.Rigidbody.velocity, globalDirection);
-
-                _torsoModule.Rigidbody.AddForce((globalDirection + _torsoModule.transform.up) *
-                                                movementForceModifier * JumpVelocity,
-                    ForceMode.VelocityChange);
-                _legsModule.Rigidbody.AddForce((globalDirection + _torsoModule.transform.up) *
-                                               movementForceModifier * JumpVelocity,
-                    ForceMode.VelocityChange);
-            }
-            _torsoModule.Rigidbody.AddTorque(
-                AngleCalculator.RotateLogicVector(globalDirection, 90) * TestFlippingForce);
-            _legsModule.Rigidbody.AddTorque(
-                AngleCalculator.RotateLogicVector(globalDirection, 90) * TestFlippingForce);
+            throw new NotImplementedException("Jump not implemented");
         }
     }
 }

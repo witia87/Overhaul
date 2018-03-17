@@ -22,6 +22,6 @@ namespace Assets.Units
         void LookAt(Vector3 globalPoint);
         void Move(Vector3 logicDirection, float speedModifier);
         void Crouch();
-        void Jump(Vector3 globalDirection, float jumpForceModifier);
+        void Jump();
     }
 }

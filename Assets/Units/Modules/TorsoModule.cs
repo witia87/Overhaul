@@ -7,7 +7,6 @@ namespace Assets.Units.Modules
     public class TorsoModule : DynamicModule
     {
         private ConfigurableJoint _legsConfigurableJoint;
-        private ConfigurableJoint _gunConfigurableJoint;
 
         [SerializeField] private LegsModule _legsToMount; // TODO: temporary
         protected Gun Gun;

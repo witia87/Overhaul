@@ -1,5 +1,4 @@
 ﻿using Assets.Units;
-using Assets.Units.Modules;
 using UnityEngine;
 
 namespace Assets.Cognitions.Players
@@ -7,52 +6,49 @@ namespace Assets.Cognitions.Players
     public class PlayerCognition : MonoBehaviour
     {
         private Vector3 _lookAtPosition;
-        private Vector3 _movementGlobalDirection;
-        [SerializeField] private UnitControl _unitControl;
+        private Vector3 _movementScaledLogicDirection;
+        private Unit _unit;
 
         private bool _wasCrouchSet;
 
         private bool _wasFireSet;
 
-        private bool _wasJumpSet;
-
         private bool _wasLookAtPositionSet;
 
         private bool _wasMovementSet;
 
-        public void Update()
+        private void Awake()
+        {
+            _unit = GetComponent<Unit>();
+        }
+
+        private void FixedUpdate()
         {
             if (_wasLookAtPositionSet)
             {
-
-
-                _unitControl.Gun.AimAt(_lookAtPosition);
+                var newLookDirection = _lookAtPosition - _unit.Gun.Position;
+                _unit.Control.LookTowards(newLookDirection.normalized);
             }
 
-            if (_wasFireSet)
-            {
-                _unitControl.Gun.Fire();
-            }
+            if (_wasFireSet) _unit.Control.Fire();
 
             if (_wasMovementSet)
             {
-                _unitControl.Move(_movementGlobalDirection.normalized, _movementGlobalDirection.magnitude);
+                _unit.Control.Move(_movementScaledLogicDirection);
             }
-
-            if (_wasJumpSet)
+            else
             {
-                _unitControl.Jump();
+                _unit.Control.Move(Vector3.zero);
             }
 
-            if (_wasCrouchSet)
-            {
-                _unitControl.Crouch();
-            }
+            if (_wasCrouchSet) _unit.Control.Crouch();
+        }
 
+        private void Update()
+        {
             _wasLookAtPositionSet = false;
             _wasFireSet = false;
             _wasMovementSet = false;
-            _wasJumpSet = false;
             _wasCrouchSet = false;
         }
 
@@ -67,15 +63,10 @@ namespace Assets.Cognitions.Players
             _wasFireSet = true;
         }
 
-        public void SetMovement(Vector3 globalDirection)
+        public void SetMovement(Vector3 globalScaledLogicDirection)
         {
             _wasMovementSet = true;
-            _movementGlobalDirection = globalDirection;
-        }
-
-        public void Jump()
-        {
-            _wasJumpSet = true;
+            _movementScaledLogicDirection = globalScaledLogicDirection;
         }
 
         public void Crouch()

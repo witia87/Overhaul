@@ -1,108 +1,59 @@
 ﻿using System;
-using Assets.Units.Guns;
-using Assets.Units.Helpers;
-using Assets.Units.Modules;
-using Assets.Units.Modules.Coordinator.States;
-using Assets.Units.Modules.Coordinator.States.Base;
-using Assets.Units.Modules.Coordinator.Vision;
 using UnityEngine;
 
 namespace Assets.Units
-{
-    public class UnitControl: MonoBehaviour, IUnitControl
+{ 
+    public class UnitControl : IUnitControl, IUnitControlParameters
     {
-        private Gun _gun;
-        private TorsoModule _torsoModule;
-        private LegsModule _legsModule;
+        private const float Epsilon = 0.000001f;
 
-        private UnitState _currentState;
-        private UnitStatesFactory _unitStatesFactory;
-        
-        public FractionId FractionId;
-        public float JumpVelocity = 1;
-        public float TestFlippingForce = 5;
-        private float _jumpRefreshTime = 1;
-        private float _jumpTimeLeft;
-
-
-        public IVisionSensor Vision { get; private set; }
-
-        public IGunControl Gun
+        public void LookTowards(Vector3 direction)
         {
-            get { return _gun; }
+            if (Math.Abs(direction.magnitude - 1) > Epsilon)
+                throw new ApplicationException("Vector not normalized.");
+
+            AimAtDirection = direction;
+
+            direction.y = 0;
+            LookLogicDirection = direction.normalized;
         }
 
-        public Vector3 LogicPosition
+        public void Move(Vector3 scaledLogicDirection)
         {
-            get { return new Vector3(transform.position.x, 0, transform.position.z); }
-        }
+            if (scaledLogicDirection.magnitude > 1 + Epsilon
+                || Math.Abs(scaledLogicDirection.y) > Epsilon)
+                throw new ApplicationException("Vector not scaled logic.");
 
-        public Vector3 Center
-        {
-            get { return _torsoModule.Center; }
-        }
-
-        public Vector3 Velocity
-        {
-            get { return _torsoModule.Rigidbody.velocity; }
-        }
-
-        private void Awake()
-        {
-            _torsoModule = GetComponent<TorsoModule>();
-            _legsModule = GetComponentInChildren<LegsModule>();
-
-            _unitStatesFactory = new UnitStatesFactory(_legsModule, _torsoModule);
-            _currentState = _unitStatesFactory.CreateStanding(Vector3.forward);
-        }
-
-        private void FixedUpdate()
-        {
-            var newState = _currentState.VerifyPhysicConditions();
-            if (_currentState == newState)
-            {
-                _currentState = _currentState.FixedUpdate();
-            }
-            else
-            {
-                _currentState = newState;
-            }
-        }
-
-
-        /// <summary>
-        ///     Makes UnitControl perform actions in order to look in the desired direction.
-        /// </summary>
-        /// <param name="globalDirection">Vector3 needs to be normalized and has y=0</param>
-        public void LookTowards(Vector3 globalDirection)
-        {
-            globalDirection.y = 0;
-            _currentState = _currentState.LookTowards(globalDirection.normalized);
-        }
-
-
-        public void LookAt(Vector3 globalPoint)
-        {
-            var newLogicLookDirection = globalPoint - _torsoModule.Center;
-            newLogicLookDirection.y = 0;
-            _currentState = _currentState.LookTowards(newLogicLookDirection.normalized);
-        }
-
-        public void Move(Vector3 logicDirection, float speedModifier)
-        {
-            AngleCalculator.CheckIfVectorIsLogic(logicDirection);
-            _currentState = _currentState.Move(logicDirection, speedModifier);
+            MoveScaledLogicDirection = scaledLogicDirection;
         }
 
         public void Crouch()
         {
-            _torsoModule.Crouch();
-            _legsModule.Crouch();
+            IsSetToCrouch = true;
         }
 
-        public void Jump()
+        public void Fire()
         {
-            throw new NotImplementedException("Jump not implemented");
+            throw new NotImplementedException();
+        }
+
+        public Vector3 MoveScaledLogicDirection { get; private set; }
+        public Vector3 LookLogicDirection { get; private set; }
+        public Vector3 AimAtDirection { get; private set; }
+        public bool IsSetToCrouch { get; private set; }
+
+
+        public bool IsSetToMove
+        {
+            get { return MoveScaledLogicDirection.magnitude > Epsilon; }
+        }
+
+        public Vector3 ShouldFire
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

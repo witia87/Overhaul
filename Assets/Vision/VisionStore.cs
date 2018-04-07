@@ -8,12 +8,12 @@ namespace Assets.Vision
     public class VisionStore : MonoBehaviour
     {
         private int _currentlyProcessedUnitIndex;
-        private readonly List<UnitControl> _enemyUnits = new List<UnitControl>();
-        private readonly List<UnitControl> _neutralUnits = new List<UnitControl>();
-        private readonly List<UnitControl> _playerUnits = new List<UnitControl>();
+        private readonly List<Unit> _enemyUnits = new List<Unit>();
+        private readonly List<Unit> _neutralUnits = new List<Unit>();
+        private readonly List<Unit> _playerUnits = new List<Unit>();
 
-        private readonly Dictionary<UnitControl, VisionObserver> _registeredObservers =
-            new Dictionary<UnitControl, VisionObserver>();
+        private readonly Dictionary<Unit, VisionObserver> _registeredObservers =
+            new Dictionary<Unit, VisionObserver>();
 
         [SerializeField] private LayerMask _visionBlockingLayerMask;
 
@@ -36,46 +36,47 @@ namespace Assets.Vision
                 ProcessUnit(_enemyUnits[_currentlyProcessedUnitIndex - _playerUnits.Count], _playerUnits);
         }
 
-        private void ProcessUnit(UnitControl unitControl, List<UnitControl> opposingUnits)
+        private void ProcessUnit(Unit unit, List<Unit> opposingUnits)
         {
-            var visibleUnits = new List<UnitControl>();
-            for (var i = 0; i < opposingUnits.Count; i++)
-                if (!Physics.Linecast(opposingUnits[i].Center, unitControl.Vision.SightPosition,
+            var visibleUnits = new List<Unit>();
+            foreach (var opposingUnit in opposingUnits)
+                if (!Physics.Linecast(opposingUnit.Position, unit.Vision.SightPosition,
                     _visionBlockingLayerMask))
-                    visibleUnits.Add(opposingUnits[i]);
-            _registeredObservers[unitControl].UpdateVisibleUnits(visibleUnits);
+                    visibleUnits.Add(opposingUnit);
+
+            _registeredObservers[unit].UpdateVisibleUnits(visibleUnits);
         }
 
-        public IVisionObserver RegisterUnit(UnitControl unitControl)
+        public IVisionObserver RegisterUnit(Unit unit)
         {
-            switch (unitControl.FractionId)
+            switch (unit.Fraction)
             {
                 case FractionId.Player:
-                    _playerUnits.Add(unitControl);
+                    _playerUnits.Add(unit);
                     break;
                 case FractionId.Enemy:
-                    _enemyUnits.Add(unitControl);
+                    _enemyUnits.Add(unit);
                     break;
                 case FractionId.Neutral:
-                    _neutralUnits.Add(unitControl);
+                    _neutralUnits.Add(unit);
                     break;
                 default:
                     throw new ApplicationException("Not all units have proper fractions set.");
             }
 
-            _registeredObservers.Add(unitControl, new VisionObserver(unitControl));
-            return _registeredObservers[unitControl];
+            _registeredObservers.Add(unit, new VisionObserver(unit));
+            return _registeredObservers[unit];
         }
 
-        public List<UnitControl> GetVisibleOpposingUnits(UnitControl unitControl)
+        public List<Unit> GetVisibleOpposingUnits(Unit unit)
         {
-            var output = new List<UnitControl>();
-            foreach (var opposingUnit in _registeredObservers[unitControl].VisibleOpposingUnits)
+            var output = new List<Unit>();
+            foreach (var opposingUnit in _registeredObservers[unit].VisibleOpposingUnits)
                 output.Add(opposingUnit);
             return output;
         }
 
-        public void UnregisterUnit(UnitControl unitControl)
+        public void UnregisterUnit(Unit unit)
         {
             throw new NotImplementedException();
         }

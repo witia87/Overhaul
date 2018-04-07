@@ -5,11 +5,11 @@ namespace Assets.Gui.Player
 {
     public class PlayerStore : GuiStore, IPlayerStore
     {
-        [SerializeField] private UnitControl _playerUnitControl;
+        [SerializeField] private Unit _playerUnit;
 
-        public UnitControl PlayerUnitControl
+        public Unit PlayerUnit
         {
-            get { return _playerUnitControl; }
+            get { return _playerUnit; }
         }
     }
 }

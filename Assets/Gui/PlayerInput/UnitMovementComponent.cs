@@ -22,11 +22,6 @@ namespace Assets.Gui.PlayerInput
                 _playerCognition.SetMovement(_rotationQuaternion * KeyboardStore.MovementVector);
             }
 
-            if (KeyboardStore.IsJumpPressed)
-            {
-                _playerCognition.Jump();
-            }
-
             if (KeyboardStore.IsCrouchPressed)
             {
                 _playerCognition.Crouch();

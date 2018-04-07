@@ -9,7 +9,7 @@ namespace Assets.Gui.UnitsVisibility
 {
     public class UnitsVisibilityStore : GuiStore
     {
-        private HashSet<UnitControl> _unitsVisibility = new HashSet<UnitControl>();
+        private HashSet<Unit> _unitsVisibility = new HashSet<Unit>();
         private VisionStore _visionStore;
         private IPlayerStore _playerStore;
         public float DisapearingTime = 0.5f;
@@ -22,7 +22,7 @@ namespace Assets.Gui.UnitsVisibility
 
         private void Update()
         {
-            var newVisibleUnits = _visionStore.GetVisibleOpposingUnits(_playerStore.PlayerUnitControl);
+            var newVisibleUnits = _visionStore.GetVisibleOpposingUnits(_playerStore.PlayerUnit);
             _unitsVisibility.Clear();
             foreach (var unit in newVisibleUnits)
             {
@@ -30,9 +30,9 @@ namespace Assets.Gui.UnitsVisibility
             }
         }
 
-        public bool IsUnitVisible(UnitControl UnitControl)
+        public bool IsUnitVisible(Unit unit)
         {
-            return _unitsVisibility.Contains(UnitControl);
+            return _unitsVisibility.Contains(unit);
         }
     }
 }

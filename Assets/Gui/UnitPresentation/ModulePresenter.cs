@@ -8,7 +8,7 @@ namespace Assets.Gui.UnitPresentation
     public class ModulePresenter : MonoBehaviour
     {
         protected CameraStore CameraStore;
-        [SerializeField] protected Module Module;
+        [SerializeField] protected DynamicModule Module;
 
         [SerializeField] protected int _angleDivisionCount = 8;
         private float _angleStep;

@@ -4,6 +4,6 @@ namespace Assets.Gui.Player
 {
     public interface IPlayerStore
     {
-        UnitControl PlayerUnitControl { get; }
+        Unit PlayerUnit { get; }
     }
 }

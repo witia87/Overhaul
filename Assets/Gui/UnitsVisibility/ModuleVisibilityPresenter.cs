@@ -8,7 +8,7 @@ namespace Assets.Gui.UnitsVisibility
     public class ModuleVisibilityPresenter : MonoBehaviour
     {
         private Renderer _renderer;
-        [SerializeField] private UnitControl _UnitControl;
+        [SerializeField] private Unit _unit;
         private UnitsVisibilityStore _unitsVisibilityStore;
 
         private void Awake()
@@ -22,13 +22,13 @@ namespace Assets.Gui.UnitsVisibility
         private float _visibilityLevel;
         protected void Update()
         {
-            if (_UnitControl.FractionId == FractionId.Player)
+            if (_unit.Fraction == FractionId.Player)
             {
                 _renderer.material.SetFloat("_VisibilityLevel", 1);
             }
             else
             {
-                if (_unitsVisibilityStore.IsUnitVisible(_UnitControl))
+                if (_unitsVisibilityStore.IsUnitVisible(_unit))
                 {
                     _visibilityLevel = Mathf.Min(_unitsVisibilityStore.DisapearingTime, _visibilityLevel + Time.deltaTime);
                 }

@@ -11,13 +11,14 @@ namespace Assets.Vision
         private Vector3 _memorizedLastSeenPosition;
         private float _memorizedLastSeenTime;
         private Vector3 _memorizedLastSeenVelocity;
+        private Unit _unit;
 
-        public Target(UnitControl UnitControl)
+        public Target(Unit unit)
         {
-            UnitControl = UnitControl;
+            _unit = unit;
         }
 
-        public IUnitControl UnitControl { get; private set; }
+        public IUnitControl BodyControl { get; private set; }
         public bool IsVisible { get; set; }
 
         public Vector3 Position
@@ -28,7 +29,7 @@ namespace Assets.Vision
                 {
                     throw new ApplicationException("Target is no longer visible, and must be treated as a memory.");
                 }
-                return UnitControl.LogicPosition;
+                return _unit.LogicPosition;
             }
         }
 
@@ -40,7 +41,7 @@ namespace Assets.Vision
                 {
                     throw new ApplicationException("Target is no longer visible, and must be treated as a memory.");
                 }
-                return UnitControl.Velocity;
+                return _unit.Velocity;
             }
         }
 
@@ -52,11 +53,10 @@ namespace Assets.Vision
                 {
                     throw new ApplicationException("Target is no longer visible, and must be treated as a memory.");
                 }
-                return UnitControl.Center;
+                return _unit.Position;
             }
         }
-
-
+        
         public float LastSeenTime
         {
             get
@@ -77,7 +77,7 @@ namespace Assets.Vision
                 {
                     return _memorizedLastSeenPosition;
                 }
-                return UnitControl.LogicPosition;
+                return _unit.LogicPosition;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Assets.Vision
                 {
                     return _memorizedLastSeenVelocity;
                 }
-                return UnitControl.Velocity;
+                return _unit.Velocity;
             }
         }
 
@@ -100,8 +100,8 @@ namespace Assets.Vision
                 throw new ApplicationException("Target already memorized."); // TODO: Remove later
             }
             _isMemorized = true;
-            _memorizedLastSeenPosition = UnitControl.LogicPosition;
-            _memorizedLastSeenVelocity = UnitControl.Velocity;
+            _memorizedLastSeenPosition = _unit.LogicPosition;
+            _memorizedLastSeenVelocity = _unit.Velocity;
             _memorizedLastSeenTime = Time.time;
         }
     }

@@ -6,11 +6,11 @@ namespace Assets.Vision
 {
     public class VisionObserver: IVisionObserver
     {
-        private UnitControl _UnitControl;
+        private Unit _unit;
 
-        public VisionObserver(UnitControl UnitControl)
+        public VisionObserver(Unit unit)
         {
-            _UnitControl = UnitControl;
+            _unit = unit;
         }
 
         public bool GetClosestTarget(out ITarget target)
@@ -24,9 +24,9 @@ namespace Assets.Vision
             return false;
         }
 
-        public List<UnitControl> VisibleOpposingUnits;
-        private UnitControl _closesVisibleOpposingUnitControl;
-        public void UpdateVisibleUnits(List<UnitControl> units)
+        public List<Unit> VisibleOpposingUnits;
+        private Unit _closesVisibleOpposingUnitControl;
+        public void UpdateVisibleUnits(List<Unit> units)
         {
             VisibleOpposingUnits = units;
             if (VisibleOpposingUnits.Count > 0)
@@ -34,8 +34,8 @@ namespace Assets.Vision
                 _closesVisibleOpposingUnitControl = VisibleOpposingUnits[0];
                 for (int i = 1; i < VisibleOpposingUnits.Count; i++)
                 {
-                    if ((_UnitControl.Center - VisibleOpposingUnits[i].Center).magnitude <
-                        (_UnitControl.Center - _closesVisibleOpposingUnitControl.Center).magnitude)
+                    if ((_unit.Position - VisibleOpposingUnits[i].Position).magnitude <
+                        (_unit.Position - _closesVisibleOpposingUnitControl.Position).magnitude)
                     {
                         _closesVisibleOpposingUnitControl = VisibleOpposingUnits[i];
                     }
@@ -45,11 +45,6 @@ namespace Assets.Vision
             {
                 _closesVisibleOpposingUnitControl = null;
             }
-        }
-
-        public void SwitchSidesOfConflict()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

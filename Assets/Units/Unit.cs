@@ -1,164 +1,83 @@
-﻿/*using System;
+﻿using Assets.Units.Bodies.Coordinator;
 using Assets.Units.Guns;
-using Assets.Units.Helpers;
 using Assets.Units.Modules;
-using Assets.Units.Modules.States;
-using Assets.Units.Modules.States.Base;
-using Assets.Units.Vision;
+using Assets.Units.Modules.Coordinator.Vision;
 using UnityEngine;
 
 namespace Assets.Units
 {
-    /// <summary>
-    ///     Class responsible for translating cognitive decisions into Unit actions.
-    ///     It s important that this scripts are executed Before the Cognitive deci
-    /// </summary>
-    public class Unit : MonoBehaviour, IUnitControl
+    public class Unit : MonoBehaviour, IUnit
     {
-        private readonly AngleCalculator _angleCalculator = new AngleCalculator();
+        [SerializeField] private FractionId _fractionId;
+        [SerializeField] private Gun _gun;
 
-        private readonly float CrouchTime = 0.4f;
-        private CrouchHelper _crouchHelper;
-        private UnitState _currentState;
-        private bool _isSetToCrouch;
+        private LegsModule _legsModule;
+        private TorsoModule _torsoModule;
+        private BodyCoordinator _bodyCoordinator;
 
-        public MovementModule MovementModule { get; private set; }
-        public TargetingModule TargetingModule { get; private set; }
 
-        private UnitStatesFactory _unitStatesFactory;
+        private UnitControl _unitControl = new UnitControl();
 
-        private bool _wasMoveRequestedThisTurn;
-        private bool _wasSetToCrouchThisTurn;
+        private VisionSensor _visionSensor;
 
-        public float StunTimeLeft { get; private set; }
-        public IGunControl Gun { get; private set; }
-
-        /// <summary>
-        ///     Makes unit perform actions in order to look in the desired direction.
-        /// </summary>
-        /// <param name="globalDirection">Vector3 needs to be normalized and has y=0</param>
-        public void LookTowards(Vector3 globalDirection)
+        public IVisionSensor Vision
         {
-            throw new NotImplementedException("LookTowards is not implemeted in Unit.");
+            get { return _visionSensor; }
         }
 
-
-        public void LookAt(Vector3 globalPoint)
+        public IUnitControl Control
         {
-            var newLogicLookDirection = globalPoint - TargetingModule.Center;
-            newLogicLookDirection.y = 0;
-            _currentState = _currentState.LookTowards(newLogicLookDirection.normalized);
+            get { return _unitControl; }
         }
 
-        public void Move(Vector3 logicDirection, float speedModifier)
+        public IGun Gun
         {
-            _wasMoveRequestedThisTurn = true;
-            _angleCalculator.CheckIfVectorIsLogic(logicDirection);
-            _currentState = _currentState.Move(logicDirection, speedModifier);
-        }
-
-        public void Crouch()
-        {
-            _wasSetToCrouchThisTurn = true;
-        }
-
-        public void Jump(Vector3 globalDirection, float jumpForceModifier)
-        {
-            _currentState = _currentState.Jump(globalDirection, jumpForceModifier);
+            get { return _gun; }
         }
 
         public Vector3 Position
         {
-            get { return TargetingModule.ModuleLogicPosition; }
+            get { return _torsoModule.Position; }
         }
 
-        public Vector3 Center
+        public Vector3 LogicPosition
         {
-            get { return TargetingModule.Center; }
+            get
+            {
+                var position = _torsoModule.Position;
+                position.y = 0;
+                return position;
+            }
         }
 
         public Vector3 Velocity
         {
-            get { return TargetingModule.Rigidbody.velocity; }
+            get { return _torsoModule.Rigidbody.velocity; }
         }
 
-        public IVisionSensor Vision { get; private set; }
+        public FractionId Fraction
+        {
+            get { return _fractionId; }
+        }
 
         private void Awake()
         {
-            TargetingModule = GetComponent<TargetingModule>();
-            MovementModule = GetComponentInChildren<MovementModule>();
-            Gun = GetComponentInChildren<Gun>();
-
-            _unitStatesFactory = new UnitStatesFactory(MovementModule, TargetingModule);
-            _currentState = _unitStatesFactory.CreateStanding(Vector3.forward);
-
-            _crouchHelper = new CrouchHelper(CrouchTime);
-            Vision = TargetingModule.GetComponentInChildren<VisionSensor>();
+            _legsModule = GetComponentInChildren<LegsModule>();
+            _torsoModule = GetComponentInChildren<TorsoModule>();
+            _torsoModule.SetupLegs(_legsModule);
+            _visionSensor = GetComponentInChildren<VisionSensor>();
+            _bodyCoordinator = new BodyCoordinator(_torsoModule, _legsModule, _unitControl);
+            Physics.IgnoreCollision(_gun.Collider, _legsModule.Collider);
         }
 
         private void FixedUpdate()
         {
-            var newState = _currentState.VerifyPhysicConditions();
-            if (_currentState == newState)
-            {
-                _currentState = _currentState.FixedUpdate();
-            }
-            else
-            {
-                _currentState = newState;
-            }
-        }
-
-        private void Update()
-        {
-            StunTimeLeft = Mathf.Max(0, StunTimeLeft - Time.deltaTime);
-            _crouchHelper.Update(_isSetToCrouch);
-            TargetingModule.SetCrouch(_crouchHelper.CrouchLevel);
-            MovementModule.SetCrouch(_crouchHelper.CrouchLevel);
-        }
-
-        /// <summary>
-        ///     In LateUpdate the capitalisation of decisions is performed, so it will be executed by ModulesDirectior in the
-        ///     FixedUpdates that follow.
-        /// </summary>
-        private void LateUpdate()
-        {
-            if (!_wasMoveRequestedThisTurn)
-            {
-                _currentState = _currentState.StopMoving();
-            }
-            _wasMoveRequestedThisTurn = false;
-
-            _isSetToCrouch = _wasSetToCrouchThisTurn;
-            _wasSetToCrouchThisTurn = false;
+            _bodyCoordinator.FixedUpdate();
         }
 
         private void OnGUI()
         {
-            _currentState.OnGUI();
-            int w = Screen.width, h = Screen.height;
-
-            var guiStyle = new GUIStyle();
-            guiStyle.alignment = TextAnchor.UpperLeft;
-            guiStyle.fontSize = h * 2 / 100;
-            guiStyle.normal.textColor = new Color(1.0f, 0.0f, 0.5f, 1.0f);
-            var rect = new Rect(w - 200, h * 2 / 100, w, 2 * h * 2 / 100);
-            GUI.Label(rect, MovementModule.IsGrounded ? "IsGrounded" : "IsAirborn", guiStyle);
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (Application.isPlaying)
-            {
-                _currentState.OnDrawGizmos();
-            }
-        }
-
-        public void Stun(float stunTime)
-        {
-            StunTimeLeft += stunTime;
-            _crouchHelper.Stun(stunTime);
+            _bodyCoordinator.OnGUI();
         }
     }
-}*/
+}

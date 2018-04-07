@@ -1,27 +1,27 @@
 ﻿using Assets.Units.Guns;
-using Assets.Units.Modules.Coordinator.Vision;
 using UnityEngine;
 
 namespace Assets.Units
 {
     public interface IUnitControl
     {
-        Vector3 LogicPosition { get; }
-        Vector3 Center { get; }
-        Vector3 Velocity { get; }
-
-        IVisionSensor Vision { get; }
-        IGunControl Gun { get; }
+        /// <summary>
+        ///     Sets the direction to look towards during the next FixedUpdate call.
+        /// </summary>
+        /// <param name="direction">Vector3 needs to be normalized</param>
+        void LookTowards(Vector3 direction);
 
         /// <summary>
-        ///     Makes UnitControl perform actions in order to look in the desired direction.
+        ///     Sets the direction to move towards during the next FixedUpdate call.
         /// </summary>
-        /// <param name="globalDirection">Vector3 needs to be normalized and has y=0</param>
-        void LookTowards(Vector3 globalDirection);
+        /// <param name="scaledLogicDirection">Vector3 needs to have length less then 1 and y=0</param>
+        void Move(Vector3 scaledLogicDirection);
 
-        void LookAt(Vector3 globalPoint);
-        void Move(Vector3 logicDirection, float speedModifier);
+        /// <summary>
+        ///     Sets unit to perform crouch (or stay that way) during the next FixedUpdate call.
+        /// </summary>
         void Crouch();
-        void Jump();
+
+        void Fire();
     }
 }

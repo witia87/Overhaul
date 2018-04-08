@@ -17,10 +17,14 @@ namespace Assets.Gui.Board
         {
             var vertices = new Vector3[4]
             {
-                new Vector3(-BoardStore.BoardTextureWidth / (float) 2, -BoardStore.BoardTextureHeight / (float) 2, 0),
-                new Vector3(+BoardStore.BoardTextureWidth / (float) 2, -BoardStore.BoardTextureHeight / (float) 2, 0),
-                new Vector3(-BoardStore.BoardTextureWidth / (float) 2, +BoardStore.BoardTextureHeight / (float) 2, 0),
-                new Vector3(+BoardStore.BoardTextureWidth / (float) 2, +BoardStore.BoardTextureHeight / (float) 2, 0)
+                new Vector3(-BoardStore.BoardTextureWidth / (float) 2,
+                    -BoardStore.BoardTextureHeight / (float) 2, 0),
+                new Vector3(+BoardStore.BoardTextureWidth / (float) 2,
+                    -BoardStore.BoardTextureHeight / (float) 2, 0),
+                new Vector3(-BoardStore.BoardTextureWidth / (float) 2,
+                    +BoardStore.BoardTextureHeight / (float) 2, 0),
+                new Vector3(+BoardStore.BoardTextureWidth / (float) 2,
+                    +BoardStore.BoardTextureHeight / (float) 2, 0)
             };
             var mesh = new Mesh
             {

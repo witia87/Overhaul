@@ -1,4 +1,4 @@
-﻿using Assets.Units;
+﻿using Assets.Modules.Units;
 
 namespace Assets.Gui.Player
 {

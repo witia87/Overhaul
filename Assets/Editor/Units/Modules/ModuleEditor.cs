@@ -1,4 +1,4 @@
-﻿using Assets.Units.Modules;
+﻿using Assets.Modules;
 using UnityEditor;
 
 namespace Assets.Editor.Units.Modules

@@ -62,6 +62,7 @@ namespace Assets.Gui.Sight.Polygons
             {
                 z--;
             }
+
             return new MapVector(x, z);
         }
 
@@ -83,6 +84,7 @@ namespace Assets.Gui.Sight.Polygons
                 _wasVisited[currentVertex.z, currentVertex.x] = true;
                 strategy = strategy.GoToNextVertex(out currentVertex);
             } while (currentVertex != initialVertex);
+
             return output.ToArray();
         }
 
@@ -95,11 +97,13 @@ namespace Assets.Gui.Sight.Polygons
                 {
                     bottomLeft.x = rectangle[i].x;
                 }
+
                 if (bottomLeft.z > rectangle[i].z)
                 {
                     bottomLeft.z = rectangle[i].z;
                 }
             }
+
             return bottomLeft;
         }
 
@@ -112,11 +116,13 @@ namespace Assets.Gui.Sight.Polygons
                 {
                     topRight.x = rectangle[i].x;
                 }
+
                 if (topRight.z < rectangle[i].z)
                 {
                     topRight.z = rectangle[i].z;
                 }
             }
+
             return topRight;
         }
 
@@ -126,6 +132,7 @@ namespace Assets.Gui.Sight.Polygons
             {
                 throw new ApplicationException("Registered polygon is not a rectangle.");
             }
+
             var output = new MapVector[rectangle.Length];
             for (var i = 0; i < rectangle.Length; i++)
             {
@@ -135,8 +142,10 @@ namespace Assets.Gui.Sight.Polygons
                 {
                     throw new ApplicationException("Sight blockers vertices are not on the grid");
                 }
+
                 output[i] = new MapVector(x, z);
             }
+
             return output;
         }
     }

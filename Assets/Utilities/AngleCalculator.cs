@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Units.Helpers
+namespace Assets.Utilities
 {
     public static class AngleCalculator
     {
@@ -35,6 +35,7 @@ namespace Assets.Units.Helpers
             {
                 throw new ApplicationException("Vector is not logic.");
             }
+
             return true;
         }
     }

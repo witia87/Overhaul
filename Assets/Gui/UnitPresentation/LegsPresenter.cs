@@ -8,6 +8,8 @@ namespace Assets.Gui.UnitPresentation
         private int _lastCameraPlaneY;
         private float _lastLattitude;
 
+        protected Animator Animator;
+
         public bool HasPositionChanged { get; private set; }
 
         public void RecalculatePosition(int x, int y, float lattitude)
@@ -26,8 +28,7 @@ namespace Assets.Gui.UnitPresentation
             transform.position = CameraStore.Pixelation.TransformCameraPlanePositionToWorldPosition(
                 new Vector2(_lastCameraPlaneX, _lastCameraPlaneY), _lastLattitude);
         }
-        
-        protected Animator Animator;
+
         protected override void Awake()
         {
             base.Awake();
@@ -42,7 +43,7 @@ namespace Assets.Gui.UnitPresentation
         private float GetVelocity()
         {
             return Mathf.Sign(Module.transform.InverseTransformDirection(Module.Rigidbody.velocity).z) *
-                Module.Rigidbody.velocity.magnitude;
+                   Module.Rigidbody.velocity.magnitude;
         }
     }
 }

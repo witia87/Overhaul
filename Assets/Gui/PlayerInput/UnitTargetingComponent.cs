@@ -13,7 +13,8 @@ namespace Assets.Gui.PlayerInput
         private void Update()
         {
             var ray =
-                CameraStore.Pixelation.TransformCameraPlanePositionToWorldRay(MouseStore.MousePositionInBoardSpace);
+                CameraStore.Pixelation.TransformCameraPlanePositionToWorldRay(MouseStore
+                    .MousePositionInBoardSpace);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, float.PositiveInfinity, _targetLayerMask))

@@ -1,24 +1,24 @@
 ﻿using System.Collections.Generic;
-using Assets.Maps;
-using Assets.Maps.Dangers;
-using Assets.Maps.Nodes;
-using Assets.Units;
+using Assets.Cognitions.Maps;
+using Assets.Cognitions.Maps.Dangers;
+using Assets.Cognitions.Maps.Nodes;
+using Assets.Modules;
 using UnityEngine;
 
 namespace Assets.Resources
 {
     public class MapStore : MonoBehaviour, IMapStore
     {
+        private BaseNode[,] _baseGrid;
         [SerializeField] private float _baseGridUnitSize = 1;
+
+        private DangerStore _dangers;
+        [SerializeField] private LayerMask _floorDetectionLayerMask;
         [SerializeField] private int _gridLength = 40;
         [SerializeField] private int _gridWidth = 40;
 
         private readonly List<INode[,]> _higherScaleGrids = new List<INode[,]>();
         [SerializeField] private int _scalesCount = 6;
-        private BaseNode[,] _baseGrid;
-
-        private DangerStore _dangers;
-        [SerializeField] private LayerMask _floorDetectionLayerMask;
 
         public float BaseGridUnitSize
         {
@@ -46,6 +46,7 @@ namespace Assets.Resources
             {
                 return new Map(_baseGrid, 0);
             }
+
             return new Map(_higherScaleGrids[scale - 1], scale);
         }
 

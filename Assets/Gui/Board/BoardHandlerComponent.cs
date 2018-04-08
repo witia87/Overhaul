@@ -5,7 +5,8 @@
         private void Update()
         {
             // Commenting the code below will tur off the camera smoothing and restore the full low pixel display effect.
-            var offset = CameraStore.CameraPositionInCameraPlaneSpace - CameraStore.PixelatedCameraPositionInBoardSpace;
+            var offset = CameraStore.CameraPositionInCameraPlaneSpace -
+                         CameraStore.PixelatedCameraPositionInBoardSpace;
             transform.localPosition = -offset;
         }
     }

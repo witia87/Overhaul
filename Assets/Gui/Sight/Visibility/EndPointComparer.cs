@@ -12,15 +12,18 @@ namespace Assets.Gui.Sight.Visibility
             {
                 return 1;
             }
+
             if (a.Angle < b.Angle)
             {
                 return -1;
             }
+
             // But for ties we want Begin nodes before End nodes
             if (!a.Begin && b.Begin)
             {
                 return 1;
             }
+
             if (a.Begin && !b.Begin)
             {
                 return -1;

@@ -22,9 +22,11 @@ namespace Assets.Gui.Sight.Polygons.WallTracingStrategies
                 ) // we've lost touch of the wall (inaccessible is the interior)
                 {
                     foundVertex = _vertexPosition;
-                    return new DownWallTracingStrategy(new MapVector(_vertexPosition.x, _vertexPosition.z - 1),
+                    return new DownWallTracingStrategy(
+                        new MapVector(_vertexPosition.x, _vertexPosition.z - 1),
                         _fields);
                 }
+
                 if (_fields[_vertexPosition.z, _vertexPosition.x] != FieldType.Inaccessible
                 ) // we've hit a wall with a face
                 {

@@ -11,9 +11,12 @@ namespace Assets.Gui.Sight.Visibility.SightBlockers
             {
                 GetVector(transform.position +
                           new Vector3(-transform.localScale.x / 2, 0, -transform.localScale.z / 2)),
-                GetVector(transform.position + new Vector3(-transform.localScale.x / 2, 0, transform.localScale.z / 2)),
-                GetVector(transform.position + new Vector3(transform.localScale.x / 2, 0, transform.localScale.z / 2)),
-                GetVector(transform.position + new Vector3(transform.localScale.x / 2, 0, -transform.localScale.z / 2))
+                GetVector(transform.position +
+                          new Vector3(-transform.localScale.x / 2, 0, transform.localScale.z / 2)),
+                GetVector(transform.position +
+                          new Vector3(transform.localScale.x / 2, 0, transform.localScale.z / 2)),
+                GetVector(transform.position +
+                          new Vector3(transform.localScale.x / 2, 0, -transform.localScale.z / 2))
             };
             SightStore.RegisterWallRectangle(polygon);
         }

@@ -52,6 +52,7 @@ namespace Assets.Editor.Units.Modules
             {
                 verts[i].Scale(size);
             }
+
             var mesh = new Mesh
             {
                 vertices = verts,

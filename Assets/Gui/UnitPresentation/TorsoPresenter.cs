@@ -16,7 +16,8 @@ namespace Assets.Gui.UnitPresentation
             _legsPresenter.RecalculateAngles();
 
             var currentLattitude = Module.Bottom.y;
-            var positionInCameraPlane = CameraStore.Pixelation.TransformWorldPositionToCameraPlane(Module.Bottom);
+            var positionInCameraPlane =
+                CameraStore.Pixelation.TransformWorldPositionToCameraPlane(Module.Bottom);
             var newCameraPlaneX = Mathf.RoundToInt(positionInCameraPlane.x);
             var newCameraPlaneY = Mathf.RoundToInt(positionInCameraPlane.y);
 

@@ -1,4 +1,4 @@
-﻿using Assets.Units;
+﻿using Assets.Modules.Units;
 using UnityEngine;
 
 namespace Assets.Cognitions.Players
@@ -30,7 +30,7 @@ namespace Assets.Cognitions.Players
                 _unit.Control.LookTowards(newLookDirection.normalized);
             }
 
-            if (_wasFireSet) _unit.Control.Fire();
+            _unit.Control.Fire(_wasFireSet);
 
             if (_wasMovementSet)
             {
@@ -41,7 +41,7 @@ namespace Assets.Cognitions.Players
                 _unit.Control.Move(Vector3.zero);
             }
 
-            if (_wasCrouchSet) _unit.Control.Crouch();
+            _unit.Control.Crouch(_wasCrouchSet);
         }
 
         private void Update()

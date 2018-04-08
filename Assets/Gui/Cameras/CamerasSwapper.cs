@@ -15,7 +15,6 @@ namespace Assets.Gui.Cameras
             Camera.SetupCurrent(_viewCamera);
             _viewCamera.enabled = true;
             _isRenderingToTexture = true;
-
         }
 
         public void SwapCameras()

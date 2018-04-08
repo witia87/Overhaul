@@ -23,16 +23,18 @@ namespace Assets.Gui.PlayerInput
             var focusObjetcPositionInBoardSpace =
                 CameraStore.Pixelation.TransformWorldPositionToCameraPlane(FocusObject.transform.position);
             var targetPoint = focusObjetcPositionInBoardSpace +
-                              (MouseStore.MousePositionInBoardSpace - focusObjetcPositionInBoardSpace).normalized
+                              (MouseStore.MousePositionInBoardSpace - focusObjetcPositionInBoardSpace)
+                              .normalized
                               * Mathf.Min(MaximalLookDistance,
-                                  (MouseStore.MousePositionInBoardSpace - focusObjetcPositionInBoardSpace).magnitude /
+                                  (MouseStore.MousePositionInBoardSpace - focusObjetcPositionInBoardSpace)
+                                  .magnitude /
                                   2);
 
             _focusPointInBoardSpace = Vector2.SmoothDamp(_focusPointInBoardSpace, targetPoint, ref _velocity,
                 FocusingTime, 10000, Time.deltaTime);
 
             Dispatcher.Dispatch(GuiCommandIds.ChangeFocusPointInBoardSpace,
-                new ChangeFocusPointInBoardSpacePayload {Position = _focusPointInBoardSpace });
+                new ChangeFocusPointInBoardSpacePayload {Position = _focusPointInBoardSpace});
         }
     }
 }

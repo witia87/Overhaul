@@ -4,8 +4,8 @@ namespace Assets.Gui.Sight.Polygons.WallTracingStrategies
 {
     public class DownWallTracingStrategy : IWallTracingStrategy
     {
-        private readonly FieldType[,] _fields;
         private MapVector _fieldPosition;
+        private readonly FieldType[,] _fields;
 
         public DownWallTracingStrategy(MapVector fieldPosition, FieldType[,] fields)
         {
@@ -25,6 +25,7 @@ namespace Assets.Gui.Sight.Polygons.WallTracingStrategies
                     return new LeftWallTracingStrategy(new MapVector(_fieldPosition.x - 1, _fieldPosition.z),
                         _fields);
                 }
+
                 if (_fields[_fieldPosition.z, _fieldPosition.x] != FieldType.Inaccessible
                 ) // we've hit a wall with a face
                 {

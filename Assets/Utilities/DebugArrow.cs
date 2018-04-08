@@ -17,7 +17,8 @@ namespace Assets.Utilities
             Gizmos.DrawRay(pos + direction, left * arrowHeadLength);
         }
 
-        public static void ForGizmo(Vector3 pos, Vector3 direction, Color color, float arrowHeadLength = 0.25f,
+        public static void ForGizmo(Vector3 pos, Vector3 direction, Color color,
+            float arrowHeadLength = 0.25f,
             float arrowHeadAngle = 20.0f)
         {
             Gizmos.color = color;
@@ -44,7 +45,8 @@ namespace Assets.Utilities
             Debug.DrawRay(pos + direction, left * arrowHeadLength);
         }
 
-        public static void ForDebug(Vector3 pos, Vector3 direction, Color color, float arrowHeadLength = 0.25f,
+        public static void ForDebug(Vector3 pos, Vector3 direction, Color color,
+            float arrowHeadLength = 0.25f,
             float arrowHeadAngle = 20.0f)
         {
             Debug.DrawRay(pos, direction, color);

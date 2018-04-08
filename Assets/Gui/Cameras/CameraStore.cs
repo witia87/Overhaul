@@ -21,7 +21,7 @@ namespace Assets.Gui.Cameras
 
         public Vector2 CameraPositionInCameraPlaneSpace { get; private set; }
         public Vector2 PixelatedCameraPositionInBoardSpace { get; private set; }
-        
+
         protected override void Awake()
         {
             base.Awake();

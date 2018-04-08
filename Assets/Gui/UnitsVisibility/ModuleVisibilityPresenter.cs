@@ -1,6 +1,5 @@
-﻿using Assets.Maps;
-using Assets.Units;
-using Assets.Units.Modules;
+﻿using Assets.Modules;
+using Assets.Modules.Units;
 using UnityEngine;
 
 namespace Assets.Gui.UnitsVisibility
@@ -11,6 +10,8 @@ namespace Assets.Gui.UnitsVisibility
         [SerializeField] private Unit _unit;
         private UnitsVisibilityStore _unitsVisibilityStore;
 
+        private float _visibilityLevel;
+
         private void Awake()
         {
             _unitsVisibilityStore = FindObjectOfType<UnitsVisibilityStore>();
@@ -19,7 +20,6 @@ namespace Assets.Gui.UnitsVisibility
             //  renderer.material.SetInt("_TexHeight", );
         }
 
-        private float _visibilityLevel;
         protected void Update()
         {
             if (_unit.Fraction == FractionId.Player)
@@ -30,14 +30,16 @@ namespace Assets.Gui.UnitsVisibility
             {
                 if (_unitsVisibilityStore.IsUnitVisible(_unit))
                 {
-                    _visibilityLevel = Mathf.Min(_unitsVisibilityStore.DisapearingTime, _visibilityLevel + Time.deltaTime);
+                    _visibilityLevel = Mathf.Min(_unitsVisibilityStore.DisapearingTime,
+                        _visibilityLevel + Time.deltaTime);
                 }
                 else
                 {
                     _visibilityLevel = Mathf.Max(0, _visibilityLevel - Time.deltaTime);
-
                 }
-                _renderer.material.SetFloat("_VisibilityLevel", _visibilityLevel  / _unitsVisibilityStore.DisapearingTime);
+
+                _renderer.material.SetFloat("_VisibilityLevel",
+                    _visibilityLevel / _unitsVisibilityStore.DisapearingTime);
             }
         }
     }

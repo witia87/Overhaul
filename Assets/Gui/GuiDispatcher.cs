@@ -26,6 +26,7 @@ namespace Assets.Gui
             {
                 _callbacks.Add(commandId, new List<ActionCallback>());
             }
+
             _callbacks[commandId].Add(callback);
         }
 
@@ -38,8 +39,10 @@ namespace Assets.Gui
         {
             if (_isDispatching)
             {
-                throw new ApplicationException("Dispatcher is already dispatching. Forbidden chain of actions.");
+                throw new ApplicationException(
+                    "Dispatcher is already dispatching. Forbidden chain of actions.");
             }
+
             _isDispatching = true;
             var watch = new Stopwatch();
             watch.Start();
@@ -50,6 +53,7 @@ namespace Assets.Gui
                     callback(command.payload);
                 }
             }
+
             _aggregatedCommands.Clear();
             _isDispatching = false;
         }

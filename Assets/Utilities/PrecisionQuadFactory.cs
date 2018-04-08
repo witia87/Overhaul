@@ -32,7 +32,6 @@ namespace Assets.Utilities
             renderer.shadowCastingMode = ShadowCastingMode.Off;
             renderer.receiveShadows = false;
 
-            quadGameObject.layer = Layers.BuiltinLayer1;
             return quadGameObject;
         }
     }

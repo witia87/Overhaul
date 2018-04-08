@@ -20,6 +20,7 @@ namespace Assets.Gui.PlayerInput
             {
                 MovementVector *= 0.66f;
             }
+
             if (Mathf.Abs(horizontalAxis) > 0.001 || Mathf.Abs(verticalAxis) > 0.001)
             {
                 IsMovementPresent = true;

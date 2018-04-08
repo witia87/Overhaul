@@ -8,13 +8,24 @@ namespace Assets.Gui.Sight
 {
     public class SightStore : GuiStore, ISightStore
     {
-        private readonly PolygonsOptimizer _polygonsOptimizer = new PolygonsOptimizer();
         private PlayerStore _playerStore;
+        private readonly PolygonsOptimizer _polygonsOptimizer = new PolygonsOptimizer();
         private VisibilityComputer _visibilityComputer;
 
         public Vector2 Center
         {
             get { return _visibilityComputer.Origin; }
+        }
+
+        public List<Vector2> GetSightPolygon(Vector3 center)
+        {
+            _visibilityComputer.Origin = new Vector2(center.x, center.z);
+            return _visibilityComputer.Compute();
+        }
+
+        public void RegisterWallRectangle(Vector2[] rectangle)
+        {
+            _polygonsOptimizer.RegisterRectangle(rectangle);
         }
 
         private void Awake()
@@ -31,21 +42,11 @@ namespace Assets.Gui.Sight
             {
                 UploadWallRectangle(polygon);
             }
+
             _visibilityComputer.AddSegment(new Vector2(1, 1), new Vector2(39, 1));
             _visibilityComputer.AddSegment(new Vector2(39, 1), new Vector2(39, 39));
             _visibilityComputer.AddSegment(new Vector2(39, 39), new Vector2(1, 39));
             _visibilityComputer.AddSegment(new Vector2(1, 39), new Vector2(1, 1));
-        }
-
-        public List<Vector2> GetSightPolygon(Vector3 center)
-        {
-            _visibilityComputer.Origin = new Vector2(center.x, center.z);
-            return _visibilityComputer.Compute();
-        }
-
-        public void RegisterWallRectangle(Vector2[] rectangle)
-        {
-            _polygonsOptimizer.RegisterRectangle(rectangle);
         }
 
         private void UploadWallRectangle(Vector2[] polygon)

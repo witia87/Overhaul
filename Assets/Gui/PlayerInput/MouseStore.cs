@@ -25,10 +25,6 @@ namespace Assets.Gui.PlayerInput
             _cameraStore = FindObjectOfType<CameraStore>();
         }
 
-        private void Start()
-        {
-        }
-
         private void Update()
         {
             var x = Input.mousePosition.x / _viewStore.PixelizationSize;

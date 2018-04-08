@@ -10,13 +10,13 @@ namespace Assets.Gui
 {
     public class GuiComponent : MonoBehaviour
     {
-        protected IPlayerStore PlayerStore;
         protected IBoardStore BoardStore;
         protected ICameraStore CameraStore;
         protected IKeyboardStore KeyboardStore;
         protected IMouseStore MouseStore;
-        protected IViewStore ViewStore;
+        protected IPlayerStore PlayerStore;
         protected ISightStore SightStore;
+        protected IViewStore ViewStore;
 
         protected virtual void Awake()
         {

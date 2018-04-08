@@ -1,5 +1,5 @@
 ﻿using Assets.Gui.Cameras;
-using Assets.Units.Modules;
+using Assets.Modules;
 using UnityEngine;
 
 namespace Assets.Gui.PlayerInput
@@ -30,11 +30,13 @@ namespace Assets.Gui.PlayerInput
         {
             //var cameraFocusPoint = _cameraStore.FocusPoint;
 
-            if (Mathf.Abs(Input.GetAxis("HorizontalLook")) > 0.25f || Mathf.Abs(Input.GetAxis("VerticalLook")) > 0.25f)
+            if (Mathf.Abs(Input.GetAxis("HorizontalLook")) > 0.25f ||
+                Mathf.Abs(Input.GetAxis("VerticalLook")) > 0.25f)
             {
                 _horizontalAxis = Input.GetAxis("HorizontalLook");
                 _verticalAxis = Input.GetAxis("VerticalLook");
             }
+
             var targetingVector = new Vector3(_horizontalAxis, 0, _verticalAxis);
             targetingVector = Quaternion.AngleAxis(45, Vector3.up) * targetingVector;
             //TargetedPosition = cameraFocusPoint + targetingVector;

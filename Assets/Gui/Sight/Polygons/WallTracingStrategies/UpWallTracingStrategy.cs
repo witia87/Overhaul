@@ -25,11 +25,13 @@ namespace Assets.Gui.Sight.Polygons.WallTracingStrategies
                     return new RightWallTracingStrategy(new MapVector(_fieldPosition.x + 1, _fieldPosition.z),
                         _fields);
                 }
+
                 if (_fields[_fieldPosition.z, _fieldPosition.x] != FieldType.Inaccessible
                 ) // we've hit a wall with a face
                 {
                     foundVertex = new MapVector(_fieldPosition.x + 1, _fieldPosition.z);
-                    return new LeftWallTracingStrategy(new MapVector(_fieldPosition.x, _fieldPosition.z - 1), _fields);
+                    return new LeftWallTracingStrategy(new MapVector(_fieldPosition.x, _fieldPosition.z - 1),
+                        _fields);
                 }
             } while (_fieldPosition.z < 128);
 

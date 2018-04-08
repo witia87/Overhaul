@@ -1,27 +1,29 @@
 ﻿using Assets.Gui.Cameras;
-using Assets.Units;
-using Assets.Units.Modules;
+using Assets.Modules.Units.Bodies;
 using UnityEngine;
 
 namespace Assets.Gui.UnitPresentation
 {
     public class ModulePresenter : MonoBehaviour
     {
-        protected CameraStore CameraStore;
-        [SerializeField] protected DynamicModule Module;
-
         [SerializeField] protected int _angleDivisionCount = 8;
         private float _angleStep;
+
+
+        private int _lastAngleX;
+        private int _lastAngleY;
+        private int _lastAngleZ;
+        protected CameraStore CameraStore;
+        [SerializeField] protected BodyModule Module;
+
+        public bool HaveAnglesChanged { get; private set; }
+
         protected virtual void Awake()
         {
             CameraStore = FindObjectOfType<CameraStore>();
             _angleStep = 360.0f / _angleDivisionCount;
         }
 
-
-        private int _lastAngleX;
-        private int _lastAngleY;
-        private int _lastAngleZ;
         public void RecalculateAngles()
         {
             var newEulerAngles = Module.transform.eulerAngles;
@@ -35,14 +37,13 @@ namespace Assets.Gui.UnitPresentation
 
             _lastAngleX = newAnglesX;
             _lastAngleY = newAnglesY;
-            _lastAngleZ= newAnglesZ;
+            _lastAngleZ = newAnglesZ;
         }
-
-        public bool HaveAnglesChanged{get;private set;}
 
         public void RefreshAngles()
         {
-            transform.eulerAngles = new Vector3(_lastAngleX * _angleStep, _lastAngleY * _angleStep, _lastAngleZ * _angleStep);
+            transform.eulerAngles = new Vector3(_lastAngleX * _angleStep, _lastAngleY * _angleStep,
+                _lastAngleZ * _angleStep);
         }
     }
 }

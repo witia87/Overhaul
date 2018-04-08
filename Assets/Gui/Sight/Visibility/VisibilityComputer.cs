@@ -79,6 +79,7 @@ namespace Assets.Gui.Sight.Visibility
                 {
                     dAngle += 2 * Mathf.PI;
                 }
+
                 if (dAngle > Mathf.PI)
                 {
                     dAngle -= 2 * Mathf.PI;
@@ -124,14 +125,17 @@ namespace Assets.Gui.Sight.Visibility
             {
                 return true;
             }
+
             if (a1 == a2 && a2 == a3)
             {
                 return true;
             }
+
             if (a1 == a2 && a2 != a3)
             {
                 return false;
             }
+
             if (b1 == b2 && b2 == b3)
             {
                 return false;
@@ -214,6 +218,7 @@ namespace Assets.Gui.Sight.Visibility
                         {
                             AddTriangle(output, currentAngle, p.Angle, currentOld);
                         }
+
                         currentAngle = p.Angle;
                     }
                 }

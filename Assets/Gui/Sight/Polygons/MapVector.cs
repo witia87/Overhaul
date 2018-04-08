@@ -15,6 +15,7 @@ namespace Assets.Gui.Sight.Polygons
             {
                 return false;
             }
+
             return obj is MapVector && Equals((MapVector) obj);
         }
 

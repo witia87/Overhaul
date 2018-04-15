@@ -1,13 +1,12 @@
-﻿using Assets.Cognitions.Players;
+﻿using Assets.Modules.Units;
 using UnityEngine;
 
 namespace Assets.Gui.PlayerInput
 {
     public class UnitMovementComponent : GuiComponent
     {
-        [SerializeField] private PlayerCognition _playerCognition;
-
         private Quaternion _rotationQuaternion;
+        [SerializeField] private Unit _unit;
 
         public void Start()
         {
@@ -19,12 +18,12 @@ namespace Assets.Gui.PlayerInput
         {
             if (KeyboardStore.IsMovementPresent)
             {
-                _playerCognition.SetMovement(_rotationQuaternion * KeyboardStore.MovementVector);
+                _unit.Control.Move(_rotationQuaternion * KeyboardStore.MovementVector);
             }
 
             if (KeyboardStore.IsCrouchPressed)
             {
-                _playerCognition.Crouch();
+                _unit.Control.Crouch();
             }
         }
     }

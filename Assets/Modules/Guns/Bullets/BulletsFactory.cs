@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Modules.Guns.Bullets
 {
@@ -14,6 +16,8 @@ namespace Assets.Modules.Guns.Bullets
         public float InitialVelocity = 10f;
 
         public float StunTime = 0.2f;
+
+        public event Action<Vector3, Vector3>  HasCreatedBullet;
 
         public void Create()
         {
@@ -33,6 +37,11 @@ namespace Assets.Modules.Guns.Bullets
             bulletRigidbody.drag = BulletsDrag;
             bulletRigidbody.angularDrag = BulletsAngularDrag;
             bulletRigidbody.AddForce(transform.forward * InitialVelocity, ForceMode.VelocityChange);
+
+            if (HasCreatedBullet != null)
+            {
+                HasCreatedBullet(bullet.transform.position + bullet.transform.forward * 2, bullet.transform.forward);
+            }
         }
     }
 }

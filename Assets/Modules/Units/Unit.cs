@@ -15,7 +15,7 @@ namespace Assets.Modules.Units
         private LegsModule _legsModule;
         private TorsoModule _torsoModule;
 
-        private UnitControl _unitControl = new UnitControl();
+        private UnitControl _unitControl;
 
         public IUnitControl Control
         {
@@ -62,12 +62,19 @@ namespace Assets.Modules.Units
             _legsModule = GetComponentInChildren<LegsModule>();
             _torsoModule = GetComponentInChildren<TorsoModule>();
             _torsoModule.SetupLegs(_legsModule);
+            _unitControl = new UnitControl(this);
             _bodyCoordinator = new BodyCoordinator(_torsoModule, _legsModule, _unitControl);
             Physics.IgnoreCollision(_gun.Collider, _legsModule.Collider);
         }
 
+        private void Update()
+        {
+            _unitControl.Update();
+        }
+
         private void FixedUpdate()
         {
+            _unitControl.FixedUpdate();
             _bodyCoordinator.FixedUpdate();
         }
 

@@ -5,7 +5,7 @@ namespace Assets.Cognitions.Vision
 {
     public interface IVisionObserver
     {
-        List<Unit> VisibleOpposingUnits { get; }
-        bool GetClosestTarget(out ITarget target);
+        List<IUnit> UnitsSpottedByTeam { get; }
+        ITarget GetHighestPriorityTarget();
     }
 }

@@ -1,23 +1,30 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Maps.Nodes;
+using Assets.Modules.Guns.Bullets;
+using Assets.Resources;
 using Assets.Utilities;
 using UnityEngine;
 
 namespace Assets.Cognitions.Maps.Dangers
 {
-    public class DangerStore : IDangerStore
+    public class DangerStore
     {
         private readonly BaseNode[,] _baseGrid;
         private readonly List<LineOfFire> _registeredLines = new List<LineOfFire>();
+        private const float DefaultDangerTime = 0.1f;
 
-        public DangerStore(BaseNode[,] baseGrid)
+        public DangerStore(BaseNode[,] baseGrid, BulletsFactory[] registeredBulletsFactories)
         {
             _baseGrid = baseGrid;
+            foreach (var bulletsFactory in registeredBulletsFactories)
+            {
+                bulletsFactory.HasCreatedBullet += RegisterLineOfFire;
+            }
         }
 
-        public void RegisterLineOfFire(Vector3 startPosition, Vector3 direction, float time)
+        public void RegisterLineOfFire(Vector3 startPosition, Vector3 direction)
         {
-            _registeredLines.Add(new LineOfFire(_baseGrid, startPosition, direction, time));
+            _registeredLines.Add(new LineOfFire(_baseGrid, startPosition, direction, DefaultDangerTime));
             _registeredLines[_registeredLines.Count - 1].Register();
         }
 

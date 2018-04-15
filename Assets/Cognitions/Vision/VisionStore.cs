@@ -6,47 +6,43 @@ using UnityEngine;
 
 namespace Assets.Cognitions.Vision
 {
-    public class VisionStore : MonoBehaviour
+    public class VisionStore : MonoBehaviour, IVisionStore
     {
+        public static LayerMask VisionBlockingLayerMask;
         private int _currentlyProcessedUnitIndex;
-        private readonly List<Unit> _enemyUnits = new List<Unit>();
-        private readonly List<Unit> _neutralUnits = new List<Unit>();
-        private readonly List<Unit> _playerUnits = new List<Unit>();
 
-        private readonly Dictionary<Unit, VisionObserver> _registeredObservers =
-            new Dictionary<Unit, VisionObserver>();
+        private readonly List<VisibleUnit>[] _registeredUnits = new List<VisibleUnit>[2];
+        private readonly List<IUnit>[] _unitsSpottedBy = new List<IUnit>[2];
+        private readonly List<VisibleUnit>[] _visibleUnitsSpottedBy = new List<VisibleUnit>[2];
 
-        public LayerMask VisionBlockingLayerMask;
+        [SerializeField] public LayerMask _visionBlockingLayerMask;
+
         public LayerMask WalLayerMask;
 
         private void Awake()
         {
+            VisionBlockingLayerMask = _visionBlockingLayerMask;
+
+            _registeredUnits[(int)FractionId.Player] = new List<VisibleUnit>();
+            _registeredUnits[(int)FractionId.Enemy] = new List<VisibleUnit>();
             var units = FindObjectsOfType<Unit>();
             foreach (var unit in units)
             {
-                RegisterUnit(unit);
+                _registeredUnits[(int) unit.Fraction].Add(new VisibleUnit(unit, _registeredUnits));
             }
+
+            _visibleUnitsSpottedBy[(int) FractionId.Player] = new List<VisibleUnit>();
+            _visibleUnitsSpottedBy[(int) FractionId.Enemy] = new List<VisibleUnit>();
+
+            _unitsSpottedBy[(int) FractionId.Player] = new List<IUnit>();
+            _unitsSpottedBy[(int) FractionId.Enemy] = new List<IUnit>();
         }
 
-        public IVisionObserver RegisterUnit(Unit unit)
+        public IVisionObserver GetVisionObserver(IUnit unit)
         {
-            switch (unit.Fraction)
-            {
-                case FractionId.Player:
-                    _playerUnits.Add(unit);
-                    break;
-                case FractionId.Enemy:
-                    _enemyUnits.Add(unit);
-                    break;
-                case FractionId.Neutral:
-                    _neutralUnits.Add(unit);
-                    break;
-                default:
-                    throw new ApplicationException("Not all units have proper fractions set.");
-            }
-
-            _registeredObservers.Add(unit, new VisionObserver(unit, this));
-            return _registeredObservers[unit];
+            return new VisionObserver(unit,
+                _visibleUnitsSpottedBy[(int)unit.Fraction],
+                _unitsSpottedBy[(int)unit.Fraction]);
         }
 
         private void Start()
@@ -59,45 +55,55 @@ namespace Assets.Cognitions.Vision
 
         public void Update()
         {
+            var playerUnits = _registeredUnits[(int) FractionId.Player];
+            var enemyUnits = _registeredUnits[(int) FractionId.Enemy];
             _currentlyProcessedUnitIndex = (_currentlyProcessedUnitIndex + 1) %
-                                           (_playerUnits.Count + _enemyUnits.Count);
+                                           (playerUnits.Count + enemyUnits.Count);
 
-            if (_currentlyProcessedUnitIndex < _playerUnits.Count)
+            if (_currentlyProcessedUnitIndex < playerUnits.Count)
             {
-                ProcessUnit(_playerUnits[_currentlyProcessedUnitIndex], _enemyUnits);
+                var unitIndex = _currentlyProcessedUnitIndex;
+                playerUnits[unitIndex].UpdateVisibility();
             }
             else
             {
-                ProcessUnit(_enemyUnits[_currentlyProcessedUnitIndex - _playerUnits.Count], _playerUnits);
+                var unitIndex = _currentlyProcessedUnitIndex - playerUnits.Count;
+                enemyUnits[unitIndex].UpdateVisibility();
             }
-        }
 
-        private void ProcessUnit(Unit unit, List<Unit> opposingUnits)
-        {
-            var visibleUnits = new List<Unit>();
-            foreach (var opposingUnit in opposingUnits)
+            if (_currentlyProcessedUnitIndex == playerUnits.Count + enemyUnits.Count - 1)
             {
-                if (!Physics.Linecast(opposingUnit.Position, unit.Vision.Position,
-                    VisionBlockingLayerMask))
+                var visibleUnitsSpottedByPlayerTeam
+                    = _visibleUnitsSpottedBy[(int) FractionId.Player];
+                visibleUnitsSpottedByPlayerTeam.Clear();
+                var unitsSpottedByPlayerTeam
+                    = _unitsSpottedBy[(int) FractionId.Player];
+                unitsSpottedByPlayerTeam.Clear();
+                foreach (var enemyUnit in enemyUnits)
                 {
-                    visibleUnits.Add(opposingUnit);
+                    if (enemyUnit.IsVisible)
+                    {
+                        visibleUnitsSpottedByPlayerTeam.Add(enemyUnit);
+                        unitsSpottedByPlayerTeam.Add(enemyUnit.Unit);
+                    }
+                }
+
+                var visibleUnitsSpottedByEnemyTeam
+                    = _visibleUnitsSpottedBy[(int) FractionId.Enemy];
+                visibleUnitsSpottedByEnemyTeam.Clear();
+                var unitsSpottedByEnemyTeam
+                    = _unitsSpottedBy[(int) FractionId.Enemy];
+                unitsSpottedByEnemyTeam.Clear();
+                foreach (var playerUnit in playerUnits)
+                {
+                    if (playerUnit.IsVisible)
+                    {
+                        visibleUnitsSpottedByEnemyTeam.Add(playerUnit);
+                        unitsSpottedByEnemyTeam.Add(playerUnit.Unit);
+                    }
                 }
             }
-
-            _registeredObservers[unit].UpdateVisibleUnits(visibleUnits);
         }
-
-        public List<Unit> GetVisibleOpposingUnits(Unit unit)
-        {
-            var output = new List<Unit>();
-            foreach (var opposingUnit in _registeredObservers[unit].VisibleOpposingUnits)
-            {
-                output.Add(opposingUnit);
-            }
-
-            return output;
-        }
-
 
         public void UnregisterUnit(Unit unit)
         {

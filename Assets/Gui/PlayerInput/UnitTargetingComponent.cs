@@ -1,4 +1,4 @@
-﻿using Assets.Cognitions.Players;
+﻿using Assets.Modules.Units;
 using UnityEngine;
 
 namespace Assets.Gui.PlayerInput
@@ -7,8 +7,8 @@ namespace Assets.Gui.PlayerInput
     {
         [SerializeField] private LayerMask _emptyTargetingLayerMask;
         [SerializeField] private LayerMask _environmentLayerMask;
-        [SerializeField] private PlayerCognition _playerCognition;
         [SerializeField] private LayerMask _targetLayerMask;
+        [SerializeField] private Unit _unit;
 
         private void Update()
         {
@@ -19,20 +19,20 @@ namespace Assets.Gui.PlayerInput
 
             if (Physics.Raycast(ray, out hit, float.PositiveInfinity, _targetLayerMask))
             {
-                _playerCognition.LookAt(hit.point);
+                _unit.Control.LookAt(hit.point);
             }
             else if (Physics.Raycast(ray, out hit, float.PositiveInfinity, _environmentLayerMask))
             {
-                _playerCognition.LookAt(hit.point);
+                _unit.Control.LookAt(hit.point);
             }
             else if (Physics.Raycast(ray, out hit, float.PositiveInfinity, _emptyTargetingLayerMask))
             {
-                _playerCognition.LookAt(hit.point);
+                _unit.Control.LookAt(hit.point);
             }
 
             if (MouseStore.IsMousePressed)
             {
-                _playerCognition.Fire();
+                _unit.Control.Fire();
             }
         }
     }

@@ -53,7 +53,7 @@
 
 			float4 frag(vertexOutput input) : COLOR
 			{
-				return float4(0, 0, 0, max(0.01, _VisibilityLevel));
+				return float4(_Color.rgb, max(0.01, _VisibilityLevel));
 			}
 			ENDCG
 		}

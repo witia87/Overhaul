@@ -5,9 +5,13 @@ namespace Assets.Modules.Units
     public interface IUnitControl
     {
         /// <summary>
-        ///     Sets the direction to look towards during the next FixedUpdate call.
+        ///     Sets the position to look at during the next FixedUpdate calls.
         /// </summary>
-        /// <param name="direction">Vector3 needs to be normalized</param>
+        void LookAt(Vector3 position);
+
+        /// <summary>
+        ///     Sets the position to look towards during the next FixedUpdate calls.
+        /// </summary>
         void LookTowards(Vector3 direction);
 
         /// <summary>
@@ -19,8 +23,8 @@ namespace Assets.Modules.Units
         /// <summary>
         ///     Sets unit to perform crouch (or stay that way) during the next FixedUpdate call.
         /// </summary>
-        void Crouch(bool should);
+        void Crouch();
 
-        void Fire(bool should);
+        void Fire();
     }
 }

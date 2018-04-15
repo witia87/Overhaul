@@ -8,20 +8,20 @@ namespace Assets.Gui.UnitsVisibility
     public class UnitsVisibilityStore : GuiStore
     {
         private IPlayerStore _playerStore;
-        private HashSet<Unit> _unitsVisibility = new HashSet<Unit>();
-        private VisionStore _visionStore;
+        private HashSet<IUnit> _unitsVisibility = new HashSet<IUnit>();
+        private IVisionObserver _visionObserver;
         public float DisapearingTime = 0.5f;
 
         private void Awake()
         {
             _playerStore = FindObjectOfType<PlayerStore>();
-            _visionStore =
-                FindObjectOfType<VisionStore>(); // TODO: Is that the proper way to communicate with logic (not GUI) store?
+            _visionObserver =
+                FindObjectOfType<VisionStore>().GetVisionObserver(_playerStore.PlayerUnit);
         }
 
         private void Update()
         {
-            var newVisibleUnits = _visionStore.GetVisibleOpposingUnits(_playerStore.PlayerUnit);
+            var newVisibleUnits = _visionObserver.UnitsSpottedByTeam;
             _unitsVisibility.Clear();
             foreach (var unit in newVisibleUnits)
             {

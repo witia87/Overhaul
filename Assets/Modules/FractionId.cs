@@ -2,8 +2,7 @@
 {
     public enum FractionId
     {
-        Player,
-        Enemy,
-        Neutral
+        Player = 0,
+        Enemy = 1
     }
 }

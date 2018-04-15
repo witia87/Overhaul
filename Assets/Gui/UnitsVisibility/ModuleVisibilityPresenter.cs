@@ -7,15 +7,18 @@ namespace Assets.Gui.UnitsVisibility
     public class ModuleVisibilityPresenter : MonoBehaviour
     {
         private Renderer _renderer;
-        [SerializeField] private Unit _unit;
+        private Unit _unit;
         private UnitsVisibilityStore _unitsVisibilityStore;
 
         private float _visibilityLevel;
 
         private void Awake()
         {
+            _unit = transform.root.GetComponent<Unit>();
             _unitsVisibilityStore = FindObjectOfType<UnitsVisibilityStore>();
             _renderer = GetComponent<Renderer>();
+            
+            //    Vec
             //   renderer.material.SetInt("_TexWidth", );
             //  renderer.material.SetInt("_TexHeight", );
         }

@@ -1,97 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Modules.Units;
-using UnityEngine;
 
 namespace Assets.Cognitions.Vision
 {
-    public class VisionObserver : IVisionObserver
+    internal class VisionObserver : IVisionObserver
     {
-        private Unit _closesVisibleOpposingUnitControl;
+        private readonly List<VisibleUnit> _spottedVisibleUnits;
+        private IUnit _unit;
 
-
-        private readonly Vector3[] _raysToMeasureDistances =
+        public VisionObserver(IUnit unit, List<VisibleUnit> spottedVisibleVisibleUnits,
+            List<IUnit> spottedUnits)
         {
-            new Vector3(1, 0, 0),
-            new Vector3(1, 0, 1),
-            new Vector3(0, 0, 1),
-            new Vector3(-1, 0, 1),
-            new Vector3(-1, 0, 0),
-            new Vector3(-1, 0, -1),
-            new Vector3(0, 0, -1),
-            new Vector3(1, 0, -1)
-        };
-
-        private Unit _unit;
-        private VisionStore _visionStore;
-
-        public VisionObserver(Unit unit, VisionStore visionStore)
-        {
-            _visionStore = visionStore;
             _unit = unit;
+            _spottedVisibleUnits = spottedVisibleVisibleUnits;
+            UnitsSpottedByTeam = spottedUnits;
         }
 
-        public List<Unit> VisibleOpposingUnits { get; private set; }
+        public List<IUnit> UnitsSpottedByTeam { get; private set; }
 
-        public bool GetClosestTarget(out ITarget target)
+        public ITarget GetHighestPriorityTarget()
         {
-            if (_closesVisibleOpposingUnitControl != null)
+            if (_spottedVisibleUnits.Count > 0)
             {
-                target = new Target(_closesVisibleOpposingUnitControl);
-                return true;
-            }
-
-            target = null;
-            return false;
-        }
-
-        public void UpdateVisibleUnits(List<Unit> units)
-        {
-            VisibleOpposingUnits = units;
-            if (VisibleOpposingUnits.Count > 0)
-            {
-                _closesVisibleOpposingUnitControl = VisibleOpposingUnits[0];
-                for (var i = 1; i < VisibleOpposingUnits.Count; i++)
+                var closesVisibleOpposingUnit = _spottedVisibleUnits[0];
+                for (var i = 1; i < _spottedVisibleUnits.Count; i++)
                 {
-                    if ((_unit.Position - VisibleOpposingUnits[i].Position).magnitude <
-                        (_unit.Position - _closesVisibleOpposingUnitControl.Position).magnitude)
+                    if ((_unit.Position - _spottedVisibleUnits[i].Unit.Position).magnitude <
+                        (_unit.Position - closesVisibleOpposingUnit.Unit.Position).magnitude)
                     {
-                        _closesVisibleOpposingUnitControl = VisibleOpposingUnits[i];
+                        closesVisibleOpposingUnit = _spottedVisibleUnits[i];
                     }
                 }
-            }
-            else
-            {
-                _closesVisibleOpposingUnitControl = null;
-            }
-        }
 
-        public List<Vector3> GetThreeClosestDirections()
-        {
-            var distances = new List<float>();
-            var directions = new List<Vector3>(_raysToMeasureDistances);
-            for (var j = 0; j < 8; j++)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(_unit.transform.position, _raysToMeasureDistances[j], out hit,
-                    _visionStore.WalLayerMask))
-                {
-                    distances.Add(hit.distance);
-                }
+                return new Target(closesVisibleOpposingUnit);
             }
 
-            var i = Mathf.FloorToInt(Random.value * 8);
-            while (directions.Count > 3)
-            {
-                if (distances[i] < distances[(i + 1) % directions.Count])
-                {
-                    distances.RemoveAt(i);
-                    directions.RemoveAt(i);
-                }
-
-                i = (i + 1) % directions.Count;
-            }
-
-            return directions;
+            throw new ApplicationException("No unit to target");
         }
     }
 }

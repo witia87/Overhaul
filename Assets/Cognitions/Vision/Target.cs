@@ -1,24 +1,26 @@
 ﻿using System;
-using Assets.Modules.Units;
 using UnityEngine;
 
 namespace Assets.Cognitions.Vision
 {
-    public class Target : ITarget
+    internal class Target : ITarget
     {
         private bool _isMemorized;
         private Vector3 _memorizedLastSeenPosition;
         private float _memorizedLastSeenTime;
         private Vector3 _memorizedLastSeenVelocity;
-        private Unit _unit;
+        private VisibleUnit _unit;
 
-        public Target(Unit unit)
+
+        public Target(VisibleUnit targetedUnit)
         {
-            _unit = unit;
+            _unit = targetedUnit;
         }
 
-        public IUnitControl BodyControl { get; private set; }
-        public bool IsVisible { get; set; }
+        public bool IsVisible
+        {
+            get { return _unit.IsVisible; }
+        }
 
         public Vector3 Position
         {
@@ -30,7 +32,7 @@ namespace Assets.Cognitions.Vision
                         "Target is no longer visible, and must be treated as a memory.");
                 }
 
-                return _unit.LogicPosition;
+                return _unit.Unit.LogicPosition;
             }
         }
 
@@ -44,7 +46,7 @@ namespace Assets.Cognitions.Vision
                         "Target is no longer visible, and must be treated as a memory.");
                 }
 
-                return _unit.Velocity;
+                return _unit.Unit.Velocity;
             }
         }
 
@@ -58,7 +60,7 @@ namespace Assets.Cognitions.Vision
                         "Target is no longer visible, and must be treated as a memory.");
                 }
 
-                return _unit.Position;
+                return _unit.Unit.Position;
             }
         }
 
@@ -84,7 +86,7 @@ namespace Assets.Cognitions.Vision
                     return _memorizedLastSeenPosition;
                 }
 
-                return _unit.LogicPosition;
+                return _unit.Unit.LogicPosition;
             }
         }
 
@@ -97,7 +99,7 @@ namespace Assets.Cognitions.Vision
                     return _memorizedLastSeenVelocity;
                 }
 
-                return _unit.Velocity;
+                return _unit.Unit.Velocity;
             }
         }
 
@@ -109,8 +111,8 @@ namespace Assets.Cognitions.Vision
             }
 
             _isMemorized = true;
-            _memorizedLastSeenPosition = _unit.LogicPosition;
-            _memorizedLastSeenVelocity = _unit.Velocity;
+            _memorizedLastSeenPosition = _unit.Unit.LogicPosition;
+            _memorizedLastSeenVelocity = _unit.Unit.Velocity;
             _memorizedLastSeenTime = Time.time;
         }
     }

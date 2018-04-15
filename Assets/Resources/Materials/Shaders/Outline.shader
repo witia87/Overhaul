@@ -4,6 +4,7 @@
 	{
 		_MainTex("CameraInput", 2D) = "white" {}
 		_BackgroundColor("Background Color", Color) = (0,0,1,1)
+		_OutlineColor("Outline Color", Color) = (1,0,0,1)
 		_OutlineSize("Outline Size", Float) = 1
 	}
 
@@ -42,6 +43,7 @@
 			int _TexWidth;
 			int _TexHeight;
 			float4 _BackgroundColor;
+			float4 _OutlineColor;
 
 			struct vertexInput {
 				float4 vertex: POSITION;
@@ -92,7 +94,7 @@
 						equalsBackground(leftColor) &&
 						equalsBackground(rightColor))))
 				{				
-					return float4(1, 0, 0, 0.6 * (1 - transparencyLevel));
+					return float4(_OutlineColor.rgb, 0.6 * (1 - transparencyLevel));
 				}
 
 				return float4(0, 0, 0, 0);

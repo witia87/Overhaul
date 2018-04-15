@@ -3,6 +3,7 @@ using Assets.Cognitions.Maps;
 using Assets.Cognitions.Maps.Dangers;
 using Assets.Cognitions.Maps.Nodes;
 using Assets.Modules;
+using Assets.Modules.Guns.Bullets;
 using UnityEngine;
 
 namespace Assets.Resources
@@ -35,11 +36,6 @@ namespace Assets.Resources
             get { return _gridLength * _baseGridUnitSize; }
         }
 
-        public IDangerStore Dangers
-        {
-            get { return _dangers; }
-        }
-
         public IMap GetMap(int scale, FractionId fractionId)
         {
             if (scale == 0)
@@ -64,7 +60,7 @@ namespace Assets.Resources
                 _higherScaleGrids.Add(mapInitializer.InitializeHigherScaleGrid(_baseGrid, i));
             }
 
-            _dangers = new DangerStore(_baseGrid);
+            _dangers = new DangerStore(_baseGrid, FindObjectsOfType<BulletsFactory>());
         }
 
         private void OnDrawGizmos()

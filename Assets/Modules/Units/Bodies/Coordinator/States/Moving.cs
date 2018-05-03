@@ -6,8 +6,8 @@ namespace Assets.Modules.Units.Bodies.Coordinator.States
 {
     public class Moving : Standing
     {
-        public Moving(LegsModule legs, TorsoModule torso, IUnitControlParameters parameters)
-            : base(legs, torso, parameters)
+        public Moving(TorsoModule torso, LegsModule legs, IUnitControlParameters parameters)
+            : base(torso, legs, parameters)
         {
         }
 

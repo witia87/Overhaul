@@ -20,10 +20,10 @@ namespace Assets.Modules.Units.Bodies.Coordinator
             _torso = torsoModule;
             _legs = legsModule;
             _parameters = parameters;
-            _standing = new Standing(legsModule, torsoModule, parameters);
-            _moving = new Moving(legsModule, torsoModule, parameters);
-            _gliding = new Gliding(legsModule, torsoModule, parameters);
-            _standingUp = new StandingUp(legsModule, torsoModule, parameters);
+            _standing = new Standing(torsoModule, legsModule, parameters);
+            _moving = new Moving(torsoModule, legsModule, parameters);
+            _gliding = new Gliding(torsoModule, legsModule, parameters);
+            _standingUp = new StandingUp(torsoModule, legsModule, parameters);
         }
 
         public UnitState GetState()
@@ -57,9 +57,9 @@ namespace Assets.Modules.Units.Bodies.Coordinator
             }
         }
 
-        public void OnGUI()
+        public void OnDrawGizmos()
         {
-            _currentState.OnGUI();
+            _currentState.OnDrawGizmos();
         }
     }
 }

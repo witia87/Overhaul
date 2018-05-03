@@ -2,10 +2,10 @@
 
 namespace Assets.Modules.Units.Bodies.Coordinator.States
 {
-    public class StandingUp : GroundedState
+    public class StandingUp : UnitState
     {
-        public StandingUp(LegsModule legs, TorsoModule torso, IUnitControlParameters parameters)
-            : base(legs, torso, parameters)
+        public StandingUp(TorsoModule torso, LegsModule legs, IUnitControlParameters parameters)
+            : base(torso, legs, parameters)
         {
         }
 

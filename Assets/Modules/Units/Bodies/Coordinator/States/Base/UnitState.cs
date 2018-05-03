@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Assets.Modules.Units.Bodies.Coordinator.States.Base
 {
@@ -19,24 +20,16 @@ namespace Assets.Modules.Units.Bodies.Coordinator.States.Base
 
         public virtual void OnDrawGizmos()
         {
+            var guiStyle = new GUIStyle();
+            guiStyle.alignment = TextAnchor.UpperLeft;
+            guiStyle.normal.textColor = new Color(1.0f, 0.0f, 0.5f, 1.0f);
+            Handles.Label(Torso.transform.position + Vector3.up, GetType().Name, guiStyle);
         }
 
         protected Vector3 GetLogicVector(Vector3 vector)
         {
             vector.y = 0;
             return vector.normalized;
-        }
-
-        public virtual void OnGUI()
-        {
-            int w = Screen.width, h = Screen.height;
-
-            var guiStyle = new GUIStyle();
-            guiStyle.alignment = TextAnchor.UpperLeft;
-            guiStyle.fontSize = h * 2 / 100;
-            guiStyle.normal.textColor = new Color(1.0f, 0.0f, 0.5f, 1.0f);
-            var rect = new Rect(w - 200, 0, w, h * 2 / 100);
-            GUI.Label(rect, GetType().Name, guiStyle);
         }
     }
 }

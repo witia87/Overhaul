@@ -2,10 +2,10 @@
 
 namespace Assets.Gui.Cameras
 {
-    public class CamerasSwapper : MonoBehaviour
+    public class DebugStore : MonoBehaviour
     {
+        public static bool IsDebugMode;
         [SerializeField] private Camera _debugCamera;
-        private bool _isRenderingToTexture = true;
 
         private float _swapCamerasCooldown;
         [SerializeField] private Camera _viewCamera;
@@ -14,7 +14,6 @@ namespace Assets.Gui.Cameras
         {
             Camera.SetupCurrent(_viewCamera);
             _viewCamera.enabled = true;
-            _isRenderingToTexture = true;
         }
 
         public void SwapCameras()
@@ -22,17 +21,17 @@ namespace Assets.Gui.Cameras
             if (_swapCamerasCooldown <= 0)
             {
                 _swapCamerasCooldown = 0.1f;
-                if (_isRenderingToTexture)
+                if (!IsDebugMode)
                 {
                     Camera.SetupCurrent(_debugCamera);
                     _viewCamera.enabled = false;
-                    _isRenderingToTexture = false;
+                    IsDebugMode = true;
                 }
                 else
                 {
                     Camera.SetupCurrent(_viewCamera);
                     _viewCamera.enabled = true;
-                    _isRenderingToTexture = true;
+                    IsDebugMode = false;
                 }
             }
         }

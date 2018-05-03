@@ -1,4 +1,5 @@
-﻿using Assets.Modules.Guns;
+﻿using Assets.Gui.Cameras;
+using Assets.Modules.Guns;
 using Assets.Modules.Units.Bodies;
 using Assets.Modules.Units.Bodies.Coordinator;
 using Assets.Modules.Units.Vision;
@@ -78,9 +79,12 @@ namespace Assets.Modules.Units
             _bodyCoordinator.FixedUpdate();
         }
 
-        private void OnGUI()
+        private void OnDrawGizmos()
         {
-            _bodyCoordinator.OnGUI();
+            if (Application.isPlaying && DebugStore.IsDebugMode)
+            {
+                _bodyCoordinator.OnDrawGizmos();
+            }
         }
     }
 }

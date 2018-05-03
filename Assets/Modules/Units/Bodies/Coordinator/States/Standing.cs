@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace Assets.Modules.Units.Bodies.Coordinator.States
 {
-    public class Standing : GroundedState
+    public class Standing : UnitState
     {
-        public Standing(LegsModule legs, TorsoModule torso, IUnitControlParameters parameters)
-            : base(legs, torso, parameters)
+        public Standing(TorsoModule torso, LegsModule legs, IUnitControlParameters parameters)
+            : base(torso, legs, parameters)
         {
         }
 
         protected void ManageReachingLegsTurnDirection(Vector3 logicLookDirection,
             Vector3 movementTurnLogicDirection)
         {
-            var legsLogicDirection = GetLogicDirection(Legs.transform.forward);
-            var torsoLogicDirection = GetLogicDirection(Torso.transform.forward);
+            var legsLogicDirection = GetLogicVector(Legs.transform.forward);
+            var torsoLogicDirection = GetLogicVector(Torso.transform.forward);
             var angle = AngleCalculator.CalculateLogicAngle(legsLogicDirection,
                 movementTurnLogicDirection);
             Legs.TurnTowards(Mathf.Abs(angle) <= 90 ? movementTurnLogicDirection : torsoLogicDirection);

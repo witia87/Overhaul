@@ -5,8 +5,8 @@ namespace Assets.Modules.Units.Bodies.Coordinator.States
 {
     public class Gliding : UnitState
     {
-        public Gliding(LegsModule legs, TorsoModule torso, IUnitControlParameters parameters) : base(torso,
-            legs, parameters)
+        public Gliding(TorsoModule torso, LegsModule legs, IUnitControlParameters parameters)
+            : base(torso, legs, parameters)
         {
         }
 

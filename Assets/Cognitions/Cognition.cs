@@ -4,8 +4,7 @@ using Assets.Cognitions.Maps;
 using Assets.Cognitions.Maps.PathFinders;
 using Assets.Cognitions.States;
 using Assets.Cognitions.Vision;
-using Assets.Modules;
-using Assets.Modules.Units;
+using Assets.Environment.Units;
 using Assets.Resources;
 using UnityEngine;
 

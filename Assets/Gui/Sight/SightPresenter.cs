@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets.Modules.Units;
+using Assets.Environment.Units;
 using UnityEngine;
 
 namespace Assets.Gui.Sight

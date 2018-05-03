@@ -3,7 +3,7 @@ using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Maps;
 using Assets.Cognitions.States;
 using Assets.Cognitions.Vision;
-using Assets.Modules.Units;
+using Assets.Environment.Units;
 using Assets.Utilities;
 using UnityEngine;
 

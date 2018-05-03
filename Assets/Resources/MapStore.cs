@@ -2,8 +2,8 @@
 using Assets.Cognitions.Maps;
 using Assets.Cognitions.Maps.Dangers;
 using Assets.Cognitions.Maps.Nodes;
-using Assets.Modules;
-using Assets.Modules.Guns.Bullets;
+using Assets.Environment;
+using Assets.Environment.Guns.Bullets;
 using UnityEngine;
 
 namespace Assets.Resources

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Maps;
-using Assets.Modules.Units;
+using Assets.Environment.Units;
 using UnityEngine;
 
 namespace Assets.Cognitions.Helpers

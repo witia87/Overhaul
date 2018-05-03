@@ -1,5 +1,5 @@
 ﻿using Assets.Cognitions.Maps.Dangers;
-using Assets.Modules;
+using Assets.Environment;
 
 namespace Assets.Cognitions.Maps
 {

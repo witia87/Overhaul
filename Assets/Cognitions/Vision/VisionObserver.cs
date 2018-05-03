@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Modules.Units;
+using Assets.Environment.Units;
 
 namespace Assets.Cognitions.Vision
 {

@@ -1,4 +1,4 @@
-﻿using Assets.Modules.Units;
+﻿using Assets.Environment.Units;
 using UnityEngine;
 
 namespace Assets.Gui.PlayerInput

@@ -1,5 +1,5 @@
-﻿using Assets.Modules;
-using Assets.Modules.Units;
+﻿using Assets.Environment;
+using Assets.Environment.Units;
 using UnityEngine;
 
 namespace Assets.Gui.UnitsVisibility

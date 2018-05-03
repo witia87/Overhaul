@@ -1,5 +1,5 @@
-﻿using Assets.Gui.Cameras;
-using Assets.Modules;
+﻿using Assets.Environment;
+using Assets.Gui.Cameras;
 using UnityEngine;
 
 namespace Assets.Gui.PlayerInput

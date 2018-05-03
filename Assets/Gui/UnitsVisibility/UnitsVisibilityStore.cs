@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Vision;
+using Assets.Environment.Units;
 using Assets.Gui.Player;
-using Assets.Modules.Units;
 
 namespace Assets.Gui.UnitsVisibility
 {

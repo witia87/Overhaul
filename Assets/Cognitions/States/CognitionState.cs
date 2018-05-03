@@ -1,7 +1,7 @@
 ﻿using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Maps;
 using Assets.Cognitions.Vision;
-using Assets.Modules.Units;
+using Assets.Environment.Units;
 using UnityEngine;
 
 namespace Assets.Cognitions.States

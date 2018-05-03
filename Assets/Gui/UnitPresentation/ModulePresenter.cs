@@ -1,5 +1,5 @@
-﻿using Assets.Gui.Cameras;
-using Assets.Modules.Units.Bodies;
+﻿using Assets.Environment.Units.Bodies;
+using Assets.Gui.Cameras;
 using UnityEngine;
 
 namespace Assets.Gui.UnitPresentation
@@ -8,8 +8,7 @@ namespace Assets.Gui.UnitPresentation
     {
         [SerializeField] protected int _angleDivisionCount = 8;
         private float _angleStep;
-
-
+        
         private int _lastAngleX;
         private int _lastAngleY;
         private int _lastAngleZ;
@@ -22,6 +21,18 @@ namespace Assets.Gui.UnitPresentation
         {
             CameraStore = FindObjectOfType<CameraStore>();
             _angleStep = 360.0f / _angleDivisionCount;
+        }
+
+        protected virtual void Update()
+        {
+            UpdateAngles();
+        }
+
+        public void UpdateAngles()
+        {
+            RecalculateAngles();
+            transform.eulerAngles = new Vector3(_lastAngleX * _angleStep, _lastAngleY * _angleStep,
+                _lastAngleZ * _angleStep);
         }
 
         public void RecalculateAngles()
@@ -38,12 +49,6 @@ namespace Assets.Gui.UnitPresentation
             _lastAngleX = newAnglesX;
             _lastAngleY = newAnglesY;
             _lastAngleZ = newAnglesZ;
-        }
-
-        public void RefreshAngles()
-        {
-            transform.eulerAngles = new Vector3(_lastAngleX * _angleStep, _lastAngleY * _angleStep,
-                _lastAngleZ * _angleStep);
         }
     }
 }

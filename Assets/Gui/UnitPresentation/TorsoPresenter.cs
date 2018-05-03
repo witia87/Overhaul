@@ -2,15 +2,23 @@
 
 namespace Assets.Gui.UnitPresentation
 {
-    public class TorsoPresenter : LegsPresenter
+    public class TorsoPresenter : ModulePresenter
     {
         [SerializeField] private LegsPresenter _legsPresenter;
         [SerializeField] private float _minimalRefreshTime = 0.05f;
         private float _timeSinceLastUpdate;
 
+        public void UpdatePosition()
+        {
+            transform.position =
+                CameraStore.Pixelation.GetClosestPixelatedPosition(Module.transform.position);
+        }
+
         protected void Update()
         {
-            _timeSinceLastUpdate += Time.deltaTime;
+            base.Update();
+            UpdatePosition();
+            /*_timeSinceLastUpdate += Time.deltaTime;
 
             RecalculateAngles();
             _legsPresenter.RecalculateAngles();
@@ -24,15 +32,15 @@ namespace Assets.Gui.UnitPresentation
             RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
             _legsPresenter.RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
 
-            RefreshPosition();
-            _legsPresenter.RefreshPosition();
+            UpdatePosition();
+            _legsPresenter.UpdatePosition();
             if (_timeSinceLastUpdate > _minimalRefreshTime &&
                 (HaveAnglesChanged || _legsPresenter.HaveAnglesChanged))
             {
                 _timeSinceLastUpdate = 0;
-                RefreshAngles();
-                _legsPresenter.RefreshAngles();
-            }
+                UpdateAngles();
+                _legsPresenter.UpdateAngles();
+            }*/
         }
     }
 }

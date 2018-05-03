@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Maps.Nodes;
-using Assets.Modules.Guns.Bullets;
+using Assets.Environment.Guns.Bullets;
 using Assets.Resources;
 using Assets.Utilities;
 using UnityEngine;

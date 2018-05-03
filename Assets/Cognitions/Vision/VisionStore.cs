@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Modules;
-using Assets.Modules.Units;
+using Assets.Environment;
+using Assets.Environment.Units;
 using UnityEngine;
 
 namespace Assets.Cognitions.Vision

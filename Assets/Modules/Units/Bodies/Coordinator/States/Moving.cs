@@ -13,7 +13,6 @@ namespace Assets.Modules.Units.Bodies.Coordinator.States
 
         public override UnitState FixedUpdate()
         {
-            base.FixedUpdate();
             var globalLookDirection = Parameters.LookLogicDirection;
             var moveScaledLogicDirection = Parameters.MoveScaledLogicDirection;
             var parametersAngle =
@@ -23,12 +22,12 @@ namespace Assets.Modules.Units.Bodies.Coordinator.States
             if (Mathf.Abs(parametersAngle) <= 120)
             {
                 ManageReachingLegsTurnDirection(logicLookDirection,
-                    ((globalLookDirection + 2 * moveScaledLogicDirection) / 3).normalized);
+                     moveScaledLogicDirection.normalized);
             }
             else
             {
                 ManageReachingLegsTurnDirection(logicLookDirection,
-                    ((globalLookDirection - 2 * moveScaledLogicDirection) / 3).normalized);
+                    -moveScaledLogicDirection.normalized);
             }
 
             Torso.TurnTowards(logicLookDirection);

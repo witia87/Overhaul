@@ -45,5 +45,11 @@ namespace Assets.Gui.UnitPresentation
             transform.eulerAngles = new Vector3(_lastAngleX * _angleStep, _lastAngleY * _angleStep,
                 _lastAngleZ * _angleStep);
         }
+
+        protected void Update()
+        {
+            RecalculateAngles();
+            RefreshAngles();
+        }
     }
 }

@@ -4,40 +4,19 @@ namespace Assets.Gui.UnitPresentation
 {
     public class LegsPresenter : ModulePresenter
     {
-        private int _lastCameraPlaneX;
-        private int _lastCameraPlaneY;
-        private float _lastLattitude;
-
-        protected Animator Animator;
-
-        public bool HasPositionChanged { get; private set; }
-
-        public void RecalculatePosition(int x, int y, float lattitude)
-        {
-            HasPositionChanged = x != _lastCameraPlaneX ||
-                                 y != _lastCameraPlaneY ||
-                                 Mathf.Abs(lattitude - _lastLattitude) > 0.1f;
-
-            _lastCameraPlaneX = x;
-            _lastCameraPlaneY = y;
-            _lastLattitude = lattitude;
-        }
-
-        public void RefreshPosition()
-        {
-            transform.position = CameraStore.Pixelation.TransformCameraPlanePositionToWorldPosition(
-                new Vector2(_lastCameraPlaneX, _lastCameraPlaneY), _lastLattitude);
-        }
+        [SerializeField] private  Animator _animator;
 
         protected override void Awake()
         {
             base.Awake();
-            Animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();
         }
 
         protected virtual void Update()
         {
-            Animator.SetFloat("Speed", GetVelocity());
+            base.Update();
+            _animator.SetFloat("Speed", GetVelocity());
+            _animator.SetFloat("Rotation", GetAngularVelocity());
         }
 
         private float GetVelocity()
@@ -45,5 +24,19 @@ namespace Assets.Gui.UnitPresentation
             return Mathf.Sign(Module.transform.InverseTransformDirection(Module.Rigidbody.velocity).z) *
                    Module.Rigidbody.velocity.magnitude;
         }
+
+
+        private float GetAngularVelocity()
+        {
+            return Mathf.Sign(Module.transform.InverseTransformDirection(Module.Rigidbody.angularVelocity).y) *
+                   Module.Rigidbody.angularVelocity.magnitude;
+        }
+
+        /*
+        private float GetForward()
+        {
+            return Module.transform.forward;
+        }
+        */
     }
 }

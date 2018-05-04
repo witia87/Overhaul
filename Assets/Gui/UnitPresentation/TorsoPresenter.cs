@@ -2,37 +2,26 @@
 
 namespace Assets.Gui.UnitPresentation
 {
-    public class TorsoPresenter : LegsPresenter
+    public class TorsoPresenter : ModulePresenter
     {
-        [SerializeField] private LegsPresenter _legsPresenter;
-        [SerializeField] private float _minimalRefreshTime = 0.05f;
-        private float _timeSinceLastUpdate;
+        [SerializeField] private Animator _animator;
 
-        protected void Update()
+        protected override void Awake()
         {
-            _timeSinceLastUpdate += Time.deltaTime;
+            base.Awake();
+            _animator = GetComponent<Animator>();
+        }
 
-            RecalculateAngles();
-            _legsPresenter.RecalculateAngles();
+        protected virtual void Update()
+        {
+            base.Update();
+           // _animator.SetFloat("Speed", GetVelocity());
+        }
 
-            var currentLattitude = Module.Bottom.y;
-            var positionInCameraPlane =
-                CameraStore.Pixelation.TransformWorldPositionToCameraPlane(Module.Bottom);
-            var newCameraPlaneX = Mathf.RoundToInt(positionInCameraPlane.x);
-            var newCameraPlaneY = Mathf.RoundToInt(positionInCameraPlane.y);
-
-            RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
-            _legsPresenter.RecalculatePosition(newCameraPlaneX, newCameraPlaneY, currentLattitude);
-
-            RefreshPosition();
-            _legsPresenter.RefreshPosition();
-            if (_timeSinceLastUpdate > _minimalRefreshTime &&
-                (HaveAnglesChanged || _legsPresenter.HaveAnglesChanged))
-            {
-                _timeSinceLastUpdate = 0;
-                RefreshAngles();
-                _legsPresenter.RefreshAngles();
-            }
+        private float GetVelocity()
+        {
+            return Mathf.Sign(Module.transform.InverseTransformDirection(Module.Rigidbody.velocity).z) *
+                   Module.Rigidbody.velocity.magnitude;
         }
     }
 }

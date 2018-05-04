@@ -6,7 +6,7 @@ namespace Assets.Modules.Units.Bodies
 {
     public class TorsoModule : BodyModule
     {
-        private const float AimAngleTolerance = Mathf.PI / 6;
+        private float _aimAngleTolerance = Mathf.PI / 3;
 
         [SerializeField] private float _gunHandlingAcceleration = 10;
         private LegsModule _legs;
@@ -20,6 +20,7 @@ namespace Assets.Modules.Units.Bodies
 
         protected override void Awake()
         {
+            _aimAngleTolerance = Mathf.Deg2Rad * GetComponent<ConfigurableJoint>().highAngularXLimit.limit;
             base.Awake();
             VisionSensor = GetComponentInChildren<VisionSensor>();
             Gun = GetComponentInChildren<Gun>();
@@ -106,13 +107,13 @@ namespace Assets.Modules.Units.Bodies
         private Vector3 GetTrimmedAimDirection(Vector3 globalDirection)
         {
             var localTargetingDirection = transform.InverseTransformDirection(globalDirection);
-            if (Vector3.Angle(Vector3.forward, localTargetingDirection) < AimAngleTolerance)
+            if (Vector3.Angle(Vector3.forward, localTargetingDirection) < _aimAngleTolerance)
             {
                 return globalDirection;
             }
 
             var trimmedLocalTargetingDirection =
-                Vector3.RotateTowards(Vector3.forward, localTargetingDirection, AimAngleTolerance, 0);
+                Vector3.RotateTowards(Vector3.forward, localTargetingDirection, _aimAngleTolerance, 0);
             return transform.TransformDirection(trimmedLocalTargetingDirection);
         }
     }

@@ -5,6 +5,7 @@ using Assets.Cognitions.Maps.PathFinders;
 using Assets.Cognitions.States;
 using Assets.Cognitions.Vision;
 using Assets.Environment.Units;
+using Assets.Gui.Cameras;
 using Assets.Resources;
 using UnityEngine;
 
@@ -77,17 +78,10 @@ namespace Assets.Cognitions
 
         private void OnDrawGizmos()
         {
-            if (_registeredStates.Count > 0 && CurrentState != null)
+            if (Application.isPlaying && DebugStore.IsDebugMode
+                                      && _registeredStates.Count > 0 && CurrentState != null)
             {
                 CurrentState.OnDrawGizmos();
-            }
-        }
-
-        private void OnGUI()
-        {
-            if (_registeredStates.Count > 0 && CurrentState != null)
-            {
-                CurrentState.OnGUI();
             }
         }
     }

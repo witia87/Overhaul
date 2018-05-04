@@ -40,6 +40,7 @@ namespace Assets.Cognitions.States
 
         public override void OnDrawGizmos()
         {
+            base.OnDrawGizmos();
             if (_path != null)
             {
                 for (var i = 0; i < _path.Count - 1; i++)

@@ -54,6 +54,7 @@ namespace Assets.Cognitions.States
 
         public override void OnDrawGizmos()
         {
+            base.OnDrawGizmos();
             for (var i = 0; i < _path.Count - 1; i++)
             {
                 DrawArrow.ForDebug(_path[i] + Vector3.up / 100,

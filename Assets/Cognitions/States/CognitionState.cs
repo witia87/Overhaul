@@ -2,6 +2,7 @@
 using Assets.Cognitions.Maps;
 using Assets.Cognitions.Vision;
 using Assets.Environment.Units;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Cognitions.States
@@ -46,21 +47,12 @@ namespace Assets.Cognitions.States
             return _nextStateBuilder;
         }
 
-
         public virtual void OnDrawGizmos()
         {
-        }
-
-        public virtual void OnGUI()
-        {
-            int w = Screen.width, h = Screen.height;
-
             var guiStyle = new GUIStyle();
             guiStyle.alignment = TextAnchor.UpperLeft;
-            guiStyle.fontSize = h * 2 / 100;
             guiStyle.normal.textColor = new Color(1.0f, 0.0f, 0.5f, 1.0f);
-            var rect = new Rect(w - 100, 0, w, h * 2 / 100);
-            GUI.Label(rect, Id.ToString(), guiStyle);
+            Handles.Label(Unit.Position + Vector3.up * 0.75f, GetType().Name, guiStyle);
         }
     }
 }

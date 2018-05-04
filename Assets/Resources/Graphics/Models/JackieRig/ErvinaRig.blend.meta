@@ -173,7 +173,7 @@ ModelImporter:
     - serializedVersion: 16
       name: ErvinaRig_Walk
       takeName: ArmatureLegsAction
-      firstFrame: 80
+      firstFrame: 90
       lastFrame: 149
       wrapMode: 0
       orientationOffsetY: 0

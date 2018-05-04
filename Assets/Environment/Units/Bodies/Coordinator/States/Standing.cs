@@ -18,7 +18,7 @@ namespace Assets.Environment.Units.Bodies.Coordinator.States
             var torsoLogicDirection = GetLogicVector(Torso.transform.forward);
             var angle = AngleCalculator.CalculateLogicAngle(legsLogicDirection,
                 movementTurnLogicDirection);
-            Legs.TurnTowards(Mathf.Abs(angle) <= 90 ? movementTurnLogicDirection : torsoLogicDirection);
+            Legs.TurnTowards(movementTurnLogicDirection);
         }
 
         public override UnitState FixedUpdate()

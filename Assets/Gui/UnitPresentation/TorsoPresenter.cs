@@ -4,9 +4,7 @@ namespace Assets.Gui.UnitPresentation
 {
     public class TorsoPresenter : ModulePresenter
     {
-        [SerializeField] private LegsPresenter _legsPresenter;
-        [SerializeField] private float _minimalRefreshTime = 0.05f;
-        private float _timeSinceLastUpdate;
+        [SerializeField] private Animator _animator;
 
         public void UpdatePosition()
         {
@@ -20,8 +18,11 @@ namespace Assets.Gui.UnitPresentation
             UpdatePosition();
             /*_timeSinceLastUpdate += Time.deltaTime;
 
-            RecalculateAngles();
-            _legsPresenter.RecalculateAngles();
+        protected virtual void Update()
+        {
+            base.Update();
+           // _animator.SetFloat("Speed", GetVelocity());
+        }
 
             var currentLattitude = Module.Bottom.y;
             var positionInCameraPlane =

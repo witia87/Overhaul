@@ -6,6 +6,8 @@ namespace Assets.Gui.UnitPresentation
     {
         protected Animator Animator;
 
+        [SerializeField] private float _stabilityAngle = 30;
+
         protected override void Awake()
         {
             base.Awake();
@@ -23,13 +25,18 @@ namespace Assets.Gui.UnitPresentation
             base.Update();
             UpdatePosition();
             Animator.SetFloat("Speed", GetVelocity());
-            Animator.SetBool("Stable", false);
+            Animator.SetBool("Stable", GetStable());
         }
 
         private float GetVelocity()
         {
             return Mathf.Sign(Module.transform.InverseTransformDirection(Module.Rigidbody.velocity).z) *
                    Module.Rigidbody.velocity.magnitude;
+        }
+
+        private bool GetStable()
+        {
+            return Vector3.Angle(Module.transform.up, Vector3.up) < _stabilityAngle;
         }
     }
 }

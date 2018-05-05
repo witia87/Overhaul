@@ -23,6 +23,7 @@ namespace Assets.Gui.UnitPresentation
             base.Update();
             UpdatePosition();
             Animator.SetFloat("Speed", GetVelocity());
+            Animator.SetBool("Stable", false);
         }
 
         private float GetVelocity()

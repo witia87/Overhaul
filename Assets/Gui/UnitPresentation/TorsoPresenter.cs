@@ -9,7 +9,7 @@ namespace Assets.Gui.UnitPresentation
         public void UpdatePosition()
         {
             transform.position =
-                CameraStore.Pixelation.GetClosestPixelatedPosition(Module.transform.position);
+                CameraStore.Pixelation.GetClosestPixelatedPosition(Module.Bottom);
         }
 
         protected void Update()

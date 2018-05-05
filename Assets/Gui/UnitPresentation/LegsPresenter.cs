@@ -12,9 +12,16 @@ namespace Assets.Gui.UnitPresentation
             Animator = GetComponent<Animator>();
         }
 
-        protected virtual void Update()
+        public void UpdatePosition()
+        {
+            transform.position =
+                CameraStore.Pixelation.GetClosestPixelatedPosition(Module.Top);
+        }
+
+        protected void Update()
         {
             base.Update();
+            UpdatePosition();
             Animator.SetFloat("Speed", GetVelocity());
         }
 

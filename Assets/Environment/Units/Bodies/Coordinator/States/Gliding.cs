@@ -1,5 +1,4 @@
 ﻿using Assets.Environment.Units.Bodies.Coordinator.States.Base;
-using UnityEngine;
 
 namespace Assets.Environment.Units.Bodies.Coordinator.States
 {

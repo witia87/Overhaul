@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Maps;
-using Assets.Cognitions.Maps.PathFinders;
+using Assets.Cognitions.Maps.MapGrids;
+using Assets.Cognitions.Maps.Paths;
 using Assets.Cognitions.States;
 using Assets.Cognitions.Vision;
 using Assets.Environment.Units;
 using Assets.Gui.Cameras;
-using Assets.Resources;
 using UnityEngine;
 
 namespace Assets.Cognitions
@@ -20,7 +20,7 @@ namespace Assets.Cognitions
         private Unit _unit;
         protected CognitionState DefaultState;
 
-        protected IMap Map;
+        protected IMapGrid Map;
 
         public IMapStore MapStore;
         [Range(0, 5)] public int Scale = 1;
@@ -41,7 +41,7 @@ namespace Assets.Cognitions
         protected virtual void Start()
         {
             Map = MapStore.GetMap(Scale, _unit.Fraction);
-            DefaultState = new Watching(new MovementHelper(_unit, Map), new TargetingHelper(_unit, Map),
+            DefaultState = new Watching(new MovementHelper(_unit, Map), new TargetingHelper(_unit),
                 _unit, Map, FindObjectOfType<VisionStore>().GetVisionObserver(_unit),
                 null);
         }

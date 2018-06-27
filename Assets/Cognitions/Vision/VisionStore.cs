@@ -15,16 +15,23 @@ namespace Assets.Cognitions.Vision
         private readonly List<IUnit>[] _unitsSpottedBy = new List<IUnit>[2];
         private readonly List<VisibleUnit>[] _visibleUnitsSpottedBy = new List<VisibleUnit>[2];
 
-        [SerializeField] public LayerMask _visionBlockingLayerMask;
+        [SerializeField] private LayerMask _visionBlockingLayerMask;
 
         public LayerMask WalLayerMask;
+
+        public IVisionObserver GetVisionObserver(IUnit unit)
+        {
+            return new VisionObserver(unit,
+                _visibleUnitsSpottedBy[(int) unit.Fraction],
+                _unitsSpottedBy[(int) unit.Fraction]);
+        }
 
         private void Awake()
         {
             VisionBlockingLayerMask = _visionBlockingLayerMask;
 
-            _registeredUnits[(int)FractionId.Player] = new List<VisibleUnit>();
-            _registeredUnits[(int)FractionId.Enemy] = new List<VisibleUnit>();
+            _registeredUnits[(int) FractionId.Player] = new List<VisibleUnit>();
+            _registeredUnits[(int) FractionId.Enemy] = new List<VisibleUnit>();
             var units = FindObjectsOfType<Unit>();
             foreach (var unit in units)
             {
@@ -36,13 +43,6 @@ namespace Assets.Cognitions.Vision
 
             _unitsSpottedBy[(int) FractionId.Player] = new List<IUnit>();
             _unitsSpottedBy[(int) FractionId.Enemy] = new List<IUnit>();
-        }
-
-        public IVisionObserver GetVisionObserver(IUnit unit)
-        {
-            return new VisionObserver(unit,
-                _visibleUnitsSpottedBy[(int)unit.Fraction],
-                _unitsSpottedBy[(int)unit.Fraction]);
         }
 
         private void Start()

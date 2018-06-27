@@ -21,13 +21,11 @@ namespace Assets.Environment.Units.Bodies.Coordinator.States
 
             if (Mathf.Abs(parametersAngle) <= 120)
             {
-                ManageReachingLegsTurnDirection(logicLookDirection,
-                     moveScaledLogicDirection.normalized);
+                Legs.TurnTowards(moveScaledLogicDirection.normalized);
             }
             else
             {
-                ManageReachingLegsTurnDirection(logicLookDirection,
-                    -moveScaledLogicDirection.normalized);
+                Legs.TurnTowards(-moveScaledLogicDirection.normalized);
             }
 
             Torso.TurnTowards(logicLookDirection);

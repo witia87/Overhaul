@@ -25,7 +25,9 @@ namespace Assets.Environment.Guns.Bullets
             {
                 _maximalVelocity = _rigidbody.velocity;
             }
-            _rigidbody.AddForce(Physics.gravity * (1 - _rigidbody.velocity.magnitude / _maximalVelocity.magnitude),
+
+            _rigidbody.AddForce(
+                Physics.gravity * (1 - _rigidbody.velocity.magnitude / _maximalVelocity.magnitude),
                 ForceMode.Acceleration);
         }
 

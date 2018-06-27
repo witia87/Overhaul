@@ -1,5 +1,6 @@
 ﻿using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Maps;
+using Assets.Cognitions.Maps.MapGrids;
 using Assets.Cognitions.Vision;
 using Assets.Environment.Units;
 using UnityEditor;
@@ -11,7 +12,7 @@ namespace Assets.Cognitions.States
     {
         private readonly NextStateBuilder _nextStateBuilder;
         public readonly ComputerStateIds Id;
-        protected readonly IMap Map;
+        protected readonly IMapGrid Map;
         protected readonly MovementHelper MovementHelper;
         protected readonly ComputerStatesFactory StatesFactory;
         protected readonly TargetingHelper TargetingHelper;
@@ -19,8 +20,8 @@ namespace Assets.Cognitions.States
         protected IVisionObserver Vision;
 
         protected CognitionState(ComputerStateIds id,
-            MovementHelper movementHelper, TargetingHelper targetingHelper, 
-            IUnit unit, IMap map, IVisionObserver vision)
+            MovementHelper movementHelper, TargetingHelper targetingHelper,
+            IUnit unit, IMapGrid map, IVisionObserver vision)
         {
             Unit = unit;
             Id = id;
@@ -28,7 +29,7 @@ namespace Assets.Cognitions.States
             Vision = vision;
             MovementHelper = movementHelper;
             TargetingHelper = targetingHelper;
-            _nextStateBuilder = new NextStateBuilder(this);
+            _nextStateBuilder = new NextStateBuilder();
             StatesFactory = new ComputerStatesFactory(map, unit, vision, movementHelper, targetingHelper);
         }
 

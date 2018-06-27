@@ -12,7 +12,7 @@ namespace Assets.Gui.UnitPresentation
                 CameraStore.Pixelation.GetClosestPixelatedPosition(Module.Bottom);
         }
 
-        protected void Update()
+        protected override void Update()
         {
             base.Update();
             UpdatePosition();

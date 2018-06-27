@@ -4,9 +4,8 @@ namespace Assets.Gui.UnitPresentation
 {
     public class LegsPresenter : ModulePresenter
     {
-        protected Animator Animator;
-
         [SerializeField] private float _stabilityAngle = 30;
+        protected Animator Animator;
 
         protected override void Awake()
         {
@@ -20,7 +19,7 @@ namespace Assets.Gui.UnitPresentation
                 CameraStore.Pixelation.GetClosestPixelatedPosition(Module.Top);
         }
 
-        protected void Update()
+        protected override void Update()
         {
             base.Update();
             UpdatePosition();

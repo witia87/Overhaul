@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Assets.Cognitions.Maps.Nodes;
+using Assets.Cognitions.Maps.MapGrids.Nodes;
+using Assets.Environment;
 using Assets.Environment.Guns.Bullets;
-using Assets.Resources;
 using Assets.Utilities;
 using UnityEngine;
 
@@ -9,23 +9,29 @@ namespace Assets.Cognitions.Maps.Dangers
 {
     public class DangerStore
     {
+        private const float DefaultDangerTime = 0.5f;
         private readonly BaseNode[,] _baseGrid;
+        private FractionId _fractionId;
         private readonly List<LineOfFire> _registeredLines = new List<LineOfFire>();
-        private const float DefaultDangerTime = 0.1f;
 
-        public DangerStore(BaseNode[,] baseGrid, BulletsFactory[] registeredBulletsFactories)
+        public DangerStore(BaseNode[,] baseGrid, BulletsFactory[] registeredBulletsFactories,
+            FractionId fractionId)
         {
             _baseGrid = baseGrid;
+            _fractionId = fractionId;
             foreach (var bulletsFactory in registeredBulletsFactories)
             {
                 bulletsFactory.HasCreatedBullet += RegisterLineOfFire;
             }
         }
 
-        public void RegisterLineOfFire(Vector3 startPosition, Vector3 direction)
+        public void RegisterLineOfFire(Vector3 startPosition, Vector3 direction, FractionId fractionId)
         {
-            _registeredLines.Add(new LineOfFire(_baseGrid, startPosition, direction, DefaultDangerTime));
-            _registeredLines[_registeredLines.Count - 1].Register();
+            if (fractionId == _fractionId)
+            {
+                _registeredLines.Add(new LineOfFire(_baseGrid, startPosition, direction, DefaultDangerTime));
+                _registeredLines[_registeredLines.Count - 1].Register();
+            }
         }
 
         public void Update()
@@ -53,12 +59,20 @@ namespace Assets.Cognitions.Maps.Dangers
                     {
                         if (_baseGrid[z, x].IsDangerous)
                         {
-                            Gizmos.color = Color.red;
-                            //Gizmos.DrawCube(_baseGrid[z, x].Center, new Vector3(1,0.1f,1));
                             DrawArrow.ForDebug(_baseGrid[z, x].Position - offset,
                                 2 * offset, Color.red, 0.1f, 0);
                             DrawArrow.ForDebug(_baseGrid[z, x].Position - offset2,
                                 2 * offset2, Color.red, 0.1f, 0);
+                        }
+                        else if (_baseGrid[z, x].IsCovered(Vector3.right) ||
+                                 _baseGrid[z, x].IsCovered(Vector3.left) ||
+                                 _baseGrid[z, x].IsCovered(Vector3.forward) ||
+                                 _baseGrid[z, x].IsCovered(Vector3.back))
+                        {
+                            DrawArrow.ForDebug(_baseGrid[z, x].Position - offset,
+                                2 * offset, Color.green, 0.1f, 0);
+                            DrawArrow.ForDebug(_baseGrid[z, x].Position - offset2,
+                                2 * offset2, Color.green, 0.1f, 0);
                         }
                     }
                 }

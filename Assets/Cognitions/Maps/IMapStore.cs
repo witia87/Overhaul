@@ -1,10 +1,11 @@
-﻿using Assets.Cognitions.Maps.Dangers;
+﻿using Assets.Cognitions.Maps.MapGrids;
 using Assets.Environment;
+using Assets.Environment.Units;
 
 namespace Assets.Cognitions.Maps
 {
     public interface IMapStore
     {
-        IMap GetMap(int scale, FractionId fractionId);
+        IMap GetMap(IUnit unit);
     }
 }

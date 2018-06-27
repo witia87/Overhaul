@@ -6,6 +6,9 @@ namespace Assets.Environment.Units.Bodies
     {
         [SerializeField] private readonly float _couchTime = 0.4f;
         [SerializeField] private float _minimalCrouchLevel = 0.6f;
+        [SerializeField] private float _standingAngularDrag = 20;
+
+        [SerializeField] private float _standingStraightForce = 20;
 
         [SerializeField] private float _turnAngularAcceleration = 20;
         [SerializeField] private float _turnAngularDrag = 20;
@@ -13,9 +16,6 @@ namespace Assets.Environment.Units.Bodies
         public CrouchHelper CrouchHelper;
 
         protected bool IsSetToCrouch;
-
-        [SerializeField] private float _standingStraightForce = 20;
-        [SerializeField] private float _standingAngularDrag = 20;
 
         public float MovingForce = 10;
 
@@ -56,8 +56,8 @@ namespace Assets.Environment.Units.Bodies
                 cross.Normalize();
             }
 
-            Rigidbody.AddTorque(cross * _standingStraightForce 
-                                * Unit.StunModifier, ForceMode.Force);
+            Rigidbody.AddTorque(cross * _standingStraightForce
+                                      * Unit.StunModifier, ForceMode.Force);
 
             AddStraightenAngularDrag();
         }
@@ -80,7 +80,7 @@ namespace Assets.Environment.Units.Bodies
 
             if (Vector3.Dot(Vector3.forward, localDirection) >= 0)
             {
-                Rigidbody.AddRelativeTorque(torque * _turnAngularAcceleration 
+                Rigidbody.AddRelativeTorque(torque * _turnAngularAcceleration
                                                    * Unit.StunModifier);
             }
             else
@@ -94,7 +94,7 @@ namespace Assets.Environment.Units.Bodies
 
         private void AddTurnAngularDrag()
         {
-            var localAngularVelocity = 
+            var localAngularVelocity =
                 transform.InverseTransformDirection(Rigidbody.angularVelocity);
             localAngularVelocity.y = localAngularVelocity.y *
                                      (1 - Time.fixedDeltaTime * _turnAngularDrag);

@@ -12,7 +12,7 @@ namespace Assets.Gui.UnitsVisibility
         private IVisionObserver _visionObserver;
         public float DisapearingTime = 0.5f;
 
-        private void Awake()
+        protected override void Awake()
         {
             _playerStore = FindObjectOfType<PlayerStore>();
             _visionObserver =

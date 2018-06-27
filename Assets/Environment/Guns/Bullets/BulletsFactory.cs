@@ -6,7 +6,7 @@ namespace Assets.Environment.Guns.Bullets
 {
     public class BulletsFactory : MonoBehaviour
     {
-        [SerializeField] public LayerMask _moduleLayerMask;
+        [SerializeField] private LayerMask _moduleLayerMask;
         public float AngleOfImprecision = 0.1f;
         public float BulletMaximalLifetime = 2f;
         public float BulletsAngularDrag = 0.1f;
@@ -16,17 +16,18 @@ namespace Assets.Environment.Guns.Bullets
         public float InitialVelocity = 10f;
 
         public float StunTime = 0.2f;
+        public FractionId FractionId;
 
-        public event Action<Vector3, Vector3>  HasCreatedBullet;
+        public event Action<Vector3, Vector3, FractionId> HasCreatedBullet;
 
         public void Create()
         {
             var bullet =
-                (GameObject) Instantiate(UnityEngine.Resources.Load("Prefabs\\Units\\Guns\\Bullets\\Bullet"));
+                (GameObject) Instantiate(Resources.Load("Prefabs\\Units\\Guns\\Bullets\\Bullet"));
             bullet.transform.localScale = BulletsSize;
             bullet.transform.position = transform.position;
             bullet.transform.eulerAngles = transform.eulerAngles + new Vector3(
-                                               (Random.value - 0.5f) * 2 * AngleOfImprecision,
+                                               (Random.value - 0.5f) * 4 * AngleOfImprecision,
                                                (Random.value - 0.5f) * 2 * AngleOfImprecision,
                                                0);
             bullet.GetComponent<Bullet>().ModuleLayerMask = _moduleLayerMask;
@@ -36,11 +37,12 @@ namespace Assets.Environment.Guns.Bullets
             bulletRigidbody.mass = BulletsMass;
             bulletRigidbody.drag = BulletsDrag;
             bulletRigidbody.angularDrag = BulletsAngularDrag;
-            bulletRigidbody.AddForce(transform.forward * InitialVelocity, ForceMode.VelocityChange);
+            bulletRigidbody.AddForce(bullet.transform.forward * InitialVelocity, ForceMode.VelocityChange);
 
             if (HasCreatedBullet != null)
             {
-                HasCreatedBullet(bullet.transform.position + bullet.transform.forward * 2, bullet.transform.forward);
+                HasCreatedBullet(bullet.transform.position + bullet.transform.forward * 6,
+                    bullet.transform.forward, FractionId);
             }
         }
     }

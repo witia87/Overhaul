@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Maps;
+using Assets.Cognitions.Maps.MapGrids;
 using Assets.Environment.Units;
 using UnityEngine;
 
@@ -7,10 +8,10 @@ namespace Assets.Cognitions.Helpers
 {
     public class MovementHelper
     {
-        private readonly IMap _map;
+        private readonly IMapGrid _map;
         private readonly IUnit _unit;
 
-        public MovementHelper(IUnit unit, IMap map)
+        public MovementHelper(IUnit unit, IMapGrid map)
         {
             _unit = unit;
             _map = map;

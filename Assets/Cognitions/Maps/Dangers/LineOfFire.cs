@@ -1,4 +1,4 @@
-﻿using Assets.Cognitions.Maps.Nodes;
+﻿using Assets.Cognitions.Maps.MapGrids.Nodes;
 using UnityEngine;
 
 namespace Assets.Cognitions.Maps.Dangers
@@ -7,6 +7,8 @@ namespace Assets.Cognitions.Maps.Dangers
     {
         private readonly BaseNode[,] _baseGrid;
         private readonly Vector3 _direction;
+        private readonly int _mapLength;
+        private readonly int _mapWidth;
         private readonly Vector3 _startPosition;
         private readonly float _startTime;
         private readonly float _time;
@@ -18,6 +20,8 @@ namespace Assets.Cognitions.Maps.Dangers
             _direction = direction;
             _time = time;
             _startTime = Time.time;
+            _mapLength = baseGrid.GetLength(0);
+            _mapWidth = baseGrid.GetLength(1);
         }
 
         public bool IsFinished
@@ -49,8 +53,9 @@ namespace Assets.Cognitions.Maps.Dangers
 
         private bool TryGetBaseNode(Vector3 position, out BaseNode node)
         {
-            var x = Mathf.FloorToInt(position.x);
-            var z = Mathf.FloorToInt(position.z);
+            var z = Mathf.Max(0, Mathf.Min(_mapLength - 1, Mathf.FloorToInt(position.z)));
+            var x = Mathf.Max(0, Mathf.Min(_mapWidth - 1, Mathf.FloorToInt(position.x)));
+
             node = _baseGrid[z, x];
             return node != null;
         }

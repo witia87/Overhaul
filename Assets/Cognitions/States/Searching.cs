@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Maps;
+using Assets.Cognitions.Maps.MapGrids;
 using Assets.Cognitions.Vision;
 using Assets.Environment.Units;
 using Assets.Utilities;
@@ -15,7 +16,7 @@ namespace Assets.Cognitions.States
         private readonly ITargetMemory _targetMemory;
         private Vector3 _targetPositionPrediction;
 
-        public Searching(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnit unit, IMap map,
+        public Searching(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnit unit, IMapGrid map,
             IVisionObserver vision,
             ITargetMemory memory)
             : base(ComputerStateIds.Chasing, movementHelper, targetingHelper, unit, map, vision)
@@ -31,7 +32,7 @@ namespace Assets.Cognitions.States
             if (!Map.PathFinder.TryGetClosestAvailablePosition(_targetMemory.LastSeenPosition +
                                                                _targetMemory.LastSeenVelocity.normalized *
                                                                _initialDistance,
-                10, out _targetPositionPrediction))
+                5, out _targetPositionPrediction))
             {
                 _targetPositionPrediction = _targetMemory.LastSeenPosition;
             }

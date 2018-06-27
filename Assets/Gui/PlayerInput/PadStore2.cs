@@ -6,15 +6,8 @@ namespace Assets.Gui.PlayerInput
 {
     public class PadTargetingController
     {
-        private readonly CameraStore _cameraStore;
-
         private float _horizontalAxis;
         private float _verticalAxis;
-
-        public PadTargetingController(CameraStore cameraStore)
-        {
-            _cameraStore = cameraStore;
-        }
 
         public Vector3 TargetedPosition { get; private set; }
 

@@ -6,6 +6,7 @@ namespace Assets.Environment.Units
 {
     public interface IUnit
     {
+        int UnitScale { get; }
         IUnitControl Control { get; }
         IGun Gun { get; }
         IVisionSensor Vision { get; }

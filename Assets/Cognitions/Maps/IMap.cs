@@ -1,19 +1,16 @@
-﻿using Assets.Cognitions.Maps.PathFinders;
-using UnityEngine;
+﻿using Assets.Cognitions.Maps.MapGraphs;
+using Assets.Cognitions.Maps.MapGraphs.Rooms;
+using Assets.Cognitions.Maps.MapGrids;
+using Assets.Cognitions.Maps.Paths;
 
 namespace Assets.Cognitions.Maps
 {
     public interface IMap
     {
-        float MapWidth { get; }
-        float MapLength { get; }
-        float BaseGridUnitSize { get; }
+        IMapGrid Grid { get; }
+        IMapGraph Graph { get; }
 
-        IPathFinder PathFinder { get; }
-
-        bool IsRectangleClear(Vector3 cornerA, Vector3 cornerB);
-
-        bool IsPositionDangorous(Vector3 position);
-        bool ArePositionsOnTheSameTile(Vector3 a, Vector3 b);
+        IPathPromise RequestPathToRoom(IRoom room);
+        IPathPromise RequestPathToPosition(IRoom room);
     }
 }

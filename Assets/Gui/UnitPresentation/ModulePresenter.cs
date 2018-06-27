@@ -8,7 +8,7 @@ namespace Assets.Gui.UnitPresentation
     {
         [SerializeField] protected int _angleDivisionCount = 8;
         private float _angleStep;
-        
+
         private int _lastAngleX;
         private int _lastAngleY;
         private int _lastAngleZ;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Maps;
-using Assets.Cognitions.States;
+using Assets.Cognitions.Maps.MapGrids;
 using Assets.Cognitions.Vision;
 using Assets.Environment.Units;
 using Assets.Utilities;
@@ -14,7 +14,7 @@ namespace Assets.Cognitions.States
         private readonly List<Vector3> _path;
         private readonly Vector3 _targetPositoon;
 
-        public Moving(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnit unit, IMap map,
+        public Moving(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnit unit, IMapGrid map,
             IVisionObserver vision, Vector3 targetPosition)
             : base(ComputerStateIds.Chasing, movementHelper, targetingHelper, unit, map, vision)
         {
@@ -38,7 +38,7 @@ namespace Assets.Cognitions.States
                     return DisposeCurrent().AndChangeStateTo(StatesFactory.CreateChasing(target));
                 }
             }
-            
+
             MovementHelper.ManageMovingAlongThePath(_path);
             Unit.Control.LookAt(_path[0]);
             return this;

@@ -13,7 +13,7 @@ namespace Assets.Environment.Guns
 
         protected ConfigurableJoint ConfigurableJoint;
 
-        private void Awake()
+        protected override void Awake()
         {
             base.Awake();
             Collider = GetComponentInChildren<Collider>();
@@ -35,7 +35,7 @@ namespace Assets.Environment.Guns
             }
         }
 
-        protected void OnDrawGizmos()
+        protected override void OnDrawGizmos()
         {
             if (Application.isPlaying)
             {

@@ -28,6 +28,7 @@ namespace Assets.Cognitions.Vision
                     return;
                 }
             }
+
             IsVisible = false;
         }
     }

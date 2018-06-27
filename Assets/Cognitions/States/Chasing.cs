@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Maps;
+using Assets.Cognitions.Maps.MapGrids;
 using Assets.Cognitions.Vision;
 using Assets.Environment.Units;
 using Assets.Utilities;
@@ -13,7 +14,7 @@ namespace Assets.Cognitions.States
         private List<Vector3> _path;
         private readonly ITarget _target;
 
-        public Chasing(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnit unit, IMap map,
+        public Chasing(MovementHelper movementHelper, TargetingHelper targetingHelper, IUnit unit, IMapGrid map,
             IVisionObserver vision,
             ITarget target)
             : base(ComputerStateIds.Chasing, movementHelper, targetingHelper, unit, map, vision)

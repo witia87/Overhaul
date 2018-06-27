@@ -1,5 +1,6 @@
 ﻿using Assets.Cognitions.Helpers;
 using Assets.Cognitions.Maps;
+using Assets.Cognitions.Maps.MapGrids;
 using Assets.Cognitions.Vision;
 using Assets.Environment.Units;
 using UnityEngine;
@@ -8,13 +9,13 @@ namespace Assets.Cognitions.States
 {
     public class ComputerStatesFactory
     {
-        private readonly IMap _map;
+        private readonly IMapGrid _map;
         private readonly MovementHelper _movementHelper;
         private readonly TargetingHelper _targetingHelper;
         private readonly IUnit _unit;
         private readonly IVisionObserver _vision;
 
-        public ComputerStatesFactory(IMap map, IUnit unit, IVisionObserver vision,
+        public ComputerStatesFactory(IMapGrid map, IUnit unit, IVisionObserver vision,
             MovementHelper movementHelper,
             TargetingHelper targetingHelper)
         {

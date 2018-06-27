@@ -8,7 +8,6 @@ namespace Assets.Gui.Sight
 {
     public class SightStore : GuiStore, ISightStore
     {
-        private PlayerStore _playerStore;
         private readonly PolygonsOptimizer _polygonsOptimizer = new PolygonsOptimizer();
         private VisibilityComputer _visibilityComputer;
 
@@ -28,9 +27,8 @@ namespace Assets.Gui.Sight
             _polygonsOptimizer.RegisterRectangle(rectangle);
         }
 
-        private void Awake()
+        protected override void Awake()
         {
-            _playerStore = FindObjectOfType<PlayerStore>();
             _visibilityComputer = new VisibilityComputer();
             _visibilityComputer.Radius = 30;
         }
@@ -43,10 +41,10 @@ namespace Assets.Gui.Sight
                 UploadWallRectangle(polygon);
             }
 
-            _visibilityComputer.AddSegment(new Vector2(1, 1), new Vector2(39, 1));
-            _visibilityComputer.AddSegment(new Vector2(39, 1), new Vector2(39, 39));
-            _visibilityComputer.AddSegment(new Vector2(39, 39), new Vector2(1, 39));
-            _visibilityComputer.AddSegment(new Vector2(1, 39), new Vector2(1, 1));
+            _visibilityComputer.AddSegment(new Vector2(1, 1), new Vector2(199, 1));
+            _visibilityComputer.AddSegment(new Vector2(199, 1), new Vector2(199, 199));
+            _visibilityComputer.AddSegment(new Vector2(199, 199), new Vector2(1, 199));
+            _visibilityComputer.AddSegment(new Vector2(1, 199), new Vector2(1, 1));
         }
 
         private void UploadWallRectangle(Vector2[] polygon)

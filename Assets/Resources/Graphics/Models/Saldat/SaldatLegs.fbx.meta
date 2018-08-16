@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: 45b8c545f73806a43b40b5d68de6d5e6
-timeCreated: 1508687594
-licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: ArmatureLegs
     100002: Camera
@@ -42,12 +40,13 @@ ModelImporter:
     9500000: //RootNode
     10800000: Lamp
     13700000: Legs
+    2186277476908879412: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material
-    second: {fileID: 2100000, guid: 65acdf991b8a2ba4a966248155c52c8c, type: 2}
+    second: {fileID: 2100000, guid: b0a3b2c1d1d208a48b9cefd4f7f7200d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -66,6 +65,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -146,11 +146,15 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

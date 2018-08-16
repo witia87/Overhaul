@@ -7,9 +7,6 @@ namespace Assets.Cognitions.Maps
 {
     public interface IMap
     {
-        IMapGrid Grid { get; }
-        IMapGraph Graph { get; }
-
         IPathPromise RequestPathToRoom(IRoom room);
         IPathPromise RequestPathToPosition(IRoom room);
     }

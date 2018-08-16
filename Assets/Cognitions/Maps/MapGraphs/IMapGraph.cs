@@ -1,9 +1,10 @@
-﻿using Assets.Cognitions.Maps.MapGraphs.Rooms;
+﻿using System.Collections.Generic;
+using Assets.Cognitions.Maps.MapGraphs.Rooms;
 
 namespace Assets.Cognitions.Maps.MapGraphs
 {
     public interface IMapGraph
     {
-        IRoom Rooms { get; }
+        IEnumerable<IRoom> Rooms { get; }
     }
 }

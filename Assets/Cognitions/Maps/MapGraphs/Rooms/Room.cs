@@ -1,18 +1,24 @@
-﻿using Assets.Cognitions.Maps.Covers;
+﻿using System.Collections.Generic;
+using Assets.Cognitions.Maps.MapGraphs.Rooms.Covers;
+using Assets.Cognitions.Maps.MapGraphs.Rooms.Entrances;
 using UnityEngine;
 
 namespace Assets.Cognitions.Maps.MapGraphs.Rooms
 {
-    class Room : IRoom
+    public class Room : IRoom
     {
-        public Vector3 Position { get; private set; }
+        public Room(Vector3 position, float width, float length)
+        {
+            Position = position;
+            Width = width;
+            Length = length;
+        }
+
+        public IEnumerable<ICover> Covers { get; set; }
+        public IEnumerable<IRoomEntrance> RoomEntrances { get; set; }
         public float Width { get; private set; }
         public float Length { get; private set; }
-        public Vector3[] EntrancePositions { get; private set; }
-        public Vector3[] CoverPositions { get; private set; }
-        public IRoom GetNeighboringRoomInDirection(Vector3 direction)
-        {
-            throw new System.NotImplementedException();
-        }
+
+        public Vector3 Position { get; private set; }
     }
 }

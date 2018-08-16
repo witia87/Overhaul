@@ -7,17 +7,17 @@ namespace Assets.Cognitions.Maps
 {
     public class MapFactory : MonoBehaviour
     {
-        private MapGraphFactory _mapGraphFactory;
-        private MapGridFactory _mapGridFactory;
+        private MapGridInitializer _mapGridInitializer;
+        private MapGraphInitializer _mapGraphInitializer;
 
 
         public void Initialize()
         {
-            _mapGraphFactory = FindObjectOfType<MapGraphFactory>();
-            _mapGridFactory = FindObjectOfType<MapGridFactory>();
+            _mapGridInitializer = FindObjectOfType<MapGridInitializer>();
+            _mapGraphInitializer = FindObjectOfType<MapGraphInitializer>();
 
-            _mapGraphFactory.Initialize();
-            _mapGridFactory.Initialize(_mapGraphFactory.GetMapGraph());
+            var graph = _mapGraphInitializer.Initialize();
+            var baseGrid = _mapGridInitializer.Initialize(graph);
         }
 
 
@@ -26,7 +26,7 @@ namespace Assets.Cognitions.Maps
             var mapGrid = _mapGridFactory.GetMapGrid(fractionId, scale);
             var mapGraph = _mapGraphFactory.GetMapGraph();
 
-            return new Map();
+            return new Map(mapGrid, mapGraph);
         }
     }
 }

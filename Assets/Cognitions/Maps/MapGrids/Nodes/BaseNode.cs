@@ -6,16 +6,12 @@ namespace Assets.Cognitions.Maps.MapGrids.Nodes
 {
     public class BaseNode : INode
     {
-        private readonly BaseNode[,] _grid;
-
         private readonly bool[,] _isCovered = new bool[2, 2];
 
-        public BaseNode(BaseNode[,] grid, int x, int z, Vector3 position)
+        public BaseNode(int x, int z, Vector3 position)
         {
-            _grid = grid;
             this.x = x;
             this.z = z;
-            Scale = Scale;
             Position = position;
         }
 
@@ -24,7 +20,6 @@ namespace Assets.Cognitions.Maps.MapGrids.Nodes
 
         public int x { get; private set; }
         public int z { get; private set; }
-        public int Scale { get; private set; }
         public Vector3 Position { get; private set; }
 
         public bool IsDangerous

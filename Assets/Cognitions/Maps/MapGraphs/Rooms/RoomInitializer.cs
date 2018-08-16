@@ -1,26 +1,31 @@
-﻿using Assets.Cognitions.Maps.Covers;
-using Assets.Cognitions.Maps.MapGrids;
+﻿using System;
+using System.Linq;
+using Assets.Cognitions.Maps.MapGraphs.Rooms.Covers;
+using Assets.Cognitions.Maps.MapGraphs.Rooms.Entrances;
 using UnityEngine;
 
 namespace Assets.Cognitions.Maps.MapGraphs.Rooms
 {
     public class RoomInitializer : MonoBehaviour
     {
-        public float Width;
-        public float Height;
+        [SerializeField] private float _height;
+        [SerializeField] private float _width;
 
-        private void Initialize(MapGrid grid, MapGraph graph)
+        public Room Initialize()
         {
-            var entrances = GetComponentsInChildren<RoomEntrance>();
-            var covers = GetComponentsInChildren<Cover>();
-            
+            var room = new Room(transform.position, _width, _height);
 
-            Destroy(gameObject);
+            var entranceInitializers = GetComponentsInChildren<RoomEntranceInitializer>();
+            var entrances = entranceInitializers.Select(initializer => (IRoomEntrance) initializer.Initialize(room));
+            room.RoomEntrances = entrances;
+
+            var coverInitializers = GetComponentsInChildren<CoverInitializer>();
+            var covers = coverInitializers.Select(initializer => (ICover) initializer.Initialize());
+            room.Covers = covers;
+
+            return room;
         }
 
-        public void Update()
-        {
-        }
 
         public void OnDrawGizmos()
         {

@@ -1,6 +1,4 @@
-﻿using Assets.Cognitions.Maps.MapGrids;
-using Assets.Environment;
-using Assets.Environment.Units;
+﻿using Assets.Environment.Units;
 
 namespace Assets.Cognitions.Maps
 {

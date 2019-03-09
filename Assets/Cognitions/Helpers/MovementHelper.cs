@@ -8,10 +8,10 @@ namespace Assets.Cognitions.Helpers
 {
     public class MovementHelper
     {
-        private readonly IMapGrid _map;
+        private readonly IMap _map;
         private readonly IUnit _unit;
 
-        public MovementHelper(IUnit unit, IMapGrid map)
+        public MovementHelper(IUnit unit, IMap map)
         {
             _unit = unit;
             _map = map;

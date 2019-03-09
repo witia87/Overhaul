@@ -13,10 +13,9 @@ namespace Assets.Cognitions.Maps.MapGrids
 
         private DangerStore _dangerStore;
 
-        public FractionGrids(BaseNode[,] baseGrid, BulletsFactory[] bulletFactories, FractionId fractionId)
+        public FractionGrids(BaseNode[,] baseGrid, BaseDangerNode[,] baseDanger, FractionId fractionId)
         {
             BaseGrid = baseGrid;
-            _dangerStore = new DangerStore(BaseGrid, bulletFactories, fractionId);
         }
 
         public HigherScaleNode[,] InitializeHigherScaleGrid(BaseNode[,] baseGrid, int scale)
@@ -63,11 +62,11 @@ namespace Assets.Cognitions.Maps.MapGrids
             }
             else
             {
-                if (HigherScaleGrids[scale] == null)
+                if (HigherScaleGrids[scale - 1] == null)
                 {
-                    HigherScaleGrids[scale] = InitializeHigherScaleGrid(BaseGrid, scale);
+                    HigherScaleGrids[scale - 1] = InitializeHigherScaleGrid(BaseGrid, scale);
                 }
-                return new MapGrid(HigherScaleGrids[scale], scale, 50);
+                return new MapGrid(HigherScaleGrids[scale - 1], scale, 50);
             }
         }
     }

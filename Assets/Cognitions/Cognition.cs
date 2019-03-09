@@ -20,9 +20,7 @@ namespace Assets.Cognitions
         private Unit _unit;
         protected CognitionState DefaultState;
 
-        protected IMapGrid Map;
-
-        public IMapStore MapStore;
+        protected IMap Map;
         [Range(0, 5)] public int Scale = 1;
 
         public IPathFinder PathFinder { get; private set; }
@@ -34,13 +32,12 @@ namespace Assets.Cognitions
 
         protected virtual void Awake()
         {
-            MapStore = FindObjectOfType<MapStore>();
             _unit = GetComponent<Unit>();
         }
 
         protected virtual void Start()
         {
-            Map = MapStore.GetMap(Scale, _unit.Fraction);
+            Map = FindObjectOfType<MapStore>().GetMap(_unit);
             DefaultState = new Watching(new MovementHelper(_unit, Map), new TargetingHelper(_unit),
                 _unit, Map, FindObjectOfType<VisionStore>().GetVisionObserver(_unit),
                 null);

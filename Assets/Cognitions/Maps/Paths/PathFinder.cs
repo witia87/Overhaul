@@ -1,31 +1,20 @@
 ﻿using System.Collections.Generic;
 using Assets.Cognitions.Maps.MapGrids;
-using Assets.Cognitions.Maps.MapGrids.Nodes;
 using UnityEngine;
 
 namespace Assets.Cognitions.Maps.Paths
 {
     public class PathFinder : IPathFinder
     {
-        private readonly MapGrid _map;
+        private readonly MapGrid _grid;
         private readonly SafespotFinder _safespotFinder;
         private readonly SimplePathFinder _simplePathFinder;
 
-        public PathFinder(MapGrid map, int pathFindingStepsLimit)
+        public PathFinder(MapGrid grid, int pathFindingStepsLimit)
         {
-            _map = map;
-            _simplePathFinder = new SimplePathFinder(map, pathFindingStepsLimit);
-            _safespotFinder = new SafespotFinder(map);
-        }
-
-        public bool TryGetClosestAvailablePosition(Vector3 position, float distanceTolerance,
-            out Vector3 closestPosition)
-        {
-            INode node;
-            closestPosition = _map.TryGetClosestAvailablePosition(position, distanceTolerance, out node)
-                ? node.Position
-                : Vector3.zero;
-            return node != null;
+            _grid = grid;
+            _simplePathFinder = new SimplePathFinder(grid, pathFindingStepsLimit);
+            _safespotFinder = new SafespotFinder(grid);
         }
 
         public List<Vector3> FindPath(Vector3 start, Vector3 end)

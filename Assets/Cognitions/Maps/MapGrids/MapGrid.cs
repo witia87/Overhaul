@@ -26,9 +26,7 @@ namespace Assets.Cognitions.Maps.MapGrids
         {
             INode nodeA, nodeB;
             if (!TryGetNode(cornerA, out nodeA) || !TryGetNode(cornerB, out nodeB))
-            {
                 throw new ApplicationException("Given corners are not valid on the map.");
-            }
 
             var xMin = Mathf.Min(nodeA.x, nodeB.x);
             var xMax = Mathf.Max(nodeA.x, nodeB.x);
@@ -36,15 +34,9 @@ namespace Assets.Cognitions.Maps.MapGrids
             var zMax = Mathf.Max(nodeA.z, nodeB.z);
 
             for (var z = zMin; z <= zMax; z++)
-            {
-                for (var x = xMin; x <= xMax; x++)
-                {
-                    if (Grid[z, x] == null)
-                    {
-                        return false;
-                    }
-                }
-            }
+            for (var x = xMin; x <= xMax; x++)
+                if (Grid[z, x] == null)
+                    return false;
 
             return true;
         }
@@ -53,10 +45,8 @@ namespace Assets.Cognitions.Maps.MapGrids
         {
             INode node;
             if (!TryGetNode(position, out node))
-            {
                 throw new ApplicationException(
                     "Requested position does not belong to the accessible map area.");
-            }
 
             return node.IsDangerous;
         }
@@ -72,6 +62,13 @@ namespace Assets.Cognitions.Maps.MapGrids
         private Vector3 GetNodePosition(int x, int z)
         {
             return new Vector3(x + (_scale + 1) * 0.5f, 0, z + (_scale + 1) * 0.5f);
+        }
+
+
+        private bool TryGetNode(Vector3 position, out INode node)
+        {
+            return TryGetNode(Mathf.FloorToInt(position.x - _scale * 0.5f),
+                Mathf.FloorToInt(position.z - _scale * 0.5f), out node);
         }
 
         private bool TryGetNode(int x, int z, out INode node)

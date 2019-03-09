@@ -12,6 +12,7 @@ namespace Assets.Environment.Units
         private BodyCoordinator _bodyCoordinator;
         [SerializeField] private FractionId _fractionId;
         [SerializeField] private Gun _gun;
+        [SerializeField] private int _unitScale;
 
         private LegsModule _legsModule;
 
@@ -70,6 +71,14 @@ namespace Assets.Environment.Units
         public FractionId Fraction
         {
             get { return _fractionId; }
+        }
+
+        public int UnitScale
+        {
+            get
+            {
+                return _unitScale;
+            }
         }
 
         private void Awake()

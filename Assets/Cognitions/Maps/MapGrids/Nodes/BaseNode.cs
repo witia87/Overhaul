@@ -38,7 +38,7 @@ namespace Assets.Cognitions.Maps.MapGrids.Nodes
         public void SetCoverage(Vector3 direction)
         {
             _isCovered[direction.z < 0 ? 0 : 1,
-                direction.z < 0 ? 0 : 1] = true;
+                direction.x < 0 ? 0 : 1] = true;
         }
     }
 }

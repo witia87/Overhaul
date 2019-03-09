@@ -1,5 +1,4 @@
-﻿using Assets.Cognitions.Maps.Dangers;
-using Assets.Environment.Units;
+﻿using Assets.Environment.Units;
 using UnityEngine;
 
 namespace Assets.Cognitions.Maps
@@ -8,13 +7,12 @@ namespace Assets.Cognitions.Maps
     {
         public static LayerMask EnvironmentLayerMask;
 
-        private DangerStore _dangers;
         [SerializeField] private LayerMask _environmentLayerMask;
         private MapFactory _mapFactory;
 
-        private void Update()
+        public IMap GetMap(IUnit unit)
         {
-            _dangers.Update();
+            return _mapFactory.GetMap(unitn);
         }
 
         private void Awake()
@@ -22,19 +20,6 @@ namespace Assets.Cognitions.Maps
             EnvironmentLayerMask = _environmentLayerMask;
             _mapFactory = FindObjectOfType<MapFactory>();
             _mapFactory.Initialize();
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_dangers != null)
-            {
-                _dangers.OnDrawGizmos();
-            }
-        }
-
-        public IMap GetMap(IUnit unit)
-        {
-            return _mapFactory.GetMap(unit.UnitScale, unit.Fraction);
         }
     }
 }

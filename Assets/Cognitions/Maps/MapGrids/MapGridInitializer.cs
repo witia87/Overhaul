@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Assets.Cognitions.Maps.MapGraphs;
-using Assets.Cognitions.Maps.MapGraphs.Rooms;
-using Assets.Cognitions.Maps.MapGraphs.Rooms.Covers;
+﻿using Assets.Cognitions.Maps.MapGraphs;
 using Assets.Cognitions.Maps.MapGrids.Nodes;
 using Assets.Environment;
 using UnityEngine;
@@ -20,17 +16,6 @@ namespace Assets.Cognitions.Maps.MapGrids
             return _fractionGrids[(int) fractionId].GetMapGrid(scale);
         }
 
-        /*public void Initialize(MapGraph mapGraph)
-        {
-            var bulletFactories = FindObjectsOfType<BulletsFactory>();
-            var availabilityGrid = GetAvailabilityGrid();
-            var roomsGrid = GetRoomsGrid(mapGraph.Rooms);
-            var coversGrid = GetCoversGrid();
-
-            _fractionGrids[0] = new FractionGrids(InitializeBaseGrid(), bulletFactories, FractionId.Player);
-            _fractionGrids[1] = new FractionGrids(InitializeBaseGrid(), bulletFactories, FractionId.Enemy);
-        }*/
-
         public BaseNode[,] Initialize(IMapGraph graph)
         {
             var baseGrid = GetEmptyGrid();
@@ -38,8 +23,11 @@ namespace Assets.Cognitions.Maps.MapGrids
 
             roomWriter.Write(graph.Rooms);
 
-            _fractionGrids[0] = new FractionGrids(InitializeBaseGrid(), bulletFactories, FractionId.Player);
-            _fractionGrids[1] = new FractionGrids(InitializeBaseGrid(), bulletFactories, FractionId.Enemy);
+            var playerDnagerGrid = GetBaseDangersGrid(baseGrid);
+            var enemyDangerGrid = GetBaseDangersGrid(baseGrid);
+
+            _fractionGrids[0] = new FractionGrids(baseGrid, playerDnagerGrid, FractionId.Player);
+            _fractionGrids[1] = new FractionGrids(baseGrid, enemyDangerGrid, FractionId.Enemy);
 
             return baseGrid;
         }
@@ -58,6 +46,17 @@ namespace Assets.Cognitions.Maps.MapGrids
                     && hit.transform.tag == "Floor")
                     grid[z, x] = new BaseNode(z, x, position);
             }
+
+            return grid;
+        }
+
+        private BaseDangerNode[,] GetBaseDangersGrid(BaseNode[,] baseGrid)
+        {
+            var grid = new BaseDangerNode[_gridLength, _gridWidth];
+            for (var z = 0; z < _gridLength; z++)
+            for (var x = 0; x < _gridWidth; x++)
+                if (baseGrid[z, x] != null)
+                    grid[z, x] = new BaseDangerNode(baseGrid[z, x].Position);
 
             return grid;
         }

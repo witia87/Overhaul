@@ -1,6 +1,7 @@
 ﻿using Assets.Cognitions.Maps.MapGraphs;
 using Assets.Cognitions.Maps.MapGrids;
 using Assets.Environment;
+using Assets.Environment.Units;
 using UnityEngine;
 
 namespace Assets.Cognitions.Maps
@@ -21,12 +22,12 @@ namespace Assets.Cognitions.Maps
         }
 
 
-        public Map GetMap(int scale, FractionId fractionId)
+        public Map GetMap(IUnit unit)
         {
-            var mapGrid = _mapGridFactory.GetMapGrid(fractionId, scale);
-            var mapGraph = _mapGraphFactory.GetMapGraph();
+            var mapGrid = _mapGridInitializer.GetMapGrid(unit.Fraction, unit.UnitScale);
+            var mapGraph = _mapGraphInitializer.GetMapGraph();
 
-            return new Map(mapGrid, mapGraph);
+            return new Map(unit, mapGrid, mapGraph);
         }
     }
 }
